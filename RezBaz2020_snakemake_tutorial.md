@@ -35,6 +35,7 @@ In this workshop, we will work through an introduction to Snakemake, a workflow 
     - [Capture our logs](#capture-our-logs)
     - [Scale our analyse to all of our samples](#scale-our-analyse-to-all-of-our-samples)
     - [Add more rules](#add-more-rules)
+    - [Add even more rules](#add-even-more-rules)
   - [Lets speed this up!](#lets-speed-this-up)
     - [Throw it more threads](#throw-it-more-threads)
     - [Deploy on a HPC](#deploy-on-a-hpc)
@@ -331,7 +332,7 @@ This produces a diagram that lets us visualise our workflow
 
 ![DAG_1](./demo_workflow_diagrams/dag_1.png)
 
-*Note. this diagram can be output to several other image formats such as svg or png*
+*Note. this diagram can be output to several other image formats such as svg or pdf*
 
 ```bash
 # Fullrun
@@ -1008,6 +1009,8 @@ Fastqc runs fine while specifying only one file output from fastqc
 
 ![DAG_6](./demo_workflow_diagrams/dag_6.png)
 
+### Add even more rules
+
 Let's add the rest of the rules, currently we have:
 
 input data :arrow_right: [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) :arrow_right: [multiqc](https://multiqc.info/) :heavy_check_mark:
@@ -1109,15 +1112,29 @@ dependencies:
   - bioconda::gatk4=4.1.6.0
 ```
 
-Run again
+Visualise workflow
+
+```bash
+snakemake --dag | dot -Tpng > dag_7.png
+```
+
+Fantastic, we are getting towards a workflow!
+
+![DAG_7](./demo_workflow_diagrams/dag_7.png)
+
+However, when analysing many samples, our DAG can become messy and complicated. We can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
+
+```bash
+snakemake --rulegraph | dot -T.png > rulegraph_1.png
+```
+
+![rulegraph_1](./demo_workflow_diagrams/rulegraph_1.png)
+
+Run the workflow again
 
 ```bash
 # Remove output of last run
 rm -r ../results/*
-
-# Visualise workflow
-snakemake --dag | dot -Tpdf > dag.pdf
-snakemake --rulegraph | dot -Tpdf > rulegraph.pdf
 
 # Run dryrun/run again
 snakemake -n -j 8 --use-conda
