@@ -1,156 +1,25 @@
 # Workflow languages – your foundation for accuracy and reproducibility in data analysis
 
-**This workshop is a part of [RezBaz 2020: Pick n Mix](https://resbaz.auckland.ac.nz/)**
-**Date:** Friday 27 November 2020
-**Time:** 2:30pm - 3:30pm
-
-Are you working with big data? Do you need to pass your data through various software? If you’ve ever been in this situation (as I have in a population genetics masters project), you would know it can become very difficult to maintain reproducibility and accuracy; wait, have I updated this output file? The more manual steps we do, the more human errors are inevitably introduced into our analysis, hampering accuracy and reproducibility.
-
-Be lazy, the machine does it better.
-
-Workflow languages automate your data analysis workflow . But this isn’t all, they ensure all your analysis logs are captured in an organised fashion, they explicitly outline the software (and exact software versions) used, the input and output files at each step. Lastly, when your data inevitably becomes big data, you can easily scale up from running your analysis on your laptop, to running your analysis on a high performance cluster (HPC) such as NeSi.
-
-In this workshop, we will work through an introduction to Snakemake, a workflow language with its basis in the popular programming language, Python. This Workshop is intended for anyone who has several steps in their data analysis workflow, particularly when many different software are involved. [Book here](https://vuw.libcal.com/event/5293465/).
-
 # Table of contents
 
 - [Workflow languages – your foundation for accuracy and reproducibility in data analysis](#workflow-languages--your-foundation-for-accuracy-and-reproducibility-in-data-analysis)
 - [Table of contents](#table-of-contents)
-- [Introduction](#introduction)
-  - [My background](#my-background)
-  - [Outcomes](#outcomes)
-  - [Benefits of workflow languages](#benefits-of-workflow-languages)
-  - [Benefits of Snakemake](#benefits-of-snakemake)
-  - [Other workflow languages](#other-workflow-languages)
-- [Tutorial](#tutorial)
-  - [Setup](#setup)
-    - [Check your OS](#check-your-os)
-    - [Install Miniconda](#install-miniconda)
-    - [Create an conda environment to work in](#create-an-conda-environment-to-work-in)
-  - [Create a basic workflow](#create-a-basic-workflow)
-    - [Aim](#aim)
-    - [File structure](#file-structure)
-    - [First rule](#first-rule)
-    - [Run using the conda package management system](#run-using-the-conda-package-management-system)
-    - [Capture our logs](#capture-our-logs)
-    - [Scale our analyse to all of our samples](#scale-our-analyse-to-all-of-our-samples)
-    - [Add more rules](#add-more-rules)
-    - [Add even more rules](#add-even-more-rules)
-    - [Throw it more threads](#throw-it-more-threads)
-    - [Takeaways](#takeaways)
-    - [Summary commands](#summary-commands)
-  - [Lets speed this up!](#lets-speed-this-up)
-    - [Deploy on a HPC](#deploy-on-a-hpc)
-  - [Leveling up your workflow!](#leveling-up-your-workflow)
-    - [Pull out parameters](#pull-out-parameters)
-    - [Pull out user configurable options](#pull-out-user-configurable-options)
-    - [Generating a snakemake report](#generating-a-snakemake-report)
-    - [Leave messages for the user](#leave-messages-for-the-user)
-    - [Create temporary files](#create-temporary-files)
-  - [Version control](#version-control)
-  - [Trouble shooting](#trouble-shooting)
-  - [Final words](#final-words)
+- [Create a basic workflow](#create-a-basic-workflow)
+  - [Aim](#aim)
+  - [File structure](#file-structure)
+  - [First rule](#first-rule)
+  - [Run using the conda package management system](#run-using-the-conda-package-management-system)
+  - [Capture our logs](#capture-our-logs)
+  - [Scale our analyse to all of our samples](#scale-our-analyse-to-all-of-our-samples)
+  - [Add more rules](#add-more-rules)
+  - [Add even more rules](#add-even-more-rules)
+  - [Throw it more cores](#throw-it-more-cores)
+- [Takeaways](#takeaways)
+- [Summary commands](#summary-commands)
 
-# Introduction
+# Create a basic workflow
 
-## My background
-
-- Bioinformatician at the Institute of Environmental Science and Research (ESR)
-- Analyse human genomic data
-- MSc - population genetics
-
-## Outcomes
-
-By the end of this workshop, you should be able to:
-
-- Use a systematic approach to build your own workflow
-- Understand how to link multiple rules in a snakemake workflow
-- Be able to use software using conda environments or containers
-- Capture all your log files
-- Identify and troubleshoot some common error messages
-- Use wildcards to process all your data/samples
-- Multithread software to speed it up
-- Visualize your workflow by creating a diagram of jobs (DAG)
-- Search for existing workflows you can use or adapt
-- Store your workflow on github
-
-## Benefits of workflow languages
-
-- Reproducibility
-- Automation
-- Portability
-- Scalability
-- Interpretability
-  
-## Benefits of Snakemake
-
-![Snakemake](https://avatars2.githubusercontent.com/u/33450111?s=400&v=4 "Snakemake")
-
-- Based in the popular (and widely used) programming language, Python
-
-## Other workflow languages
-
-Choose your favourite flavour of workflow language!
-
-- [Common Workflow Language (CWL)](https://www.commonwl.org/)
-- [Nextflow](https://www.nextflow.io/)
-- [Workflow Description Language (WDL)](https://openwdl.org/)
-- [Guix Workflow Language](https://workflows.guix.info/)
-
-# Tutorial
-
-## Setup
-
-### Check your OS
-
-If you already use Linux or MacOS X, great! Ignore this paragraph!. If you use Windows, setup a Linux virtual machine (VM) with Vagrant (see instructions on how to do this [here](https://snakemake.readthedocs.io/en/stable/tutorial/setup.html#setup-a-linux-vm-with-vagrant-under-windows)).
-
-### Install Miniconda
-
-Information on how to install Miniconda can be found [on their website](https://docs.conda.io/en/latest/miniconda.html). Snakemake also provides information on installing Miniconda in [their documentation](https://snakemake.readthedocs.io/en/stable/tutorial/setup.html#step-1-installing-miniconda-3)
-
-Once miniconda is installed, [set up your channels](https://bioconda.github.io/user/install.html#set-up-channels) (channels are locations where packages/software are can be installed from)
-
-```bash
-conda config --add channels defaults
-conda config --add channels bioconda
-conda config --add channels conda-forge
-```
-
-### Create an conda environment to work in
-
-With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which to install all the necessary software to run our workflow, supporting the portability and reproducibility of your workflow
-
-
-Create a conda environment (called `demo_workflow_env`) that has python and Snakemake installed (and all it dependant software)
-
-```bash
-conda create -n demo_workflow_env python=3.7.6 snakemake=5.28.0
-```
-
-Respond yes to the following prompt to install the necessary software in the new conda environment:
-
-```bash
-Proceed ([y]/n)?
-```
-
-Activate the conda environment we just created
-
-```bash
-conda activate demo_workflow_env
-```
-
-Now we can see which conda environment we are in on the command line
-
-```bash
-(demo_workflow_env) lkemp@Wintermute:~$
-```
-
-*Snakemake has been installed within your `demo_workflow_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
-
-## Create a basic workflow
-
-### Aim
+## Aim
 
 ---
 
@@ -178,7 +47,7 @@ Output:
 -rw-rw-r-- 1 lkemp lkemp 1.9M Nov 18 14:56 NA24695_2.fastq.gz
 ```
 
-### File structure
+## File structure
 
 Workflow file structure:
 
@@ -200,7 +69,7 @@ mkdir -p demo_workflow/{results,workflow/envs}
 touch demo_workflow/workflow/Snakefile
 ```
 
-### First rule
+## First rule
 
 First lets run the first step ([fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)) directly on the command line to get the syntax of the command right and check what outputs files we expect to get
 
@@ -348,7 +217,7 @@ snakemake -n --cores 8
 snakemake --cores 8
 ```
 
-### Run using the conda package management system
+## Run using the conda package management system
 
 fastqc worked because we already had it installed locally. Let's specify a conda environment for fastqc so the user of the workflow doesn't need to install it manually.
 
@@ -407,7 +276,7 @@ snakemake -n --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
-### Capture our logs
+## Capture our logs
 
 What happens if we have an error in one of our rules? Let's create an error (remove the `-o` flag):
 
@@ -567,7 +436,7 @@ Approx 45% complete for NA24631_1.fastq.gz
 
 ![logs](https://i.redd.it/d8qyw1j389e11.jpg)
 
-### Scale our analyse to all of our samples
+## Scale our analyse to all of our samples
 
 We are currently only analysing one of our three samples
 
@@ -642,7 +511,7 @@ Output:
 -rw-rw-r-- 1 lkemp lkemp 1.8K Nov 19 15:17 NA24695.log
 ```
 
-### Add more rules
+## Add more rules
 
 - Make a conda environment file for multiqc
 
@@ -1011,7 +880,7 @@ Fastqc runs fine while specifying only one file output from fastqc
 
 ![DAG_6](./demo_workflow_diagrams/dag_6.png)
 
-### Add even more rules
+## Add even more rules
 
 Let's add the rest of the rules, currently we have:
 
@@ -1153,9 +1022,9 @@ snakemake --cores 8 --use-conda
 
 Notice it will run only one rule/sample at a time...why is that?
 
-### Throw it more threads
+## Throw it more cores
 
-Run again allowing Snakemake to use more threads overall `--cores 32` rather than `--cores 8`
+Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 8`
 
 ```bash
 # Remove output of last run
@@ -1170,7 +1039,7 @@ Now more steps can be run at one time - parallel computing here we come!
 
 ![parallel computing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1200px-IBM_Blue_Gene_P_supercomputer.jpg)
 
-### Takeaways
+# Takeaways
 
 ---
 
@@ -1192,9 +1061,9 @@ Now more steps can be run at one time - parallel computing here we come!
 
 ---
 
-### Summary commands
+# Summary commands
 
-Create a DAG with:
+Create a diagram of jobs (DAG) with:
 
 ```bash
 snakemake --dag | dot -Tpng > dag.png
@@ -1204,6 +1073,12 @@ Create a rulegraph with:
 
 ```bash
 snakemake --rulegraph | dot -Tpng > rulegraph.png
+```
+
+Create a filegraph with:
+
+```bash
+snakemake --filegraph | dot -Tpng > filegraph.png
 ```
 
 Run a dryrun of your snakemake workflow with:
@@ -1236,67 +1111,14 @@ Create a global wildcard to get process all your samples in a directory with:
 SAMPLES, = glob_wildcards("../relative/path/to/samples/{sample}_1.fastq.gz")
 ```
 
-Then use the expand function to tell Snakemake to look at and expand out your global wildcard to figure out what you refer to `{sample}` in your workflow
+Combine this with the expand function to tell Snakemake to look at your global wildcard to figure out what you refer to as `{sample}` in your workflow
 
 ```bash
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+expand("../results/{sample}.bam", sample = SAMPLES)
 ```
 
-Up your workflow speed by increasing the maximum number of threads that can be used with the `--cores` command
+Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores with the `--cores` command
 
 ```bash
 snakemake --cores 32 --use-conda
 ```
-
-## Lets speed this up!
-
-
-
-### Deploy on a HPC
-
----
-
-Takeaways:
-
-- Run your commands directly on the command line before wrapping it up in a Snakemake rule
-- First do a dryrun with the `-n` flag to check the Snakemake structure is set up correctly
-- Work iteratively (get each rule working before moving onto the next)
-- File paths are relative to the Snakefile
-- View the workflow with the ` ` command
-- Use the `--use-conda` flag when using conda to install software in your workflow
-- Snakemake is lazy...
-  - It will only do something if it hasn't already done it
-  - It will pick up where it left off, rather than run the whole workflow again
-  - It *won't* do any steps that aren't necessary to get to the target files defined in `rule: all`
-- `input:` `output:` `log:` and `threads:` directives need to be called in the `shell` directive
-- Use `&> {log}` in the shell command to capture your log files
-- Organise your log files with rulenames and sample name
-- You don't need to specify all the target files in `rule all:`, the final file in a given chain of tasks will suffice
-- We can massively speed up our analyses by running them in parallel
-
----
-
-## Leveling up your workflow!
-
-### Pull out parameters
-
-### Pull out user configurable options
-
-We can separate the user configurable options for our workflow away from the workflow. This supports reproducibility by minimising the chance the user makes changes to the core workflow.
-
-### Generating a snakemake report
-
-### Leave messages for the user
-
-### Create temporary files
-
-## Version control
-
-## Trouble shooting
-
-## Final words
-
-https://github.com/ESR-NZ/human_genomics_pipeline
-
-https://github.com/ESR-NZ/vcf_annotation_pipeline
-
