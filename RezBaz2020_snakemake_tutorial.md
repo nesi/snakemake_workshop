@@ -36,8 +36,10 @@ In this workshop, we will work through an introduction to Snakemake, a workflow 
     - [Scale our analyse to all of our samples](#scale-our-analyse-to-all-of-our-samples)
     - [Add more rules](#add-more-rules)
     - [Add even more rules](#add-even-more-rules)
-  - [Lets speed this up!](#lets-speed-this-up)
     - [Throw it more threads](#throw-it-more-threads)
+    - [Takeaways](#takeaways)
+    - [Summary commands](#summary-commands)
+  - [Lets speed this up!](#lets-speed-this-up)
     - [Deploy on a HPC](#deploy-on-a-hpc)
   - [Leveling up your workflow!](#leveling-up-your-workflow)
     - [Pull out parameters](#pull-out-parameters)
@@ -1118,14 +1120,22 @@ Visualise workflow
 snakemake --dag | dot -Tpng > dag_7.png
 ```
 
-Fantastic, we are getting towards a workflow!
+Fantastic, we are starting to build a workflow!
 
 ![DAG_7](./demo_workflow_diagrams/dag_7.png)
 
-However, when analysing many samples, our DAG can become messy and complicated. We can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
+However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
 ```bash
-snakemake --rulegraph | dot -T.png > rulegraph_1.png
+snakemake --rulegraph | dot -Tpng > rulegraph_1.png
+```
+
+![rulegraph_1](./demo_workflow_diagrams/rulegraph_1.png)
+
+Another option that will show all your input and output files at each step:
+
+```bash
+snakemake --filegraph | dot -Tpng > filegraph.png
 ```
 
 ![rulegraph_1](./demo_workflow_diagrams/rulegraph_1.png)
@@ -1143,9 +1153,26 @@ snakemake -j 8 --use-conda
 
 Notice it will run only one rule/sample at a time...why is that?
 
----
+### Throw it more threads
 
-Takeaways:
+Run again allowing Snakemake to use more threads overall `-j 32` rather than `-j 8`
+
+```bash
+# Remove output of last run
+rm -r ../results/*
+
+# Run dryrun/run again
+snakemake -n -j 32 --use-conda
+snakemake -j 32 --use-conda
+```
+
+Now more steps can be run at one time - parallel computing here we come!
+
+![parallel computing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1200px-IBM_Blue_Gene_P_supercomputer.jpg)
+
+### Takeaways
+
+---
 
 - Run your commands directly on the command line before wrapping it up in a Snakemake rule
 - First do a dryrun with the `-n` flag to check the Snakemake structure is set up correctly
@@ -1165,22 +1192,65 @@ Takeaways:
 
 ---
 
-## Lets speed this up!
+### Summary commands
 
-### Throw it more threads
-
-Run again allowing Snakemake to use more threads overall `-j 32` rather than `-j 8`
+Create a DAG with:
 
 ```bash
-# Remove output of last run
-rm -r ../results/*
+snakemake --dag | dot -Tpng > dag.png
+```
 
-# Run dryrun/run again
-snakemake -n -j 32 --use-conda
+Create a rulegraph with:
+
+```bash
+snakemake --rulegraph | dot -Tpng > rulegraph.png
+```
+
+Run a dryrun of your snakemake workflow with:
+
+```bash
+snakemake -n -j 8
+```
+
+Run your snakemake workflow with:
+
+```bash
+snakemake -j 8
+```
+
+Run a dryrun of your snakemake workflow using conda to install your software with:
+
+```bash
+snakemake -n -j 8 --use-conda
+```
+
+Run your snakemake workflow using conda to install your software with:
+
+```bash
+snakemake -j 8 --use-conda
+```
+
+Create a global wildcard to get process all your samples in a directory with:
+
+```bash
+SAMPLES, = glob_wildcards("../relative/path/to/samples/{sample}_1.fastq.gz")
+```
+
+Then use the expand function to tell Snakemake to look at and expand out your global wildcard to figure out what you refer to `{sample}` in your workflow
+
+```bash
+        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+```
+
+Up your workflow speed by increasing the maximum number of threads that can be used with the `-j` command
+
+```bash
 snakemake -j 32 --use-conda
 ```
 
-![Unlimited speed](https://www.driven.co.nz/media/46465/nt-unlimited-speed-sign.jpg?width=820)
+## Lets speed this up!
+
+
 
 ### Deploy on a HPC
 
