@@ -856,17 +856,6 @@ Although the workflow ran the same, the DAG actually changed slightly, now there
 
 For example if only our fastqc outputs are defined as the target in `rule: all`
 
-```bash
-# Remove output of last run
-rm -r ../results/*
-
-# Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
-```
-
-What happens if we only have the final target file (`../results/multiqc_report.html`) in `rule all:`
-
 ```python
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
@@ -1008,6 +997,16 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 ```
 
 Our fastqc rule will still be run/evaluated
+
+Visualise workflow
+
+```bash
+snakemake --dag | dot -Tpng > dag_6.png
+```
+
+Fastqc runs fine while specifying only one file output from fastqc
+
+![DAG_6](./demo_workflow_diagrams/dag_6.png)
 
 Let's add the rest of the rules, currently we have:
 
