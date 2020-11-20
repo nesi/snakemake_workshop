@@ -1,12 +1,9 @@
-# Workflow languages – your foundation for accuracy and reproducibility in data analysis
+# We want more!
 
 # Table of contents
 
-- [Workflow languages – your foundation for accuracy and reproducibility in data analysis](#workflow-languages--your-foundation-for-accuracy-and-reproducibility-in-data-analysis)
-- [Table of contents](#table-of-contents)
 - [We want more!](#we-want-more)
-
-# We want more!
+- [Table of contents](#table-of-contents)
 
 - Here is an example of a fully established pipeline that extends on the workflow we created in this workshop: https://github.com/ESR-NZ/human_genomics_pipeline
 

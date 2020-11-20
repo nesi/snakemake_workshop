@@ -1,15 +1,12 @@
-# Workflow languages – your foundation for accuracy and reproducibility in data analysis
+# Setup
 
 # Table of contents
 
-- [Workflow languages – your foundation for accuracy and reproducibility in data analysis](#workflow-languages--your-foundation-for-accuracy-and-reproducibility-in-data-analysis)
-- [Table of contents](#table-of-contents)
 - [Setup](#setup)
+- [Table of contents](#table-of-contents)
   - [Check your OS](#check-your-os)
   - [Install Miniconda](#install-miniconda)
   - [Create an conda environment to work in](#create-an-conda-environment-to-work-in)
-
-# Setup
 
 ## Check your OS
 

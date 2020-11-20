@@ -1,17 +1,14 @@
-# Workflow languages – your foundation for accuracy and reproducibility in data analysis
+# Introduction
 
 # Table of contents
 
-- [Workflow languages – your foundation for accuracy and reproducibility in data analysis](#workflow-languages--your-foundation-for-accuracy-and-reproducibility-in-data-analysis)
-- [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
+- [Table of contents](#table-of-contents)
   - [My background](#my-background)
   - [Outcomes](#outcomes)
   - [Benefits of workflow languages](#benefits-of-workflow-languages)
   - [Benefits of Snakemake](#benefits-of-snakemake)
   - [Other workflow languages](#other-workflow-languages)
-
-# Introduction
 
 ## My background
 
@@ -30,7 +27,7 @@ By the end of this workshop, you should be able to:
 - Identify and troubleshoot some common error messages
 - Use wildcards to process all your data/samples
 - Multithread software to speed it up
-- Visualize your workflow by creating a diagram of jobs (DAG)
+- Visualize your workflow by creating a diagram of jobs (DAG), rulegraphs or filegraphs
 - Search for existing workflows you can use or adapt
 - Store your workflow on github
 

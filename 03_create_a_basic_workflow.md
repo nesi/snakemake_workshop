@@ -1,10 +1,9 @@
-# Workflow languages – your foundation for accuracy and reproducibility in data analysis
+# Create a basic workflow
 
 # Table of contents
 
-- [Workflow languages – your foundation for accuracy and reproducibility in data analysis](#workflow-languages--your-foundation-for-accuracy-and-reproducibility-in-data-analysis)
-- [Table of contents](#table-of-contents)
 - [Create a basic workflow](#create-a-basic-workflow)
+- [Table of contents](#table-of-contents)
   - [Aim](#aim)
   - [File structure](#file-structure)
   - [First rule](#first-rule)
@@ -16,8 +15,6 @@
   - [Throw it more cores](#throw-it-more-cores)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
-
-# Create a basic workflow
 
 ## Aim
 
