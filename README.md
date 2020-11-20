@@ -14,9 +14,9 @@ In this workshop, we will work through an introduction to [Snakemake](https://sn
 
 Sections:
 
-- [01 Introduction](./01_introduction.md)
-- [02 Setup](./02_setup.md)
-- [03 Create a basic workflow](./03_create_a_basic_workflow.md)
-- [04 Leveling up your workflow](./04_leveling_up_your_workflow.md)
-- [05 words of wisdom](./05_words_of_wisdom.md)
-- [06 we want more](./06_we_want_more.md)
+- [01 - Introduction](./01_introduction.md)
+- [02 - Setup](./02_setup.md)
+- [03 - Create a basic workflow](./03_create_a_basic_workflow.md)
+- [04 - Leveling up your workflow](./04_leveling_up_your_workflow.md)
+- [05 - Words of wisdom](./05_words_of_wisdom.md)
+- [06 - We want more](./06_we_want_more.md)
