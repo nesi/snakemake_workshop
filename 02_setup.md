@@ -7,6 +7,7 @@
   - [Check your OS](#check-your-os)
   - [Install Miniconda](#install-miniconda)
   - [Create an conda environment to work in](#create-an-conda-environment-to-work-in)
+  - [Clone this repo](#clone-this-repo)
 
 ## Check your OS
 
@@ -54,3 +55,10 @@ Now we can see which conda environment we are in on the command line
 ```
 
 *Snakemake has been installed within your `demo_workflow_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
+
+## Clone this repo
+
+```bash
+git clone https://github.com/leahkemp/RezBaz2020_snakemake_workshop.git
+cd RezBaz2020_snakemake_workshop
+```
