@@ -287,7 +287,7 @@ Test the workflow
 cd demo_workflow/workflow/
 
 # Dryrun
-snakemake -n -j 8
+snakemake -n --cores 8
 ```
 
 Output:
@@ -338,14 +338,14 @@ This produces a diagram that lets us visualise our workflow
 
 ```bash
 # Fullrun
-snakemake -j 8
+snakemake --cores 8
 ```
 
 What happens if we try a dryrun/run now?
 
 ```bash
-snakemake -n -j 8
-snakemake -j 8
+snakemake -n --cores 8
+snakemake --cores 8
 ```
 
 ### Run using the conda package management system
@@ -403,8 +403,8 @@ Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 ### Capture our logs
@@ -444,8 +444,8 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 The logs are currently just printed to the screen and can be hard to find in a large automated workflow
@@ -488,8 +488,8 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 It didn't write to our log file!
@@ -540,8 +540,8 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 Worked great, all of our logs are now written to `logs/fastqc/NA24631.log`
@@ -624,8 +624,8 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 All three samples were run through our workflow! And we have a log file for each sample for the fastqc rule
@@ -714,8 +714,8 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 Didn't work? Error:
@@ -788,8 +788,8 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 What happens if we only have the final target file (`../results/multiqc_report.html`) in `rule all:`
@@ -839,8 +839,8 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 It still works because it is the last file in the workflow sequence, Snakemake will do all the steps necessary to get to this target file (therefore it runs fastqc and multiqc)
@@ -907,8 +907,8 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 Output:
@@ -985,7 +985,7 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
 ```
 
 Output:
@@ -1070,7 +1070,7 @@ rule trim_galore:
         "./envs/trim_galore.yaml"
     threads: 8
     shell:
-        "trim_galore {input} -o ../results/trimmed/ --paired -j {threads} &> {log}"
+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 
 rule bwa:
     input:
@@ -1147,23 +1147,23 @@ Run the workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 8 --use-conda
-snakemake -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 Notice it will run only one rule/sample at a time...why is that?
 
 ### Throw it more threads
 
-Run again allowing Snakemake to use more threads overall `-j 32` rather than `-j 8`
+Run again allowing Snakemake to use more threads overall `--cores 32` rather than `--cores 8`
 
 ```bash
 # Remove output of last run
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n -j 32 --use-conda
-snakemake -j 32 --use-conda
+snakemake -n --cores 32 --use-conda
+snakemake --cores 32 --use-conda
 ```
 
 Now more steps can be run at one time - parallel computing here we come!
@@ -1209,25 +1209,25 @@ snakemake --rulegraph | dot -Tpng > rulegraph.png
 Run a dryrun of your snakemake workflow with:
 
 ```bash
-snakemake -n -j 8
+snakemake -n --cores 8
 ```
 
 Run your snakemake workflow with:
 
 ```bash
-snakemake -j 8
+snakemake --cores 8
 ```
 
 Run a dryrun of your snakemake workflow using conda to install your software with:
 
 ```bash
-snakemake -n -j 8 --use-conda
+snakemake -n --cores 8 --use-conda
 ```
 
 Run your snakemake workflow using conda to install your software with:
 
 ```bash
-snakemake -j 8 --use-conda
+snakemake --cores 8 --use-conda
 ```
 
 Create a global wildcard to get process all your samples in a directory with:
@@ -1242,10 +1242,10 @@ Then use the expand function to tell Snakemake to look at and expand out your gl
         expand("../results/mapped/{sample}.bam", sample = SAMPLES)
 ```
 
-Up your workflow speed by increasing the maximum number of threads that can be used with the `-j` command
+Up your workflow speed by increasing the maximum number of threads that can be used with the `--cores` command
 
 ```bash
-snakemake -j 32 --use-conda
+snakemake --cores 32 --use-conda
 ```
 
 ## Lets speed this up!
