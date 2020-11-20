@@ -704,7 +704,7 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
-Run again
+Run workflow again
 
 ```bash
 # Remove output of last run
@@ -767,6 +767,16 @@ rule multiqc:
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 ```
+
+Visualise workflow
+
+```bash
+snakemake --dag | dot -Tpng > dag_3.png
+```
+
+Now we have two rules in our workflow, we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
+
+![DAG_3](./demo_workflow_diagrams/dag_3.png)
 
 Run again
 
