@@ -774,7 +774,7 @@ Visualise workflow
 snakemake --dag | dot -Tpng > dag_3.png
 ```
 
-Now we have two rules in our workflow, we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
+Now we have two rules in our workflow (fastqc and multiqc), we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
 
 ![DAG_3](./demo_workflow_diagrams/dag_3.png)
 
@@ -829,7 +829,7 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
-Run again
+Run workflow again
 
 ```bash
 # Remove output of last run
@@ -842,9 +842,19 @@ snakemake -j 8 --use-conda
 
 It still works because it is the last file in the workflow sequence, Snakemake will do all the steps necessary to get to this target file (therefore it runs fastqc and multiqc)
 
+Visualise workflow
+
+```bash
+snakemake --dag | dot -Tpng > dag_4.png
+```
+
+Although the workflow ran the same, the DAG actually changed slightly, now there is only one file target and only the output of multiqc goes to `rule all`
+
+![DAG_4](./demo_workflow_diagrams/dag_4.png)
+
 **Beware: Snakemake will also NOT run rules that is doesn't need to run in order to get the target files defined in rule: all**
 
-For example if our fastqc outputs are defined as the target in `rule: all`
+For example if only our fastqc outputs are defined as the target in `rule: all`
 
 ```bash
 # Remove output of last run
@@ -921,6 +931,16 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 ```
 
 Our multiqc rule won't be run/evaluated
+
+Visualise workflow
+
+```bash
+snakemake --dag | dot -Tpng > dag_5.png
+```
+
+Now we are back to only running fastqc in our workflow, despite having our second rule (multiqc) in our workflow
+
+![DAG_5](./demo_workflow_diagrams/dag_5.png)
 
 Snakemake is lazy.
 
