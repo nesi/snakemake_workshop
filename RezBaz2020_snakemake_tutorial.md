@@ -1132,13 +1132,13 @@ snakemake --rulegraph | dot -Tpng > rulegraph_1.png
 
 ![rulegraph_1](./demo_workflow_diagrams/rulegraph_1.png)
 
-Another option that will show all your input and output files at each step:
+An aside: another option that will show all your input and output files at each step:
 
 ```bash
 snakemake --filegraph | dot -Tpng > filegraph.png
 ```
 
-![rulegraph_1](./demo_workflow_diagrams/rulegraph_1.png)
+![rulegraph_1](./demo_workflow_diagrams/filegraph_1.png)
 
 Run the workflow again
 
