@@ -324,12 +324,12 @@ We can also visualise our workflow by creating a diagram of jobs (DAG)
 
 ```bash
 # Visualise workflow
-snakemake --dag | dot -Tpdf > dag_1.pdf
+snakemake --dag | dot -Tpng > dag_1.png
 ```
 
 This produces a diagram that lets us visualise our workflow
 
-![DAG_1](./demo_workflow_diagrams/dag_1.pdf)
+![DAG_1](./demo_workflow_diagrams/dag_1.png)
 
 *Note. this diagram can be output to several other image formats such as svg or png*
 
