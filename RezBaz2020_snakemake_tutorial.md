@@ -406,7 +406,7 @@ snakemake -j 8 --use-conda
 
 ### Capture our logs
 
-What happens if we have a large workflow and an error in one of our rules? Let's create an error (remove the `-o` flag):
+What happens if we have an error in one of our rules? Let's create an error (remove the `-o` flag):
 
 ```python
 # Targets
@@ -604,7 +604,17 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
-Run again
+Visualise workflow
+
+```bash
+snakemake --dag | dot -Tpng > dag_2.png
+```
+
+Now we have three samples running though our workflow
+
+![DAG_2](./demo_workflow_diagrams/dag_2.png)
+
+Run workflow again
 
 ```bash
 # Remove output of last run
