@@ -1138,7 +1138,7 @@ An aside: another option that will show all your input and output files at each 
 snakemake --filegraph | dot -Tpng > filegraph.png
 ```
 
-![rulegraph_1](./demo_workflow_diagrams/filegraph_1.png)
+![filegraph](./demo_workflow_diagrams/filegraph.png)
 
 Run the workflow again
 
