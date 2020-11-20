@@ -329,7 +329,7 @@ snakemake --dag | dot -Tpdf > dag_1.pdf
 
 This produces a diagram that lets us visualise our workflow
 
-![DAG_1](./demo_workflow/diagrams/dag_1.pdf)
+![DAG_1](./demo_workflow_diagrams/dag_1.pdf)
 
 *Note. this diagram can be output to several other image formats such as svg or png*
 
