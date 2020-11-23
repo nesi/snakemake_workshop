@@ -20,7 +20,7 @@
 
 ---
 
-Let's create a basic workflow that will do some of the typical quality control checks, pre-processing and mapping to a reference genome that is undertaken on paired-end sequence data
+*Let's create a basic workflow that will do some of the typical quality control checks, pre-processing and mapping to a reference genome that is undertaken on paired-end sequence data*
 
 input data :arrow_right: [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) :arrow_right: [multiqc](https://multiqc.info/)
 input data :arrow_right: [trim_galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) :arrow_right: [bwa](http://bio-bwa.sourceforge.net/)
@@ -35,8 +35,8 @@ ls -lh ./data/
 
 Output:
 
-```bash
--rw-rw-r-- 1 lkemp lkemp 2.1M Nov 18 14:56 NA24631_1.fastq.gz
+```html
+<p>-rw-rw-r-- 1 lkemp lkemp <mark>2.1M<mark> Nov 18 14:56 NA24631_1.fastq.gz</p>
 -rw-rw-r-- 1 lkemp lkemp 2.3M Nov 18 14:56 NA24631_2.fastq.gz
 -rw-rw-r-- 1 lkemp lkemp 2.1M Nov 18 14:56 NA24694_1.fastq.gz
 -rw-rw-r-- 1 lkemp lkemp 2.3M Nov 18 14:56 NA24694_2.fastq.gz
@@ -60,6 +60,8 @@ demo_workflow/
 We will work in the `workflow` directory send all of our file outputs/results to the `results/` directory
 
 *See more information on the workflow structure that the Snakemake developers recommend [here](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#distribution-and-reproducibility)*
+
+Create this file structure and our main Snakefile with:
 
 ```bash
 mkdir -p demo_workflow/{results,workflow/envs}
@@ -119,7 +121,7 @@ rule my_rule:
 
 - Name the rule
 - Fill in the the input fastq files from the `data` directory (path relative to the Snakefile)
-- Fill in the output files
+- Fill in the output files (now you can see it's useful to know what files fasqtc outputs!)
 - Set the number of threads
 - Write the shell command and pass these variables to the shell command
 - Set the final output files (`rule all:`)
@@ -187,7 +189,7 @@ Job counts:
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-The output confirms that the workflow will run one sample (`count 1`) through the rule `fastqc`
+The output confirms that the workflow will run one sample (`count 1`) through `jobs fastqc`
 
 We can also visualise our workflow by creating a diagram of jobs (DAG)
 
@@ -196,23 +198,125 @@ We can also visualise our workflow by creating a diagram of jobs (DAG)
 snakemake --dag | dot -Tpng > dag_1.png
 ```
 
-This produces a diagram that lets us visualise our workflow
-
 ![DAG_1](./demo_workflow_diagrams/dag_1.png)
 
 *Note. this diagram can be output to several other image formats such as svg or pdf*
+
+Let's do a full run of our workflow (by removing the `-n` flag)
 
 ```bash
 # Fullrun
 snakemake --cores 8
 ```
 
-What happens if we try a dryrun/run now?
+Output:
+
+```bash
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       all
+        1       fastqc
+        2
+
+[Fri Nov 20 18:46:27 2020]
+rule fastqc:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    jobid: 1
+    threads: 8
+
+Started analysis of NA24631_1.fastq.gz
+Approx 5% complete for NA24631_1.fastq.gz
+Approx 10% complete for NA24631_1.fastq.gz
+Approx 15% complete for NA24631_1.fastq.gz
+Approx 20% complete for NA24631_1.fastq.gz
+Approx 25% complete for NA24631_1.fastq.gz
+Approx 30% complete for NA24631_1.fastq.gz
+Approx 35% complete for NA24631_1.fastq.gz
+Approx 40% complete for NA24631_1.fastq.gz
+Approx 45% complete for NA24631_1.fastq.gz
+Approx 50% complete for NA24631_1.fastq.gz
+Approx 55% complete for NA24631_1.fastq.gz
+Started analysis of NA24631_2.fastq.gz
+Approx 60% complete for NA24631_1.fastq.gz
+Approx 65% complete for NA24631_1.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_1.fastq.gz
+Approx 75% complete for NA24631_1.fastq.gz
+Approx 15% complete for NA24631_2.fastq.gz
+Approx 20% complete for NA24631_2.fastq.gz
+Approx 80% complete for NA24631_1.fastq.gz
+Approx 25% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_1.fastq.gz
+Approx 30% complete for NA24631_2.fastq.gz
+Approx 90% complete for NA24631_1.fastq.gz
+Approx 35% complete for NA24631_2.fastq.gz
+Approx 95% complete for NA24631_1.fastq.gz
+Approx 40% complete for NA24631_2.fastq.gz
+Analysis complete for NA24631_1.fastq.gz
+Approx 45% complete for NA24631_2.fastq.gz
+Approx 50% complete for NA24631_2.fastq.gz
+Approx 55% complete for NA24631_2.fastq.gz
+Approx 60% complete for NA24631_2.fastq.gz
+Approx 65% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_2.fastq.gz
+Approx 75% complete for NA24631_2.fastq.gz
+Approx 80% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_2.fastq.gz
+Approx 90% complete for NA24631_2.fastq.gz
+Approx 95% complete for NA24631_2.fastq.gz
+Analysis complete for NA24631_2.fastq.gz
+[Fri Nov 20 18:46:33 2020]
+Finished job 1.
+1 of 2 steps (50%) done
+
+[Fri Nov 20 18:46:33 2020]
+localrule all:
+    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    jobid: 0
+
+[Fri Nov 20 18:46:33 2020]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /home/lkemp/RezBaz2020_snakemake_workshop/demo_workflow/workflow/.snakemake/log/2020-11-20T184627.461379.snakemake.log
+```
+
+It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
+
+```bash
+ls -lh ../results/fastqc/
+```
+
+Output
+
+```bash
+total 2.4M
+-rw-rw-r-- 1 lkemp lkemp 718K Nov 20 18:46 NA24631_1_fastqc.html
+-rw-rw-r-- 1 lkemp lkemp 475K Nov 20 18:46 NA24631_1_fastqc.zip
+-rw-rw-r-- 1 lkemp lkemp 726K Nov 20 18:46 NA24631_2_fastqc.html
+-rw-rw-r-- 1 lkemp lkemp 479K Nov 20 18:46 NA24631_2_fastqc.zip
+```
+
+What happens if we try a dryrun or run now?
 
 ```bash
 snakemake -n --cores 8
 snakemake --cores 8
 ```
+
+Output
+
+```bash
+Building DAG of jobs...
+Nothing to be done.
+```
+
+Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
 
 ## Run using the conda package management system
 
@@ -339,7 +443,7 @@ rule fastqc:
         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
     log:
-        "logs/fastqc/NA2431.log"
+        "logs/fastqc/NA24631.log"
     threads: 8
     conda:
         "envs/fastqc.yaml"
@@ -388,32 +492,10 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
-- StdOut: standard output
-- StdErr: standard error
-
-|  Syntax  | StdOut in terminal | StdErr in terminal | StdOut in file | StdErr in file |
-|----------|--------------------|--------------------|----------------|----------------|
-|    >     |  no                | yes                | yes            | no             |
-|   2>     |  yes               | no                 | no             | yes            |
-|   &>     |  no                | no                 | yes            | yes            |
-
-(Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
-
-Run again
+We now have a log file, lets have a look
 
 ```bash
-# Remove output of last run
-rm -r ../results/*
-
-# Run dryrun/run again
-snakemake -n --cores 8 --use-conda
-snakemake --cores 8 --use-conda
-```
-
-Worked great, all of our logs are now written to `logs/fastqc/NA24631.log`
-
-```bash
-head logs/fastqc/NA24631.log
+cat ./logs/fastqc/NA24631.log
 ```
 
 Output:
@@ -429,9 +511,55 @@ Approx 30% complete for NA24631_1.fastq.gz
 Approx 35% complete for NA24631_1.fastq.gz
 Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
+Approx 50% complete for NA24631_1.fastq.gz
+Started analysis of NA24631_2.fastq.gz
+Approx 55% complete for NA24631_1.fastq.gz
+Approx 60% complete for NA24631_1.fastq.gz
+Approx 65% complete for NA24631_1.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_1.fastq.gz
+Approx 75% complete for NA24631_1.fastq.gz
+Approx 15% complete for NA24631_2.fastq.gz
+Approx 20% complete for NA24631_2.fastq.gz
+Approx 80% complete for NA24631_1.fastq.gz
+Approx 25% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_1.fastq.gz
+Approx 90% complete for NA24631_1.fastq.gz
+Approx 30% complete for NA24631_2.fastq.gz
+Approx 35% complete for NA24631_2.fastq.gz
+Approx 95% complete for NA24631_1.fastq.gz
+Analysis complete for NA24631_1.fastq.gz
+Approx 40% complete for NA24631_2.fastq.gz
+Approx 45% complete for NA24631_2.fastq.gz
+Approx 50% complete for NA24631_2.fastq.gz
+Approx 55% complete for NA24631_2.fastq.gz
+Approx 60% complete for NA24631_2.fastq.gz
+Approx 65% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_2.fastq.gz
+Approx 75% complete for NA24631_2.fastq.gz
+Approx 80% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_2.fastq.gz
+Approx 90% complete for NA24631_2.fastq.gz
+Approx 95% complete for NA24631_2.fastq.gz
+Analysis complete for NA24631_2.fastq.gz
 ```
 
 ![logs](https://i.redd.it/d8qyw1j389e11.jpg)
+
+(Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
+
+Different ways to write log files:
+
+
+|  Syntax  | StdOut in terminal | StdErr in terminal | StdOut in file | StdErr in file |
+|----------|--------------------|--------------------|----------------|----------------|
+|   >      |  no                | yes                | yes            | no             |
+|   2>     |  yes               | no                 | no             | yes            |
+|   &>     |  no                | no                 | yes            | yes            |
+
+- StdOut: standard output
+- StdErr: standard error
 
 ## Scale our analyse to all of our samples
 
