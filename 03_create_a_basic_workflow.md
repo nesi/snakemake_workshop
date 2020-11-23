@@ -35,10 +35,6 @@ ls -lh ./data/
 
 Output:
 
-<body>
-<p>The Math test is on <mark>Friday</mark>.</p>
-</body>
-
 ```bash
 -rw-rw-r-- 1 lkemp lkemp 2.1M Nov 18 14:56 NA24631_1.fastq.gz
 -rw-rw-r-- 1 lkemp lkemp 2.3M Nov 18 14:56 NA24631_2.fastq.gz
@@ -346,7 +342,7 @@ dependencies:
 
 Update our rule to use it using the `conda:` directive
 
-```python
+```diff
 # Targets
 rule all:
     input:
@@ -364,8 +360,8 @@ rule fastqc:
         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
     threads: 8
-    conda:
-        "envs/fastqc.yaml"
++   conda:
++       "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
