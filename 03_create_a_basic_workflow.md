@@ -869,7 +869,7 @@ rule all:
 +       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
 +       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
 +       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-+       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
 -       "../results/multiqc_report.html"
 
 # Workflow
