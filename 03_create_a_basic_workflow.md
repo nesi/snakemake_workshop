@@ -402,7 +402,8 @@ rule fastqc:
     conda:
         "envs/fastqc.yaml"
     shell:
--       "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
+-       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
++       "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
 ```
 
 Run again
@@ -446,6 +447,7 @@ rule fastqc:
     conda:
         "envs/fastqc.yaml"
     shell:
+-       "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
@@ -487,6 +489,7 @@ rule fastqc:
     conda:
         "envs/fastqc.yaml"
     shell:
+-       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
@@ -752,6 +755,7 @@ rule fastqc:
   
 rule multiqc:
     input:
+-       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
 +       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
@@ -862,10 +866,10 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 # Targets
 rule all:
     input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
 -       "../results/multiqc_report.html"
 
 # Workflow
@@ -1030,7 +1034,7 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 rule all:
     input:
         "../results/multiqc_report.html",
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
++       expand("../results/mapped/{sample}.bam", sample = SAMPLES)
 
 # Workflow
 rule fastqc:

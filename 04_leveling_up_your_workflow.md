@@ -67,7 +67,8 @@ rule trim_galore:
         "./envs/trim_galore.yaml"
     threads: 8
     shell:
--       "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
+-       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
++       "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
 
 rule bwa:
     input:
@@ -223,7 +224,9 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 rm -r ../results/*
 
 # Run dryrun/run again
+- snakemake -n --cores 32 --use-conda
 + snakemake -n --cores 32 --use-conda --configfile ../config/config.yaml
+- snakemake --cores 32 --use-conda
 + snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 ```
 
@@ -413,34 +416,34 @@ Now our messages are printed to the screen as our workflow runs
 
 ```diff
 [Tue Nov 24 16:05:49 2020]
-+ Job 10: Trimming using these parameter: --paired --cores. Writing logs to logs/trim_galore/NA24695.log. Using 8 threads.
+Job 10: Trimming using these parameter: --paired --cores. Writing logs to logs/trim_galore/NA24695.log. Using 8 threads.
 
 [Tue Nov 24 16:05:49 2020]
-+ Job 3: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
+Job 3: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
 
 [Tue Nov 24 16:05:49 2020]
-+ Job 2: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
+Job 2: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
 
 [Tue Nov 24 16:05:49 2020]
-+ Job 4: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
+Job 4: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
 
 [Tue Nov 24 16:05:59 2020]
-+ Job 6: Trimming using these parameter: --paired --cores. Writing logs to logs/trim_galore/NA24694.log. Using 8 threads.
+Job 6: Trimming using these parameter: --paired --cores. Writing logs to logs/trim_galore/NA24694.log. Using 8 threads.
 
 [Tue Nov 24 16:05:59 2020]
-+ Job 8: Trimming using these parameter: --paired --cores. Writing logs to logs/trim_galore/NA24631.log. Using 8 threads.
+Job 8: Trimming using these parameter: --paired --cores. Writing logs to logs/trim_galore/NA24631.log. Using 8 threads.
 
 [Tue Nov 24 16:05:59 2020]
-+ Job 9: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
+Job 9: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
 
 [Tue Nov 24 16:06:00 2020]
-+ Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
+Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
 
 [Tue Nov 24 16:06:05 2020]
-+ Job 7: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
+Job 7: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
 
 [Tue Nov 24 16:06:06 2020]
-+ Job 5: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
+Job 5: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
 ```
 
 ## Create temporary files
@@ -471,7 +474,7 @@ total 12M
 -rw-rw-r-- 1 lkemp lkemp 1.8M Nov 24 16:05 NA24695_2_val_2.fq.gz
 ```
 
-Let's mark all the trimmed fastq files as `temp` in our Snakefile
+Let's mark all the trimmed fastq files as temporary in our Snakefile
 
 ```diff
 # Define our configuration file
@@ -608,7 +611,7 @@ Under the `Configuration` tab, all of our user configuration is explicitly outli
 
 ![snakemake_report_4](./demo_workflow_diagrams/snakemake_report_4.png)
 
-These reports are highly configurable, have a look at an example report [here](https://koesterlab.github.io/resources/report.html)
+These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
 
 *See more information on creating Snakemake reports [in the Snakemake documentation](https://snakemake.readthedocs.io/en/stable/snakefiles/reporting.html)*
 
