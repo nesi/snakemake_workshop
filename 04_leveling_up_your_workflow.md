@@ -625,7 +625,7 @@ These reports are highly configurable, have a look at an example of what can be 
 
 # Summary commands
 
-Use the parameter directive to keep the parameters and flags of your programs separate from your shell command, for example:
+Use the parameter directive (`params`) to keep the parameters and flags of your programs separate from your shell command, for example:
 
 ```bash
 params:
@@ -638,30 +638,26 @@ Run your snakemake workflow (using conda to install your software AND with a con
 snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 ```
 
-Alternatively, define your config file in the Snakefile and run your snakemake workflow (using conda to install your software) with:
+Alternatively, define your config file in the Snakefile:
 
 ```bash
 configfile: "../config/config.yaml"
 ```
 
-```bash
-snakemake --cores 32 --use-conda
-```
-
-Use the message directive to provide information to the user on what is happening real time, for example:
+Use the `message` directive to provide information to the user on what is happening real time, for example:
 
 ```bash
 message:
     "Undertaking quality control checks {input}"
 ```
 
-Mark temporary files to remove (once they are no longer needed by the workflow) with:
+Mark temporary files to remove (once they are no longer needed by the workflow) with `temp()`, for example:
 
 ```bash
 temp(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"])
 ```
 
-Create a basic interactive Snakemake report with:
+Create a basic interactive Snakemake report after running your workflow with:
 
 ```bash
 snakemake --report ../results/report.html
