@@ -15,6 +15,7 @@
   - [Throw it more cores](#throw-it-more-cores)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
+- [Our final snakemake workflow!](#our-final-snakemake-workflow)
 
 ## Aim
 
@@ -49,7 +50,6 @@ Output:
 Workflow file structure:
 
 ```bash
-
 demo_workflow/
       |_______results/
       |_______workflow/
@@ -103,7 +103,7 @@ Output:
 
 Let's wrap this up in a Snakemake workflow! Start with the basic structure in the Snakefile:
 
-```python
+```diff
 # Target rules
 rule all:
     input:
@@ -126,26 +126,26 @@ rule my_rule:
 - Write the shell command and pass these variables to the shell command
 - Set the final output files (`rule all:`)
 
-```python
+```diff
 # Targets
 rule all:
     input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
++         "../results/fastqc/NA24631_1_fastqc.html",
++         "../results/fastqc/NA24631_2_fastqc.html",
++         "../results/fastqc/NA24631_1_fastqc.zip",
++         "../results/fastqc/NA24631_2_fastqc.zip"
 
 # Workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    threads: 8
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
++ rule fastqc:
+      input:
++         R1 = "../../data/NA24631_1.fastq.gz",
++         R2 = "../../data/NA24631_2.fastq.gz"
+      output:
++         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
++         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
++     threads: 8
+      shell:
++         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
 Test the workflow
@@ -368,20 +368,20 @@ rule fastqc:
 
 Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/latest/) to get our software by using the `--use-conda` flag
 
-```bash
+```diff
 # Remove output of last run
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
-snakemake --cores 8 --use-conda
++ snakemake -n --cores 8 --use-conda
++ snakemake --cores 8 --use-conda
 ```
 
 ## Capture our logs
 
 What happens if we have an error in one of our rules? Let's create an error (remove the `-o` flag):
 
-```python
+```diff
 # Targets
 rule all:
     input:
@@ -398,13 +398,11 @@ rule fastqc:
     output:
         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    log:
-        "logs/fastqc/NA2431.tsv"
     threads: 8
     conda:
         "envs/fastqc.yaml"
     shell:
-        "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
+-       "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
 ```
 
 Run again
@@ -425,7 +423,7 @@ The logs are currently just printed to the screen and can be hard to find in a l
   - putting the logs in a directory labelled by the rule
   - labelling the log files with the sample name
 
-```python
+```diff
 # Targets
 rule all:
     input:
@@ -442,13 +440,13 @@ rule fastqc:
     output:
         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    log:
-        "logs/fastqc/NA24631.log"
++   log:
++       "logs/fastqc/NA24631.log"
     threads: 8
     conda:
         "envs/fastqc.yaml"
     shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
++       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
 Run again
@@ -466,7 +464,7 @@ It didn't write to our log file!
 
 We haven't linked the `log:` directive to our shell command!
 
-```bash
+```diff
 # Targets
 rule all:
     input:
@@ -489,7 +487,7 @@ rule fastqc:
     conda:
         "envs/fastqc.yaml"
     shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
++       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
 We now have a log file, lets have a look
@@ -572,28 +570,28 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 - Use the [expand function](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#the-expand-function) (`expand()`) function to tell snakemake that `{sample}` is what we defined in our global wildcard `SAMPLES,`
 - Snakemake can figure out what `{sample}` is in our rule since it's defined in the targets in `rule all:`
 
-```python
+```diff
 # Define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
++ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
 # Targets
 rule all:
     input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
++       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
++       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
 
 # Workflow
 rule fastqc:
     input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
++       R1 = "../../data/{sample}_1.fastq.gz",
++       R2 = "../../data/{sample}_2.fastq.gz"
     output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
++       zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     log:
-        "logs/fastqc/{sample}.log"
++       "logs/fastqc/{sample}.log"
     threads: 8
     conda:
         "envs/fastqc.yaml"
@@ -659,7 +657,7 @@ dependencies:
 - Connect the outputs of fastqc to the inputs of multiqc
 - Add a new final target for `rule all:`
 
-```python
+```diff
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
@@ -670,7 +668,7 @@ rule all:
         expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
         expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
         expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-        "../results/multiqc_report.html"
++       "../results/multiqc_report.html"
 
 # Workflow
 rule fastqc:
@@ -688,17 +686,17 @@ rule fastqc:
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
-rule multiqc:
-    input:
-        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    output:
-        "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
-    log:
-        "logs/multiqc/multiqc.log"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
++ rule multiqc:
++     input:
++         ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++     output:
++         "../results/multiqc_report.html"
++     conda:
++         "envs/multiqc.yaml"
++     log:
++         "logs/multiqc/multiqc.log"
++     shell:
++         "multiqc {input} -o ../results/ &> {log}"
 ```
 
 Run workflow again
@@ -723,7 +721,7 @@ Wildcards in input files cannot be determined from output files:
 
 Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
 
-```python
+```diff
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
@@ -754,7 +752,7 @@ rule fastqc:
   
 rule multiqc:
     input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
++       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
     conda:
@@ -788,14 +786,18 @@ snakemake --cores 8 --use-conda
 
 What happens if we only have the final target file (`../results/multiqc_report.html`) in `rule all:`
 
-```python
+```diff
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
 # Targets
 rule all:
     input:
-        "../results/multiqc_report.html"
+-       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+       "../results/multiqc_report.html"
 
 # Workflow
 rule fastqc:
@@ -853,7 +855,7 @@ Although the workflow ran the same, the DAG actually changed slightly, now there
 
 For example if only our fastqc outputs are defined as the target in `rule: all`
 
-```python
+```diff
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
@@ -863,7 +865,8 @@ rule all:
         expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
         expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
         expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+-       "../results/multiqc_report.html"
 
 # Workflow
 rule fastqc:
@@ -934,14 +937,18 @@ Snakemake is lazy.
 
 We also don't need to specify *ALL* the files output by a target, just at least one output file to convince Snakemake to not be lazy and run the rule. For example:
 
-```python
+```diff
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
 # Targets
 rule all:
     input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES)
+        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+-       "../results/multiqc_report.html"
 
 # Workflow
 rule fastqc:
@@ -1015,7 +1022,7 @@ We still need to add:
 
 input data :arrow_right: [trim_galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) :arrow_right: [bwa](http://bio-bwa.sourceforge.net/)
 
-```python
+```diff
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
@@ -1053,32 +1060,32 @@ rule multiqc:
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    log:
-        "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
-    threads: 8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
++ rule trim_galore:
++     input:
++         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
++     output:
++         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
++     log:
++         "logs/trim_galore/{sample}.log"
++     conda:
++         "./envs/trim_galore.yaml"
++     threads: 8
++     shell:
++         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 
-rule bwa:
-    input:
-        fastq = ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"],
-        refgenome = "/store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta"
-    output: 
-        "../results/mapped/{sample}.bam"
-    log:
-        "logs/bwa_mem/{sample}.log"
-    conda:
-        "./envs/bwa.yaml"
-    threads: 8
-    shell:
-        "bwa mem -t {threads} {input.refgenome} {input.fastq} > {output} 2> {log}"
++ rule bwa:
++     input:
++         fastq = ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"],
++         refgenome = "/store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta"
++     output: 
++         "../results/mapped/{sample}.bam"
++     log:
++         "logs/bwa_mem/{sample}.log"
++     conda:
++         "./envs/bwa.yaml"
++     threads: 8
++     shell:
++         "bwa mem -t {threads} {input.refgenome} {input.fastq} > {output} 2> {log}"
 ```
 
 Conda env files
@@ -1218,13 +1225,13 @@ Run your snakemake workflow with:
 snakemake --cores 8
 ```
 
-Run a dryrun of your snakemake workflow using conda to install your software with:
+Run a dryrun of your snakemake workflow (using conda to install your software) with:
 
 ```bash
 snakemake -n --cores 8 --use-conda
 ```
 
-Run your snakemake workflow using conda to install your software with:
+Run your snakemake workflow (using conda to install your software) with:
 
 ```bash
 snakemake --cores 8 --use-conda
@@ -1247,3 +1254,7 @@ Increase the number of samples that can be analysed at one time in your workflow
 ```bash
 snakemake --cores 32 --use-conda
 ```
+
+# Our final snakemake workflow!
+
+See [final_basic_demo_workflow](./final_basic_demo_workflow) for the final Snakemake workflow we've created up to this point
