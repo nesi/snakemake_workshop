@@ -1,8 +1,8 @@
-# Leveling up your workflow!
+# 04 - Leveling up your workflow!
 
 # Table of contents
 
-- [Leveling up your workflow!](#leveling-up-your-workflow)
+- [04 - Leveling up your workflow!](#04---leveling-up-your-workflow)
 - [Table of contents](#table-of-contents)
   - [Pull out parameters](#pull-out-parameters)
   - [Pull out user configurable options](#pull-out-user-configurable-options)
@@ -666,3 +666,5 @@ snakemake --report ../results/report.html
 # Our final snakemake workflow!
 
 See [leveled_up_demo_workflow](../leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
+
+<p align="center"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/05_words_of_wisdom.md">Next page: 05 - Words of wisdom</a>

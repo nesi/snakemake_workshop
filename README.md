@@ -19,7 +19,6 @@ In this workshop, we will work through an introduction to [Snakemake](https://sn
 - [03 - Create a basic workflow](./workshop_material/03_create_a_basic_workflow.md)
 - [04 - Leveling up your workflow](./workshop_material/04_leveling_up_your_workflow.md)
 - [05 - Words of wisdom](./workshop_material/05_words_of_wisdom.md)
-- [06 - We want more](./workshop_material/06_we_want_more.md)
 
 **The workflows we will create:**
 

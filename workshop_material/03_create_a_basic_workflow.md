@@ -1,8 +1,8 @@
-# Create a basic workflow
+# 03 - Create a basic workflow
 
 # Table of contents
 
-- [Create a basic workflow](#create-a-basic-workflow)
+- [03 - Create a basic workflow](#03---create-a-basic-workflow)
 - [Table of contents](#table-of-contents)
   - [Aim](#aim)
   - [File structure](#file-structure)
@@ -1159,3 +1159,5 @@ snakemake --cores 32 --use-conda
 # Our final snakemake workflow!
 
 See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workflow we've created up to this point
+
+<p align="center"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/04_leveling_up_your_workflow.md">Next page: 04 - Leveling up your workflow</a>

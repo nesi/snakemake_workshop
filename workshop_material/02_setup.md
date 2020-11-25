@@ -1,8 +1,8 @@
-# Setup
+# 02 - Setup
 
 # Table of contents
 
-- [Setup](#setup)
+- [02 - Setup](#02---setup)
 - [Table of contents](#table-of-contents)
   - [Install Miniconda](#install-miniconda)
     - [Check your OS](#check-your-os)
@@ -72,3 +72,5 @@ cd RezBaz2020_snakemake_workshop
 ```
 
 See the [Git Guides](https://github.com/git-guides/git-clone) for information on cloning a repo
+
+<p align="center"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/03_create_a_basic_workflow.md">Next page: 03 - Create a basic workflow</a>

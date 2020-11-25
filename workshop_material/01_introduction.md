@@ -1,8 +1,8 @@
-# Introduction
+# 01 - Introduction
 
 # Table of contents
 
-- [Introduction](#introduction)
+- [01 - Introduction](#01---introduction)
 - [Table of contents](#table-of-contents)
   - [My background](#my-background)
   - [Benefits of workflow languages](#benefits-of-workflow-languages)
