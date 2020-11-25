@@ -527,7 +527,7 @@ Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 ```
 
-<center> We have logs. Tidy logs. </center>
+<p align="center">We have logs. Tidy logs.</p>
 
 ![logs](https://miro.medium.com/max/2560/1*ohWUB5snJRaMe-vJ8HaoiA.png)
 
