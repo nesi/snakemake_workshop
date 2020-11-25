@@ -667,4 +667,5 @@ snakemake --report ../results/report.html
 
 See [leveled_up_demo_workflow](../leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
 
-<p align="center"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/05_words_of_wisdom.md">Next page: 05 - Words of wisdom</a>
+<p align="left"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/03_create_a_basic_workflow.md">Previous page: 03 - Create a basic workflow</a>
+<p align="right"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/05_words_of_wisdom.md">Next page: 05 - Words of wisdom</a>

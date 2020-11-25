@@ -20,3 +20,5 @@
 - Here is an example of a fully established pipeline that extends on the workflow we created in this workshop: https://github.com/ESR-NZ/human_genomics_pipeline
 
 - See https://github.com/snakemake-workflows for a bunch of genetics related snakemake workflows. Although they are genetics focussed, they provide a good place to see what can be done with a Snakemake workflow
+
+<p align="left"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/04_leveling_up_your_workflow.md">Previous page: 04 - Leveling up your workflow!</a>
