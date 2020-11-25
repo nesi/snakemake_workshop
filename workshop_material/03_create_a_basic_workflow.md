@@ -1261,4 +1261,4 @@ snakemake --cores 32 --use-conda
 
 # Our final snakemake workflow!
 
-See [basic_demo_workflow](./basic_demo_workflow) for the final Snakemake workflow we've created up to this point
+See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workflow we've created up to this point

@@ -665,4 +665,4 @@ snakemake --report ../results/report.html
 
 # Our final snakemake workflow!
 
-See [leveled_up_demo_workflow](./leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
+See [leveled_up_demo_workflow](../leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
