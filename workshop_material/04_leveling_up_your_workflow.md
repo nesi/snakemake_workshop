@@ -599,17 +599,17 @@ snakemake --report ../results/report.html
 
 This gives us an interactive version of our diagram of jobs (DAG). When you click on a node in the DAG, a full outline of the input and output files are detailed, the exact software used and the exact shell command that was run.
 
-![snakemake_report_1](./demo_workflow_diagrams/snakemake_report_1.png)
+![snakemake_report_1](./images/snakemake_report_1.png)
 
-![snakemake_report_2](./demo_workflow_diagrams/snakemake_report_2.png)
+![snakemake_report_2](./images/snakemake_report_2.png)
 
 You also are provided with runtime information under the `Statistics` tab outlining how long each rule/sample ran for, and the date/time each file was created.
 
-![snakemake_report_3](./demo_workflow_diagrams/snakemake_report_3.png)
+![snakemake_report_3](./images/snakemake_report_3.png)
 
 Under the `Configuration` tab, all of our user configuration is explicitly outlined
 
-![snakemake_report_4](./demo_workflow_diagrams/snakemake_report_4.png)
+![snakemake_report_4](./images/snakemake_report_4.png)
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
 

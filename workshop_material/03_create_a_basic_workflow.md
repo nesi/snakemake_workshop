@@ -199,7 +199,7 @@ We can also visualise our workflow by creating a diagram of jobs (DAG)
 snakemake --dag | dot -Tpng > dag_1.png
 ```
 
-![DAG_1](./demo_workflow_diagrams/dag_1.png)
+![DAG_1](./images/dag_1.png)
 
 *Note. this diagram can be output to several other image formats such as svg or pdf*
 
@@ -579,7 +579,7 @@ snakemake --dag | dot -Tpng > dag_2.png
 
 Now we have three samples running though our workflow
 
-![DAG_2](./demo_workflow_diagrams/dag_2.png)
+![DAG_2](./images/dag_2.png)
 
 Run workflow again
 
@@ -744,7 +744,7 @@ snakemake --dag | dot -Tpng > dag_3.png
 
 Now we have two rules in our workflow (fastqc and multiqc), we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
 
-![DAG_3](./demo_workflow_diagrams/dag_3.png)
+![DAG_3](./images/dag_3.png)
 
 Run again
 
@@ -822,7 +822,7 @@ snakemake --dag | dot -Tpng > dag_4.png
 
 Although the workflow ran the same, the DAG actually changed slightly, now there is only one file target and only the output of multiqc goes to `rule all`
 
-![DAG_4](./demo_workflow_diagrams/dag_4.png)
+![DAG_4](./images/dag_4.png)
 
 **Beware: Snakemake will also NOT run rules that is doesn't need to run in order to get the target files defined in rule: all**
 
@@ -902,7 +902,7 @@ snakemake --dag | dot -Tpng > dag_5.png
 
 Now we are back to only running fastqc in our workflow, despite having our second rule (multiqc) in our workflow
 
-![DAG_5](./demo_workflow_diagrams/dag_5.png)
+![DAG_5](./images/dag_5.png)
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
 
@@ -1023,7 +1023,7 @@ snakemake --dag | dot -Tpng > dag_6.png
 
 Fantastic, we are starting to build a workflow!
 
-![DAG_6](./demo_workflow_diagrams/dag_6.png)
+![DAG_6](./images/dag_6.png)
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
@@ -1031,7 +1031,7 @@ However, when analysing many samples, our DAG can become messy and complicated. 
 snakemake --rulegraph | dot -Tpng > rulegraph_1.png
 ```
 
-![rulegraph_1](./demo_workflow_diagrams/rulegraph_1.png)
+![rulegraph_1](./images/rulegraph_1.png)
 
 An aside: another option that will show all your input and output files at each step:
 
@@ -1039,7 +1039,7 @@ An aside: another option that will show all your input and output files at each 
 snakemake --filegraph | dot -Tpng > filegraph.png
 ```
 
-![filegraph](./demo_workflow_diagrams/filegraph.png)
+![filegraph](./images/filegraph.png)
 
 Run the workflow again
 
