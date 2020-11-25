@@ -23,8 +23,8 @@
 
 *Let's create a basic workflow that will do some of the typical quality control checks, pre-processing and mapping to a reference genome that is undertaken on paired-end sequence data*
 
-input data :arrow_right: [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) :arrow_right: [multiqc](https://multiqc.info/)
-input data :arrow_right: [trim_galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) :arrow_right: [bwa](http://bio-bwa.sourceforge.net/)
+input data :arrow_right: [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) :arrow_right: [multiqc](https://multiqc.info/) <br />
+input data :arrow_right: [trim_galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) :arrow_right: [bwa](http://bio-bwa.sourceforge.net/) <br />
 
 ---
 
@@ -548,8 +548,6 @@ Analysis complete for NA24631_2.fastq.gz
 
 ![logs](https://i.redd.it/d8qyw1j389e11.jpg)
 
-(Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
-
 Different ways to write log files:
 
 
@@ -561,6 +559,8 @@ Different ways to write log files:
 
 - StdOut: standard output
 - StdErr: standard error
+
+(Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
 
 ## Scale our analyse to all of our samples
 
@@ -1261,4 +1261,4 @@ snakemake --cores 32 --use-conda
 
 # Our final snakemake workflow!
 
-See [final_basic_demo_workflow](./final_basic_demo_workflow) for the final Snakemake workflow we've created up to this point
+See [basic_demo_workflow](./basic_demo_workflow) for the final Snakemake workflow we've created up to this point
