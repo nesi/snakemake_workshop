@@ -5,31 +5,16 @@
 - [Introduction](#introduction)
 - [Table of contents](#table-of-contents)
   - [My background](#my-background)
-  - [Outcomes](#outcomes)
   - [Benefits of workflow languages](#benefits-of-workflow-languages)
   - [Benefits of Snakemake](#benefits-of-snakemake)
   - [Other workflow languages](#other-workflow-languages)
+  - [This workshop](#this-workshop)
 
 ## My background
 
 - Bioinformatician at the Institute of Environmental Science and Research (ESR)
 - Analyse human genomic data
 - MSc - population genetics
-
-## Outcomes
-
-By the end of this workshop, you should be able to:
-
-- Use a systematic approach to build your own workflow
-- Understand how to link multiple rules in a snakemake workflow
-- Be able to use software using conda environments or containers
-- Capture all your log files
-- Identify and troubleshoot some common error messages
-- Use wildcards to process all your data/samples
-- Multithread software to speed it up
-- Visualize your workflow by creating a diagram of jobs (DAG), rulegraphs or filegraphs
-- Search for existing workflows you can use or adapt
-- Store your workflow on github
 
 ## Benefits of workflow languages
 
@@ -53,3 +38,14 @@ Choose your favourite flavour of workflow language!
 - [Nextflow](https://www.nextflow.io/)
 - [Workflow Description Language (WDL)](https://openwdl.org/)
 - [Guix Workflow Language](https://workflows.guix.info/)
+
+## This workshop
+
+Throughout this workshop, I'll be indicating the code to remove and the code to insert (relative to the previous step) with the following:
+
+```diff
+- Remove this line of code
++ Add this line of code
+```
+
+*However, the actual `+` and `-` symbols should not be included in your own code*

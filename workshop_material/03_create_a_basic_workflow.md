@@ -59,7 +59,7 @@ demo_workflow/
 
 We will work in the `workflow` directory send all of our file outputs/results to the `results/` directory
 
-*See more information on the workflow structure that the Snakemake developers recommend [here](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#distribution-and-reproducibility)*
+*Read up on the best practice workflow structure [here](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#distribution-and-reproducibility)*
 
 Create this file structure and our main Snakefile with:
 
@@ -86,13 +86,13 @@ mkdir test
 fastqc ./data/NA24631_1.fastq.gz ./data/NA24631_2.fastq.gz -o ./test -t 8
 ```
 
-What are the output files of fastqc?
+What are the output files of fastqc? Find out with:
 
 ```bash
 ls -lh ./test
 ```
 
-Output:
+My output:
 
 ```bash
 -rw-rw-r-- 1 lkemp lkemp 250K Nov 18 15:53 NA24631_1_fastqc.html
@@ -148,13 +148,15 @@ rule all:
 +         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
-Test the workflow
+Let's test the workflow! First we need to be in the `workflow` directory where the Snakefile is
+
+```bash 
+cd demo_workflow/workflow/
+```
+
+Then let's carry out a dryrun of the workflow, where no actual analysis is undertaken (fastqc is *not* run) but the overall Snakemake structure is run/validated. This is a good way to check for errors in your Snakemake workflow before actually running your workflow.
 
 ```bash
-# Move to the workflow directory where the Snakefile is
-cd demo_workflow/workflow/
-
-# Dryrun
 snakemake -n --cores 8
 ```
 
@@ -194,7 +196,6 @@ The output confirms that the workflow will run one sample (`count 1`) through `j
 We can also visualise our workflow by creating a diagram of jobs (DAG)
 
 ```bash
-# Visualise workflow
 snakemake --dag | dot -Tpng > dag_1.png
 ```
 
@@ -205,7 +206,6 @@ snakemake --dag | dot -Tpng > dag_1.png
 Let's do a full run of our workflow (by removing the `-n` flag)
 
 ```bash
-# Fullrun
 snakemake --cores 8
 ```
 
@@ -302,7 +302,7 @@ total 2.4M
 -rw-rw-r-- 1 lkemp lkemp 479K Nov 20 18:46 NA24631_2_fastqc.zip
 ```
 
-What happens if we try a dryrun or run now?
+What happens if we try a dryrun or full run now?
 
 ```bash
 snakemake -n --cores 8
@@ -379,50 +379,15 @@ rm -r ../results/*
 
 ## Capture our logs
 
-What happens if we have an error in one of our rules? Let's create an error (remove the `-o` flag):
+So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting there watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break. 
 
-```diff
-# Targets
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
+We can get the logs for each rule to be written to a log file via the `log:` directive:
 
-# Workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    threads: 8
-    conda:
-        "envs/fastqc.yaml"
-    shell:
--       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-+       "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
-```
-
-Run again
-
-```bash
-# Remove output of last run
-rm -r ../results/*
-
-# Run dryrun/run again
-snakemake -n --cores 8 --use-conda
-snakemake --cores 8 --use-conda
-```
-
-The logs are currently just printed to the screen and can be hard to find in a large automated workflow
-
-- We can get the logs for *each sample* and *each rule* to be written to a log file via the `logs:` directive
 - It's a good idea to organise the logs by:
-  - putting the logs in a directory labelled by the rule
-  - labelling the log files with the sample name
+  - Putting the logs in a directory labelled after the rule/software 
+  - Labelling the log files with the sample name
+
+- Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive
 
 ```diff
 # Targets
@@ -447,9 +412,88 @@ rule fastqc:
     conda:
         "envs/fastqc.yaml"
     shell:
--       "fastqc {input.R1} {input.R2} ../results/fastqc/ -t {threads}"
-+       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+-       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
++       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
+
+A note on standard outputs and standard errors
+
+- For linux, these are standard streams in which information is returned by a computer process - in our case the logs that we see returned to us on our screen when we run fastqc
+- There are two main streams:
+  - standard output (the log messages)
+  - standard error (the error messages)
+
+```bash
+# Standard error
+Started analysis of NA24631_1.fastq.gz
+Approx 5% complete for NA24631_1.fastq.gz
+Approx 10% complete for NA24631_1.fastq.gz
+Approx 15% complete for NA24631_1.fastq.gz
+Approx 20% complete for NA24631_1.fastq.gz
+Approx 25% complete for NA24631_1.fastq.gz
+Approx 30% complete for NA24631_1.fastq.gz
+Approx 35% complete for NA24631_1.fastq.gz
+Approx 40% complete for NA24631_1.fastq.gz
+Approx 45% complete for NA24631_1.fastq.gz
+Approx 50% complete for NA24631_1.fastq.gz
+Started analysis of NA24631_2.fastq.gz
+Approx 55% complete for NA24631_1.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
+Approx 60% complete for NA24631_1.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
+Approx 65% complete for NA24631_1.fastq.gz
+Approx 15% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_1.fastq.gz
+Approx 20% complete for NA24631_2.fastq.gz
+Approx 75% complete for NA24631_1.fastq.gz
+Approx 25% complete for NA24631_2.fastq.gz
+Approx 80% complete for NA24631_1.fastq.gz
+Approx 30% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_1.fastq.gz
+Approx 35% complete for NA24631_2.fastq.gz
+Approx 90% complete for NA24631_1.fastq.gz
+Approx 40% complete for NA24631_2.fastq.gz
+Approx 95% complete for NA24631_1.fastq.gz
+Analysis complete for NA24631_1.fastq.gz
+Approx 45% complete for NA24631_2.fastq.gz
+Approx 50% complete for NA24631_2.fastq.gz
+Approx 55% complete for NA24631_2.fastq.gz
+Approx 60% complete for NA24631_2.fastq.gz
+Approx 65% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_2.fastq.gz
+Approx 75% complete for NA24631_2.fastq.gz
+Approx 80% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_2.fastq.gz
+Approx 90% complete for NA24631_2.fastq.gz
+Approx 95% complete for NA24631_2.fastq.gz
+Analysis complete for NA24631_2.fastq.gz
+```
+
+```bash
+# Standard error
+Failed to process ../results/fastqc
+java.io.FileNotFoundException: ../results/fastqc (Is a directory)
+        at java.io.FileInputStream.open0(Native Method)
+        at java.io.FileInputStream.open(FileInputStream.java:195)
+        at java.io.FileInputStream.<init>(FileInputStream.java:138)
+        at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:73)
+        at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
+        at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
+        at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:152)
+        at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:121)
+        at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
+```
+
+Different ways to write log files:
+
+
+|  Syntax  | standard output in terminal | standard error in terminal | standard output in file | standard error in file |
+|----------|-----------------------------|----------------------------|-------------------------|------------------------|
+|   `>`    |  :x:                        | :heavy_check_mark:         | :heavy_check_mark:      | :x:                    |
+|   `2>`   |  :heavy_check_mark:         | :x:                        | :x:                     | :heavy_check_mark:     |
+|   `&>`   |  :x:                        | :x:                        | :heavy_check_mark:      | :heavy_check_mark:     |
+
+(Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
 
 Run again
 
@@ -462,41 +506,10 @@ snakemake -n --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
-It didn't write to our log file!
-
-We haven't linked the `log:` directive to our shell command!
-
-```diff
-# Targets
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
-
-# Workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    log:
-        "logs/fastqc/NA24631.log"
-    threads: 8
-    conda:
-        "envs/fastqc.yaml"
-    shell:
--       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-+       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-```
-
 We now have a log file, lets have a look
 
 ```bash
-cat ./logs/fastqc/NA24631.log
+head ./logs/fastqc/NA24631.log
 ```
 
 Output:
@@ -512,55 +525,11 @@ Approx 30% complete for NA24631_1.fastq.gz
 Approx 35% complete for NA24631_1.fastq.gz
 Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
-Approx 50% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
-Approx 55% complete for NA24631_1.fastq.gz
-Approx 60% complete for NA24631_1.fastq.gz
-Approx 65% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_1.fastq.gz
-Approx 75% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_2.fastq.gz
-Approx 20% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_1.fastq.gz
-Approx 90% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_2.fastq.gz
-Approx 35% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_1.fastq.gz
-Analysis complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_2.fastq.gz
-Approx 45% complete for NA24631_2.fastq.gz
-Approx 50% complete for NA24631_2.fastq.gz
-Approx 55% complete for NA24631_2.fastq.gz
-Approx 60% complete for NA24631_2.fastq.gz
-Approx 65% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_2.fastq.gz
-Approx 75% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_2.fastq.gz
-Approx 90% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_2.fastq.gz
 ```
 
-![logs](https://i.redd.it/d8qyw1j389e11.jpg)
+<center> We have logs. Tidy logs. </center>
 
-Different ways to write log files:
-
-
-|  Syntax  | StdOut in terminal | StdErr in terminal | StdOut in file | StdErr in file |
-|----------|--------------------|--------------------|----------------|----------------|
-|   >      |  no                | yes                | yes            | no             |
-|   2>     |  yes               | no                 | no             | yes            |
-|   &>     |  no                | no                 | yes            | yes            |
-
-- StdOut: standard output
-- StdErr: standard error
-
-(Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
+![logs](https://miro.medium.com/max/2560/1*ohWUB5snJRaMe-vJ8HaoiA.png)
 
 ## Scale our analyse to all of our samples
 
@@ -1183,17 +1152,18 @@ Now more steps can be run at one time - parallel computing here we come!
 - First do a dryrun with the `-n` flag to check the Snakemake structure is set up correctly
 - Work iteratively (get each rule working before moving onto the next)
 - File paths are relative to the Snakefile
-- Visualise your workflow by creating a DAG (diagram of jobs) or a rulegraph
+- Run your workflow from where your Snakefile is
+- Visualise your workflow by creating a DAG (diagram of jobs), a rulegraph or filegraph
 - Use the `--use-conda` flag when using conda to install software in your workflow
 - Snakemake is lazy...
   - It will only do something if it hasn't already done it
   - It will pick up where it left off, rather than run the whole workflow again
   - It *won't* do any steps that aren't necessary to get to the target files defined in `rule: all`
 - `input:` `output:` `log:` and `threads:` directives need to be called in the `shell` directive
-- Use `&> {log}` in the shell command to capture your log files
-- Organise your log files with rulenames and sample name
+- Use `&> {log}` (or something similar) in the shell command to capture your log files
+- Organise your log files by naming them after the rule that was run and sample that was analysed
 - You don't need to specify all the target files in `rule all:`, the final file in a given chain of tasks will suffice
-- We can massively speed up our analyses by running them in parallel
+- We can massively speed up our analyses by running your sampled in parallel
 
 ---
 

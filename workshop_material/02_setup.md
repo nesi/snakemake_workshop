@@ -4,16 +4,21 @@
 
 - [Setup](#setup)
 - [Table of contents](#table-of-contents)
-  - [Check your OS](#check-your-os)
   - [Install Miniconda](#install-miniconda)
-  - [Create an conda environment to work in](#create-an-conda-environment-to-work-in)
+    - [Check your OS](#check-your-os)
+    - [Installing miniconda](#installing-miniconda)
+  - [Create a conda environment](#create-a-conda-environment)
   - [Clone this repo](#clone-this-repo)
 
-## Check your OS
+## Install Miniconda
+
+For this workshop, will analyse our data using various software. However, the only software we will need to manually install is [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+
+### Check your OS
 
 If you already use Linux or MacOS X, great! Ignore this paragraph!. If you use Windows, setup a Linux virtual machine (VM) with Vagrant (see instructions on how to do this [here](https://snakemake.readthedocs.io/en/stable/tutorial/setup.html#setup-a-linux-vm-with-vagrant-under-windows)).
 
-## Install Miniconda
+### Installing miniconda
 
 Information on how to install Miniconda can be found [on their website](https://docs.conda.io/en/latest/miniconda.html). Snakemake also provides information on installing Miniconda in [their documentation](https://snakemake.readthedocs.io/en/stable/tutorial/setup.html#step-1-installing-miniconda-3)
 
@@ -25,12 +30,11 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-## Create an conda environment to work in
+## Create a conda environment
 
-With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which to install all the necessary software to run our workflow, supporting the portability and reproducibility of your workflow
+With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
 
-
-Create a conda environment (called `demo_workflow_env`) that has python and Snakemake installed (and all it dependant software)
+Create a conda environment (called `demo_workflow_env`) that has python and Snakemake installed (and all it's dependant software)
 
 ```bash
 conda create -n demo_workflow_env python=3.7.6 snakemake=5.28.0
@@ -58,7 +62,13 @@ Now we can see which conda environment we are in on the command line
 
 ## Clone this repo
 
+To clone this repo (and use the example data I have provided), you will require you have git installed. See [this guide](https://www.atlassian.com/git/tutorials/install-git) for help with an installation of git.
+
+Once git is installed, clone this repo with the following:
+
 ```bash
 git clone https://github.com/leahkemp/RezBaz2020_snakemake_workshop.git
 cd RezBaz2020_snakemake_workshop
 ```
+
+See the [Git Guides](https://github.com/git-guides/git-clone) for information on cloning a repo
