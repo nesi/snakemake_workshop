@@ -50,4 +50,4 @@ Throughout this workshop, I'll be indicating the code to remove and the code to 
 
 *However, the actual `+` and `-` symbols should not be included in your own code*
 
-<input type="button" name="b2" value="next page" onclick="location.href='./02_setup.md'">
+<p align="center"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/02_setup.md">Next page: 02 - Setup</a>
