@@ -9,7 +9,7 @@
   - [First rule](#first-rule)
   - [Run using the conda package management system](#run-using-the-conda-package-management-system)
   - [Capture our logs](#capture-our-logs)
-  - [Scale our analyse to all of our samples](#scale-our-analyse-to-all-of-our-samples)
+  - [Scale up to analyse all of our samples](#scale-up-to-analyse-all-of-our-samples)
   - [Add more rules](#add-more-rules)
   - [Add even more rules](#add-even-more-rules)
   - [Throw it more cores](#throw-it-more-cores)
@@ -506,7 +506,7 @@ snakemake -n --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
-We now have a log file, lets have a look
+We now have a log file, lets have a look at the first 10 lines of our log with:
 
 ```bash
 head ./logs/fastqc/NA24631.log
@@ -527,11 +527,11 @@ Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 ```
 
-<p align="center"><b>**We have logs. Tidy logs.**</b><br></p>
+<p align="center"><b>We have logs. Tidy logs.</b><br></p>
 
 ![logs](https://miro.medium.com/max/2560/1*ohWUB5snJRaMe-vJ8HaoiA.png)
 
-## Scale our analyse to all of our samples
+## Scale up to analyse all of our samples
 
 We are currently only analysing one of our three samples
 
@@ -904,86 +904,9 @@ Now we are back to only running fastqc in our workflow, despite having our secon
 
 ![DAG_5](./demo_workflow_diagrams/dag_5.png)
 
-Snakemake is lazy.
+<p align="center"><b>Snakemake is lazy.</b><br></p>
 
 ![Snakemake is lazy.](https://64.media.tumblr.com/0492923adeb79cb841e29968135305d5/tumblr_nzdagaL6EH1uavdlbo7_1280.png)
-
-We also don't need to specify *ALL* the files output by a target, just at least one output file to convince Snakemake to not be lazy and run the rule. For example:
-
-```diff
-# Define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# Targets
-rule all:
-    input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
--       "../results/multiqc_report.html"
-
-# Workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 8
-    conda:
-        "envs/fastqc.yaml"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
-    log:
-        "logs/multiqc/multiqc.log"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-```
-
-Run again
-
-```bash
-# Remove output of last run
-rm -r ../results/*
-
-# Run dryrun/run again
-snakemake -n --cores 8 --use-conda
-```
-
-Output:
-
-```bash
-Job counts:
-        count   jobs
-        1       all
-        3       fastqc
-        4
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
-```
-
-Our fastqc rule will still be run/evaluated
-
-Visualise workflow
-
-```bash
-snakemake --dag | dot -Tpng > dag_6.png
-```
-
-Fastqc runs fine while specifying only one file output from fastqc
-
-![DAG_6](./demo_workflow_diagrams/dag_6.png)
 
 ## Add even more rules
 
@@ -1002,7 +925,11 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 # Targets
 rule all:
     input:
-        "../results/multiqc_report.html",
+-       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+-       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
++       "../results/multiqc_report.html",
 +       expand("../results/mapped/{sample}.bam", sample = SAMPLES)
 
 # Workflow
@@ -1061,7 +988,7 @@ rule multiqc:
 +         "bwa mem -t {threads} {input.refgenome} {input.fastq} > {output} 2> {log}"
 ```
 
-Conda env files
+Create conda env files
 
 ```bash
 # Create file
@@ -1091,12 +1018,12 @@ dependencies:
 Visualise workflow
 
 ```bash
-snakemake --dag | dot -Tpng > dag_7.png
+snakemake --dag | dot -Tpng > dag_6.png
 ```
 
 Fantastic, we are starting to build a workflow!
 
-![DAG_7](./demo_workflow_diagrams/dag_7.png)
+![DAG_6](./demo_workflow_diagrams/dag_6.png)
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
@@ -1140,7 +1067,7 @@ snakemake -n --cores 32 --use-conda
 snakemake --cores 32 --use-conda
 ```
 
-Now more steps can be run at one time - parallel computing here we come!
+<p align="center"><b>Now more steps can be run at one time - parallel computing here we come!</b><br></p>
 
 ![parallel computing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1200px-IBM_Blue_Gene_P_supercomputer.jpg)
 
