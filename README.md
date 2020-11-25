@@ -14,12 +14,12 @@ In this workshop, we will work through an introduction to [Snakemake](https://sn
 
 **Workshop sections:**
 
-- [01 - Introduction](./01_introduction.md)
-- [02 - Setup](./02_setup.md)
-- [03 - Create a basic workflow](./03_create_a_basic_workflow.md)
-- [04 - Leveling up your workflow](./04_leveling_up_your_workflow.md)
-- [05 - Words of wisdom](./05_words_of_wisdom.md)
-- [06 - We want more](./06_we_want_more.md)
+- [01 - Introduction](./workshop_material/01_introduction.md)
+- [02 - Setup](./workshop_material/02_setup.md)
+- [03 - Create a basic workflow](./workshop_material/03_create_a_basic_workflow.md)
+- [04 - Leveling up your workflow](./workshop_material/04_leveling_up_your_workflow.md)
+- [05 - Words of wisdom](./workshop_material/05_words_of_wisdom.md)
+- [06 - We want more](./workshop_material/06_we_want_more.md)
 
 **The workflows we will create:**
 
