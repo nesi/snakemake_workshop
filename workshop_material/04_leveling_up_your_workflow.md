@@ -4,17 +4,17 @@
 
 - [04 - Leveling up your workflow!](#04---leveling-up-your-workflow)
 - [Table of contents](#table-of-contents)
-  - [Pull out parameters](#pull-out-parameters)
-  - [Pull out user configurable options](#pull-out-user-configurable-options)
-  - [Leave messages for the user](#leave-messages-for-the-user)
-  - [Create temporary files](#create-temporary-files)
-  - [Generating a snakemake report](#generating-a-snakemake-report)
-  - [Modular workflow](#modular-workflow)
+  - [4.1 Pull out parameters](#41-pull-out-parameters)
+  - [4.2 Pull out user configurable options](#42-pull-out-user-configurable-options)
+  - [4.3 Leave messages for the user](#43-leave-messages-for-the-user)
+  - [4.4 Create temporary files](#44-create-temporary-files)
+  - [4.5 Generating a snakemake report](#45-generating-a-snakemake-report)
+  - [4.6 Modular workflow](#46-modular-workflow)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
 - [Our final snakemake workflow!](#our-final-snakemake-workflow)
 
-## Pull out parameters
+## 4.1 Pull out parameters
 
 ```diff
 # Define samples from data directory using wildcards
@@ -85,7 +85,7 @@ rule bwa:
         "bwa mem -t {threads} {input.refgenome} {input.fastq} > {output} 2> {log}"
 ```
 
-## Pull out user configurable options
+## 4.2 Pull out user configurable options
 
 We can separate the user configurable options for our workflow away from the workflow. This supports reproducibility by minimising the chance the user makes changes to the core workflow.
 
@@ -316,7 +316,7 @@ rm -r ../results/*
 + snakemake --cores 32 --use-conda
 ```
 
-## Leave messages for the user
+## 4.3 Leave messages for the user
 
 We can provide the user of our workflow more information on what is happening at each stage/rule of our workflow via the `message:` directive. We are able to call many variables such as:
 
@@ -446,7 +446,7 @@ Job 7: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy
 Job 5: Mapping sequences against /store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta
 ```
 
-## Create temporary files
+## 4.4 Create temporary files
 
 In our workflow, we are likely to be creating files that we don't want at the end of the day, but are used or produced by our workflow (intermediate files). We can mark such files as temporary so Snakemake will remove the file once it doesn't need to use it anymore.
 
@@ -587,7 +587,7 @@ total 24K
 
 *This become particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. And it's tidy.*
 
-## Generating a snakemake report
+## 4.5 Generating a snakemake report
 
 With Snakemake, we can automatically generate detailed self-contained HTML reports after we run our workflow with the following command:
 
@@ -615,7 +615,7 @@ These reports are highly configurable, have a look at an example of what can be 
 
 *See more information on creating Snakemake reports [in the Snakemake documentation](https://snakemake.readthedocs.io/en/stable/snakefiles/reporting.html)*
 
-## Modular workflow
+## 4.6 Modular workflow
 
 # Takeaways
 
