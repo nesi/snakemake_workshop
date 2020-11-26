@@ -800,14 +800,14 @@ rule fastqc:
      input:
 -        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
 +        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-     output:
-         "../results/multiqc_report.html"
-     log:
-         "logs/multiqc/multiqc.log"
-     conda:
-         "envs/multiqc.yaml"
-     shell:
-         "multiqc {input} -o ../results/ &> {log}"
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
 ```
 
 Visualise workflow
@@ -867,10 +867,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 ```
@@ -936,10 +936,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 ```
@@ -1025,10 +1025,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 

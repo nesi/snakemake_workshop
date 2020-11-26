@@ -47,10 +47,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -60,7 +60,7 @@ rule trim_galore:
     output:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
 +   params:
-+       "--paired --cores"
++       "--paired"
     log:
         "logs/trim_galore/{sample}.log"
     conda:
@@ -68,7 +68,7 @@ rule trim_galore:
     threads: 8
     shell:
 -       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-+       "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
++       "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 
 rule bwa:
     input:
@@ -151,10 +151,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -164,14 +164,14 @@ rule trim_galore:
     output:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
     params:
-        "--paired --cores"
+        "--paired"
     log:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
     threads: 8
     shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 
 rule bwa:
     input:
@@ -266,10 +266,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -279,14 +279,14 @@ rule trim_galore:
     output:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
     params:
-        "--paired --cores"
+        "--paired"
     log:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
     threads: 8
     shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 
 rule bwa:
     input:
@@ -360,10 +360,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
 +   message:
 +       "Compiling a HTML report for quality control checks. Writing to {output}."
     shell:
@@ -375,7 +375,7 @@ rule trim_galore:
     output:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
     params:
-        "--paired --cores"
+        "--paired"
     log:
         "logs/trim_galore/{sample}.log"
 +   message:
@@ -384,7 +384,7 @@ rule trim_galore:
         "./envs/trim_galore.yaml"
     threads: 8
     shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 
 rule bwa:
     input:
@@ -512,10 +512,10 @@ rule multiqc:
         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
-    conda:
-        "envs/multiqc.yaml"
     log:
         "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
     message:
         "Compiling a HTML report for quality control checks. Writing to {output}."
     shell:
@@ -528,7 +528,7 @@ rule trim_galore:
 -       ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
 +       temp(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"])
     params:
-        "--paired --cores"
+        "--paired"
     log:
         "logs/trim_galore/{sample}.log"
     message:
@@ -537,7 +537,7 @@ rule trim_galore:
         "./envs/trim_galore.yaml"
     threads: 8
     shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} {threads} &> {log}"
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 
 rule bwa:
     input:
@@ -629,7 +629,7 @@ Use the parameter directive (`params`) to keep the parameters and flags of your 
 
 ```bash
 params:
-    "--paired --cores"
+    "--paired"
 ```
 
 Run your snakemake workflow (using conda to install your software AND with a configuration file) with:
