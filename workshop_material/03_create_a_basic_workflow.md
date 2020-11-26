@@ -357,6 +357,8 @@ This will install [fastqc (version 0.11.9)](https://anaconda.org/bioconda/fastqc
 
 Have a look at [bioconda's list of packages](https://bioconda.github.io/conda-package_index.html) to see the VERY extensive list of open source (free) bioinformatics software that is available for download and use. Note that is only one of the conda package repositories that exist, also have a look at the [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) conda package repositories.
 
+See [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-file-manually) for information on creating conda environment files.
+
 Update our rule to use it using the `conda:` directive
 
 ```diff
@@ -389,12 +391,46 @@ Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/
 # Remove output of last run
 rm -r ../results/*
 
-# Run dryrun/run again
+# Run dryrun again
+- snakemake --dryrun --cores 8
 + snakemake --dryrun --cores 8 --use-conda
-+ snakemake --cores 8 --use-conda
 ```
 
-See [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-file-manually) for information on creating conda environment files
+```diff
+Building DAG of jobs...
++ Conda environment envs/fastqc.yaml will be created.
+Job counts:
+        count   jobs
+        1       all
+        1       fastqc
+        2
+
+[Thu Nov 26 16:10:03 2020]
+rule fastqc:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    jobid: 1
+    threads: 8
+
+
+[Thu Nov 26 16:10:03 2020]
+localrule all:
+    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    jobid: 0
+
+Job counts:
+        count   jobs
+        1       all
+        1       fastqc
+        2
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+```
+
+```diff
+# Run again
+- snakemake --cores 8
++ snakemake --cores 8 --use-conda
+```
 
 ## Capture our logs
 
