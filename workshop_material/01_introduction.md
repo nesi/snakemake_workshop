@@ -38,9 +38,7 @@ A good paper on [Scalable Workflows and Reproducible Data Analysis for Genomics]
 See what other people think:
 
 - https://www.biostars.org/p/345998/
-
 - https://www.reddit.com/r/bioinformatics/comments/f3rxel/snakemake_vs_nextflow/
-
 - https://www.biostars.org/p/258436/
 
 ## Other workflow languages

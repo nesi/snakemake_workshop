@@ -13,9 +13,9 @@
   - [3.7 Add more rules](#37-add-more-rules)
   - [3.8 Add even more rules](#38-add-even-more-rules)
   - [3.9 Throw it more cores](#39-throw-it-more-cores)
-  - [Takeaways](#takeaways)
-  - [Summary commands](#summary-commands)
-  - [Our final snakemake workflow!](#our-final-snakemake-workflow)
+- [Takeaways](#takeaways)
+- [Summary commands](#summary-commands)
+- [Our final snakemake workflow!](#our-final-snakemake-workflow)
 
 ## 3.1 Aim
 
@@ -1147,7 +1147,7 @@ With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you ca
 
 ![parallel computing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1200px-IBM_Blue_Gene_P_supercomputer.jpg)
 
-## Takeaways
+# Takeaways
 
 ---
 
@@ -1172,7 +1172,7 @@ With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you ca
 
 ---
 
-## Summary commands
+# Summary commands
 
 Create a directed acyclic graph (DAG) with:
 
@@ -1234,7 +1234,7 @@ Increase the number of samples that can be analysed at one time in your workflow
 snakemake --cores 32 --use-conda
 ```
 
-## Our final snakemake workflow!
+# Our final snakemake workflow!
 
 See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workflow we've created up to this point
 
