@@ -9,7 +9,6 @@
   - [4.3 Leave messages for the user](#43-leave-messages-for-the-user)
   - [4.4 Create temporary files](#44-create-temporary-files)
   - [4.5 Generating a snakemake report](#45-generating-a-snakemake-report)
-  - [4.6 Modular workflow](#46-modular-workflow)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
 - [Our final snakemake workflow!](#our-final-snakemake-workflow)
@@ -100,7 +99,7 @@ demo_workflow/
       |          |_______envs/
       |          |_______Snakefile
       |_______config
-                 |_______config.yaml           
+                 |_______config.yaml
 ```
 
 ```bash
@@ -189,7 +188,9 @@ rule bwa:
         "bwa mem -t {threads} {input.refgenome} {input.fastq} > {output} 2> {log}"
 ```
 
-Now let's use our configuration file!
+Now we don't have any hard coded file paths in our workflow - supporting portability.
+
+let's use our configuration file!
 
 Specify the file path to the reference genome (.fasta) in our configuration file
 
@@ -225,8 +226,8 @@ rm -r ../results/*
 
 # Run dryrun/run again
 - snakemake --dryrun --cores 32 --use-conda
-+ snakemake --dryrun --cores 32 --use-conda --configfile ../config/config.yaml
 - snakemake --cores 32 --use-conda
++ snakemake --dryrun --cores 32 --use-conda --configfile ../config/config.yaml
 + snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 ```
 
@@ -310,10 +311,10 @@ Then we don't need to specify where the configuration file is on the command lin
 rm -r ../results/*
 
 # Run dryrun/run again
-- snakemake --dryrun --cores 32 --use-conda --configfile ../config/config.yaml
 + snakemake --dryrun --cores 32 --use-conda
-- snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 + snakemake --cores 32 --use-conda
+- snakemake --dryrun --cores 32 --use-conda --configfile ../config/config.yaml
+- snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 ```
 
 ## 4.3 Leave messages for the user
@@ -615,11 +616,16 @@ These reports are highly configurable, have a look at an example of what can be 
 
 *See more information on creating Snakemake reports [in the Snakemake documentation](https://snakemake.readthedocs.io/en/stable/snakefiles/reporting.html)*
 
-## 4.6 Modular workflow
-
 # Takeaways
 
 ---
+
+- Pull out your parameters and put them in `params:` directive
+- Pulling the user configurable options away from the core workflow will support reproducibility by reducing the chance of changes to the core workflow
+- Putting your 
+- Leaving messages for the user of your workflow will help them understand what is happening at each stage and follow the workflows progress
+- Mark files you won't need once the workflow completes to reduce the memory usage - *particularly* when dealing with big data
+- Generate a snakemake report to get a summary of the workflow run - these are highly configurable
 
 ---
 
