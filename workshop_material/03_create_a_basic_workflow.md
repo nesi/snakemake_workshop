@@ -23,7 +23,7 @@
 
 *Let's create a basic workflow that will do some of the typical quality control checks, pre-processing and mapping to a reference genome that is undertaken on paired-end sequence data*
 
-![DAG](./images/dag.png)
+![rulegraph_1](./images/rulegraph_1.png)
 
 ---
 
