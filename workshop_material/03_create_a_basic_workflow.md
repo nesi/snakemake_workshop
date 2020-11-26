@@ -1147,7 +1147,7 @@ snakemake --cores 32 --use-conda
 
 ---
 
-- There is an enormous range of open source (free) software available for use from the[bioconda](https://bioconda.github.io/conda-package_index.html), [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) conda package repositories
+- There is an enormous range of open source (free) software available for use from the [bioconda](https://bioconda.github.io/conda-package_index.html), [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) conda package repositories
 - These software are all very straightforward to integrate in your snakemake workflow
 - Run your commands directly on the command line before wrapping it up in a Snakemake rule
 - First do a dryrun to check the Snakemake structure is set up correctly
@@ -1155,7 +1155,7 @@ snakemake --cores 32 --use-conda
 - File paths are relative to the Snakefile
 - Run your workflow from where your Snakefile is
 - Visualise your workflow by creating a DAG (directed acyclic graph), a rulegraph or filegraph
-- Use conda to install software in your workflow
+- Use conda to install software in your workflow - this improves reproducibility and portability
 - Snakemake is lazy...
   - It will only do something if it hasn't already done it
   - It will pick up where it left off, rather than run the whole workflow again
