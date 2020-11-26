@@ -193,7 +193,7 @@ This was a dry-run (flag --dryrun). The order of jobs does not reflect the order
 
 The output confirms that the workflow will run one sample (`count 1`) through `jobs fastqc`
 
-We can also visualise our workflow by creating a diagram of jobs (DAG). We tell snakemake to create a DAG with the `--dag` flag, then pipe this output to the [dot software](https://graphviz.org/) and write the output to the file `dag_1.png`
+We can also visualise our workflow by creating a [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAG). We tell snakemake to create a DAG with the `--dag` flag, then pipe this output to the [dot software](https://graphviz.org/) and write the output to the file `dag_1.png`
 
 ```bash
 snakemake --dag | dot -Tpng > dag_1.png
@@ -320,7 +320,7 @@ Nothing to be done.
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
 
-Also, what happens if we create another diagram of jobs (DAG)?
+Also, what happens if we create another directed acyclic graph (DAG) after the workflow has been run?
 
 ```bash
 snakemake --dag | dot -Tpng > dag.png
@@ -329,6 +329,8 @@ snakemake --dag | dot -Tpng > dag.png
 ![DAG](./images/dag.png)
 
 Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
+
+This can be quite informative if your workflow errors out at a rule. You can visually check which rules successfully ran and which didn't.
 
 ## Run using the conda package management system
 
@@ -351,6 +353,10 @@ channels:
 dependencies:
   - bioconda::fastqc=0.11.9
 ```
+
+This will install [fastqc (version 0.11.9)](https://anaconda.org/bioconda/fastqc) from bioconda into a 'clean' conda environment separate from the rest of your computer
+
+Have a look at [bioconda's list of packages](https://bioconda.github.io/conda-package_index.html) to see the VERY extensive list of open source (free) bioinformatics software that is available for download and use. Note that is only one of the conda package repositories that exist, also have a look at the [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) conda package repositories.
 
 Update our rule to use it using the `conda:` directive
 
@@ -389,14 +395,16 @@ rm -r ../results/*
 + snakemake --cores 8 --use-conda
 ```
 
+See [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-file-manually) for information on creating conda environment files
+
 ## Capture our logs
 
-So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting there watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break. 
+So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting there watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break.
 
 We can get the logs for each rule to be written to a log file via the `log:` directive:
 
 - It's a good idea to organise the logs by:
-  - Putting the logs in a directory labelled after the rule/software 
+  - Putting the logs in a directory labelled after the rule/software
   - Labelling the log files with the sample name
 
 - Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive
@@ -1087,28 +1095,30 @@ snakemake --cores 32 --use-conda
 
 ---
 
+- There is an enormous range of open source (free) software available for use from the[bioconda](https://bioconda.github.io/conda-package_index.html), [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) conda package repositories
+- These software are all very straightforward to integrate in your snakemake workflow
 - Run your commands directly on the command line before wrapping it up in a Snakemake rule
-- First do a dryrun with the `--dryrun` flag to check the Snakemake structure is set up correctly
+- First do a dryrun to check the Snakemake structure is set up correctly
 - Work iteratively (get each rule working before moving onto the next)
 - File paths are relative to the Snakefile
 - Run your workflow from where your Snakefile is
-- Visualise your workflow by creating a DAG (diagram of jobs), a rulegraph or filegraph
-- Use the `--use-conda` flag when using conda to install software in your workflow
+- Visualise your workflow by creating a DAG (directed acyclic graph), a rulegraph or filegraph
+- Use conda to install software in your workflow
 - Snakemake is lazy...
   - It will only do something if it hasn't already done it
   - It will pick up where it left off, rather than run the whole workflow again
   - It *won't* do any steps that aren't necessary to get to the target files defined in `rule: all`
 - `input:` `output:` `log:` and `threads:` directives need to be called in the `shell` directive
-- Use `&> {log}` (or something similar) in the shell command to capture your log files
+- Capture your log files
 - Organise your log files by naming them after the rule that was run and sample that was analysed
 - You don't need to specify all the target files in `rule all:`, the final file in a given chain of tasks will suffice
-- We can massively speed up our analyses by running your sampled in parallel
+- We can massively speed up our analyses by running our samples in parallel
 
 ---
 
 # Summary commands
 
-Create a diagram of jobs (DAG) with:
+Create a directed acyclic graph (DAG) with:
 
 ```bash
 snakemake --dag | dot -Tpng > dag.png
