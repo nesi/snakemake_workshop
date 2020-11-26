@@ -20,7 +20,7 @@
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
@@ -124,7 +124,7 @@ In the Snakefile, tell Snakemake to grab the variable `REFGENOME` from `../confi
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
@@ -205,7 +205,7 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 32 --use-conda
+snakemake --dryrun --cores 32 --use-conda
 snakemake --cores 32 --use-conda
 ```
 
@@ -224,8 +224,8 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 rm -r ../results/*
 
 # Run dryrun/run again
-- snakemake -n --cores 32 --use-conda
-+ snakemake -n --cores 32 --use-conda --configfile ../config/config.yaml
+- snakemake --dryrun --cores 32 --use-conda
++ snakemake --dryrun --cores 32 --use-conda --configfile ../config/config.yaml
 - snakemake --cores 32 --use-conda
 + snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 ```
@@ -239,7 +239,7 @@ Alternatively, we can define our config file in our Snakefile in a situation whe
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
@@ -310,8 +310,8 @@ Then we don't need to specify where the configuration file is on the command lin
 rm -r ../results/*
 
 # Run dryrun/run again
-- snakemake -n --cores 32 --use-conda --configfile ../config/config.yaml
-+ snakemake -n --cores 32 --use-conda
+- snakemake --dryrun --cores 32 --use-conda --configfile ../config/config.yaml
++ snakemake --dryrun --cores 32 --use-conda
 - snakemake --cores 32 --use-conda --configfile ../config/config.yaml
 + snakemake --cores 32 --use-conda
 ```
@@ -331,7 +331,7 @@ configfile: "../config/config.yaml"
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
@@ -408,7 +408,7 @@ rule bwa:
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 32 --use-conda
+snakemake --dryrun --cores 32 --use-conda
 snakemake --cores 32 --use-conda
 ```
 
@@ -483,7 +483,7 @@ configfile: "../config/config.yaml"
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
@@ -561,7 +561,7 @@ rule bwa:
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 32 --use-conda
+snakemake --dryrun --cores 32 --use-conda
 snakemake --cores 32 --use-conda
 ```
 

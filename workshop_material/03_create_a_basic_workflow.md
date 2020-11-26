@@ -76,7 +76,7 @@ First lets run the first step ([fastqc](https://www.bioinformatics.babraham.ac.u
 # Install fastqc
 conda install fastqc
 
-# See what parameters are availble
+# See what parameters are available
 fastqc --help
 
 # Create a test directory
@@ -104,7 +104,7 @@ My output:
 Let's wrap this up in a Snakemake workflow! Start with the basic structure in the Snakefile:
 
 ```diff
-# Target rules
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
 
@@ -127,7 +127,7 @@ rule my_rule:
 - Set the final output files (`rule all:`)
 
 ```diff
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
 +         "../results/fastqc/NA24631_1_fastqc.html",
@@ -150,14 +150,14 @@ rule all:
 
 Let's test the workflow! First we need to be in the `workflow` directory where the Snakefile is
 
-```bash 
+```bash
 cd demo_workflow/workflow/
 ```
 
 Then let's carry out a dryrun of the workflow, where no actual analysis is undertaken (fastqc is *not* run) but the overall Snakemake structure is run/validated. This is a good way to check for errors in your Snakemake workflow before actually running your workflow.
 
 ```bash
-snakemake -n --cores 8
+snakemake --dryrun --cores 8
 ```
 
 Output:
@@ -188,7 +188,7 @@ Job counts:
         1       all
         1       fastqc
         2
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+This was a dry-run (flag --dryrun). The order of jobs does not reflect the order of execution.
 ```
 
 The output confirms that the workflow will run one sample (`count 1`) through `jobs fastqc`
@@ -203,7 +203,7 @@ snakemake --dag | dot -Tpng > dag_1.png
 
 *Note. this diagram can be output to several other image formats such as svg or pdf*
 
-Let's do a full run of our workflow (by removing the `-n` flag)
+Let's do a full run of our workflow (by removing the `--dryrun` flag)
 
 ```bash
 snakemake --cores 8
@@ -305,7 +305,7 @@ total 2.4M
 What happens if we try a dryrun or full run now?
 
 ```bash
-snakemake -n --cores 8
+snakemake --dryrun --cores 8
 snakemake --cores 8
 ```
 
@@ -343,7 +343,7 @@ dependencies:
 Update our rule to use it using the `conda:` directive
 
 ```diff
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/fastqc/NA24631_1_fastqc.html",
@@ -373,7 +373,7 @@ Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/
 rm -r ../results/*
 
 # Run dryrun/run again
-+ snakemake -n --cores 8 --use-conda
++ snakemake --dryrun --cores 8 --use-conda
 + snakemake --cores 8 --use-conda
 ```
 
@@ -390,7 +390,7 @@ We can get the logs for each rule to be written to a log file via the `log:` dir
 - Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive
 
 ```diff
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/fastqc/NA24631_1_fastqc.html",
@@ -502,7 +502,7 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -546,7 +546,7 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 # Define samples from data directory using wildcards
 + SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
 +       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
@@ -588,7 +588,7 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -633,7 +633,7 @@ dependencies:
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
@@ -678,7 +678,7 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -697,7 +697,7 @@ Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to defin
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
@@ -753,7 +753,7 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -763,7 +763,7 @@ What happens if we only have the final target file (`../results/multiqc_report.h
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
 -       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
@@ -808,7 +808,7 @@ Run workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -832,7 +832,7 @@ For example if only our fastqc outputs are defined as the target in `rule: all`
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
 +       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
@@ -877,7 +877,7 @@ Run again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -889,7 +889,7 @@ Job counts:
         1       all
         3       fastqc
         4
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+This was a dry-run (flag --dryrun). The order of jobs does not reflect the order of execution.
 ```
 
 Our multiqc rule won't be run/evaluated
@@ -922,7 +922,7 @@ input data :arrow_right: [trim_galore](https://www.bioinformatics.babraham.ac.uk
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
 -       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
@@ -1048,7 +1048,7 @@ Run the workflow again
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 snakemake --cores 8 --use-conda
 ```
 
@@ -1063,7 +1063,7 @@ Run again allowing Snakemake to use more cores overall `--cores 32` rather than 
 rm -r ../results/*
 
 # Run dryrun/run again
-snakemake -n --cores 32 --use-conda
+snakemake --dryrun --cores 32 --use-conda
 snakemake --cores 32 --use-conda
 ```
 
@@ -1076,7 +1076,7 @@ snakemake --cores 32 --use-conda
 ---
 
 - Run your commands directly on the command line before wrapping it up in a Snakemake rule
-- First do a dryrun with the `-n` flag to check the Snakemake structure is set up correctly
+- First do a dryrun with the `--dryrun` flag to check the Snakemake structure is set up correctly
 - Work iteratively (get each rule working before moving onto the next)
 - File paths are relative to the Snakefile
 - Run your workflow from where your Snakefile is
@@ -1117,7 +1117,7 @@ snakemake --filegraph | dot -Tpng > filegraph.png
 Run a dryrun of your snakemake workflow with:
 
 ```bash
-snakemake -n --cores 8
+snakemake --dryrun --cores 8
 ```
 
 Run your snakemake workflow with:
@@ -1129,7 +1129,7 @@ snakemake --cores 8
 Run a dryrun of your snakemake workflow (using conda to install your software) with:
 
 ```bash
-snakemake -n --cores 8 --use-conda
+snakemake --dryrun --cores 8 --use-conda
 ```
 
 Run your snakemake workflow (using conda to install your software) with:

@@ -1,7 +1,7 @@
 # Define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Targets
+# Target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
