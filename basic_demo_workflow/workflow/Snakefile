@@ -35,20 +35,20 @@ rule multiqc:
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
- rule trim_galore:
-     input:
-         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-     output:
-         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-     log:
-         "logs/trim_galore/{sample}.log"
-     conda:
-         "./envs/trim_galore.yaml"
-     threads: 8
-     shell:
-         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    log:
+        "logs/trim_galore/{sample}.log"
+    conda:
+        "./envs/trim_galore.yaml"
+    threads: 8
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 
- rule bwa:
+rule bwa:
      input:
          fastq = ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"],
          refgenome = "/store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta"
