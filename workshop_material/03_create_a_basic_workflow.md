@@ -4,20 +4,20 @@
 
 - [03 - Create a basic workflow](#03---create-a-basic-workflow)
 - [Table of contents](#table-of-contents)
-  - [Aim](#aim)
-  - [File structure](#file-structure)
-  - [First rule](#first-rule)
-  - [Run using the conda package management system](#run-using-the-conda-package-management-system)
-  - [Capture our logs](#capture-our-logs)
-  - [Scale up to analyse all of our samples](#scale-up-to-analyse-all-of-our-samples)
-  - [Add more rules](#add-more-rules)
-  - [Add even more rules](#add-even-more-rules)
-  - [Throw it more cores](#throw-it-more-cores)
-- [Takeaways](#takeaways)
-- [Summary commands](#summary-commands)
-- [Our final snakemake workflow!](#our-final-snakemake-workflow)
+  - [3.1 Aim](#31-aim)
+  - [3.2 File structure](#32-file-structure)
+  - [3.3 First rule](#33-first-rule)
+  - [3.4 Run using the conda package management system](#34-run-using-the-conda-package-management-system)
+  - [3.5 Capture our logs](#35-capture-our-logs)
+  - [3.6 Scale up to analyse all of our samples](#36-scale-up-to-analyse-all-of-our-samples)
+  - [3.7 Add more rules](#37-add-more-rules)
+  - [3.8 Add even more rules](#38-add-even-more-rules)
+  - [3.9 Throw it more cores](#39-throw-it-more-cores)
+  - [Takeaways](#takeaways)
+  - [Summary commands](#summary-commands)
+  - [Our final snakemake workflow!](#our-final-snakemake-workflow)
 
-## Aim
+## 3.1 Aim
 
 ---
 
@@ -44,7 +44,7 @@ Output:
 -rw-rw-r-- 1 lkemp lkemp 1.9M Nov 18 14:56 NA24695_2.fastq.gz
 ```
 
-## File structure
+## 3.2 File structure
 
 Workflow file structure:
 
@@ -67,7 +67,7 @@ mkdir -p demo_workflow/{results,workflow/envs}
 touch demo_workflow/workflow/Snakefile
 ```
 
-## First rule
+## 3.3 First rule
 
 First lets run the first step ([fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)) directly on the command line to get the syntax of the command right and check what outputs files we expect to get
 
@@ -331,7 +331,7 @@ Notice our workflow 'job nodes' are now dashed lines, this indicates that their 
 
 This can be quite informative if your workflow errors out at a rule. You can visually check which rules successfully ran and which didn't.
 
-## Run using the conda package management system
+## 3.4 Run using the conda package management system
 
 fastqc worked because we already had it installed locally. Let's specify a conda environment for fastqc so the user of the workflow doesn't need to install it manually.
 
@@ -436,7 +436,7 @@ Notice it now says that "Conda environment envs/fastqc.yaml will be created.". N
 + snakemake --cores 8 --use-conda
 ```
 
-## Capture our logs
+## 3.5 Capture our logs
 
 So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting at the computer watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break.
 
@@ -499,7 +499,7 @@ Different ways to write log files:
 >
 > Try creating an error in the shell command (for example remove the `-o` flag) and use the three different syntaxes for writing to your log file. What is and isn't printed to your screen and to your log file?
 
-Like this? Read some [more](https://opensource.com/article/18/10/linux-data-streams
+Like this? Read some [more](https://opensource.com/article/18/10/linux-data-streams)
 
 ---
 
@@ -539,7 +539,7 @@ Approx 45% complete for NA24631_1.fastq.gz
 
 ![logs](https://miro.medium.com/max/2560/1*ohWUB5snJRaMe-vJ8HaoiA.png)
 
-## Scale up to analyse all of our samples
+## 3.6 Scale up to analyse all of our samples
 
 We are currently only analysing one of our three samples
 
@@ -614,7 +614,7 @@ Output:
 -rw-rw-r-- 1 lkemp lkemp 1.8K Nov 19 15:17 NA24695.log
 ```
 
-## Add more rules
+## 3.7 Add more rules
 
 - Make a conda environment file for multiqc
 
@@ -916,15 +916,13 @@ Now we are back to only running fastqc in our workflow, despite having our secon
 
 ![Snakemake is lazy.](https://64.media.tumblr.com/0492923adeb79cb841e29968135305d5/tumblr_nzdagaL6EH1uavdlbo7_1280.png)
 
-## Add even more rules
+## 3.8 Add even more rules
 
-Let's add the rest of the rules, currently we have:
+Let's add the rest of the rules. We want to get to:
 
-input data :arrow_right: [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) :arrow_right: [multiqc](https://multiqc.info/) :heavy_check_mark:
+![rulegraph_1](./images/rulegraph_1.png)
 
-We still need to add:
-
-input data :arrow_right: [trim_galore](https://www.bioinformatics.babraham.ac.uk/projects/trim_galore/) :arrow_right: [bwa](http://bio-bwa.sourceforge.net/)
+We currently have fastqc and multiqc, so we still need to add trim_galore and bwa
 
 ```diff
 # Define samples from data directory using wildcards
@@ -1062,7 +1060,7 @@ snakemake --cores 8 --use-conda
 
 Notice it will run only one rule/sample at a time...why is that?
 
-## Throw it more cores
+## 3.9 Throw it more cores
 
 Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 8`
 
@@ -1079,7 +1077,7 @@ snakemake --cores 32 --use-conda
 
 ![parallel computing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1200px-IBM_Blue_Gene_P_supercomputer.jpg)
 
-# Takeaways
+## Takeaways
 
 ---
 
@@ -1104,7 +1102,7 @@ snakemake --cores 32 --use-conda
 
 ---
 
-# Summary commands
+## Summary commands
 
 Create a directed acyclic graph (DAG) with:
 
@@ -1166,7 +1164,7 @@ Increase the number of samples that can be analysed at one time in your workflow
 snakemake --cores 32 --use-conda
 ```
 
-# Our final snakemake workflow!
+## Our final snakemake workflow!
 
 See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workflow we've created up to this point
 
