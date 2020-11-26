@@ -148,7 +148,7 @@ rule all:
 +         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
-Let's test the workflow! First we need to be in the `workflow` directory where the Snakefile is
+Let's test the workflow! First we need to be in the `workflow` directory, where the Snakefile is
 
 ```bash
 cd demo_workflow/workflow/
@@ -193,13 +193,15 @@ This was a dry-run (flag --dryrun). The order of jobs does not reflect the order
 
 The output confirms that the workflow will run one sample (`count 1`) through `jobs fastqc`
 
-We can also visualise our workflow by creating a diagram of jobs (DAG)
+We can also visualise our workflow by creating a diagram of jobs (DAG). We tell snakemake to create a DAG with the `--dag` flag, then pipe this output to the [dot software](https://graphviz.org/) and write the output to the file `dag_1.png`
 
 ```bash
 snakemake --dag | dot -Tpng > dag_1.png
 ```
 
 ![DAG_1](./images/dag_1.png)
+
+Our diagram has a node for each job which are connected by edges representing dependencies
 
 *Note. this diagram can be output to several other image formats such as svg or pdf*
 
@@ -317,6 +319,16 @@ Nothing to be done.
 ```
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
+
+Also, what happens if we create another diagram of jobs (DAG)?
+
+```bash
+snakemake --dag | dot -Tpng > dag.png
+```
+
+![DAG](./images/dag.png)
+
+Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
 
 ## Run using the conda package management system
 
