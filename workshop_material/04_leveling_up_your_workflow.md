@@ -597,7 +597,7 @@ snakemake --report ../results/report.html
 
 *Note. you won't be able to view this html while it is on the remote server, however  after you transfer it to your local computer you should be able to view it*
 
-This gives us an interactive version of our diagram of jobs (DAG). When you click on a node in the DAG, a full outline of the input and output files are detailed, the exact software used and the exact shell command that was run.
+This gives us an interactive version of our directed acyclic graph (DAG). When you click on a node in the DAG, the input and output files are fully outlined, the exact software used and the exact shell command that was run.
 
 ![snakemake_report_1](./images/snakemake_report_1.png)
 
