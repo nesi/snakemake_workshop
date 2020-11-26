@@ -604,8 +604,65 @@ Run workflow again
 # Remove output of last run
 rm -r ../results/*
 
-# Run dryrun/run again
+# Run dryrun again
 snakemake --dryrun --cores 8 --use-conda
+```
+
+See how it now runs each sample over all three of our samples in the output of the dryrun:
+
+```bash
+Building DAG of jobs...
+Job counts:
+        count   jobs
+        1       all
+        3       fastqc
+        4
+
+[Thu Nov 26 22:43:18 2020]
+rule fastqc:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    log: logs/fastqc/NA24631.log
+    jobid: 2
+    wildcards: sample=NA24631
+    threads: 8
+
+
+[Thu Nov 26 22:43:18 2020]
+rule fastqc:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    log: logs/fastqc/NA24695.log
+    jobid: 3
+    wildcards: sample=NA24695
+    threads: 8
+
+
+[Thu Nov 26 22:43:18 2020]
+rule fastqc:
+    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    log: logs/fastqc/NA24694.log
+    jobid: 1
+    wildcards: sample=NA24694
+    threads: 8
+
+
+[Thu Nov 26 22:43:18 2020]
+localrule all:
+    input: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    jobid: 0
+
+Job counts:
+        count   jobs
+        1       all
+        3       fastqc
+        4
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+```
+
+```bash
+# Run again
 snakemake --cores 8 --use-conda
 ```
 
