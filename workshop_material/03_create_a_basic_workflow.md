@@ -396,9 +396,11 @@ rm -r ../results/*
 + snakemake --dryrun --cores 8 --use-conda
 ```
 
+My output:
+
 ```diff
 Building DAG of jobs...
-+ Conda environment envs/fastqc.yaml will be created.
+Conda environment envs/fastqc.yaml will be created.
 Job counts:
         count   jobs
         1       all
@@ -426,6 +428,8 @@ Job counts:
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
+Notice it now says that "Conda environment envs/fastqc.yaml will be created.". Now the software our workflow uses will be automatically installed!
+
 ```diff
 # Run again
 - snakemake --cores 8
@@ -434,15 +438,15 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 ## Capture our logs
 
-So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting there watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break.
+So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting at the computer watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break.
 
 We can get the logs for each rule to be written to a log file via the `log:` directive:
 
 - It's a good idea to organise the logs by:
-  - Putting the logs in a directory labelled after the rule/software
-  - Labelling the log files with the sample name
+  - Putting the logs in a directory labelled after the rule/software that was run
+  - Labelling the log files with the sample name the software was run on
 
-- Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive
+- Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive in the shell script (eg. `&> {log}`)
 
 ```diff
 # Target OUTPUT files for the whole workflow
@@ -471,73 +475,14 @@ rule fastqc:
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
-A note on standard outputs and standard errors
+---
 
-- For linux, these are standard streams in which information is returned by a computer process - in our case the logs that we see returned to us on our screen when we run fastqc
+A tangent about [standard streams](https://en.wikipedia.org/wiki/Standard_streams)
+
+- These are standard streams in which information is returned by a computer process - in our case the logs that we see returned to us on our screen when we run fastqc
 - There are two main streams:
   - standard output (the log messages)
   - standard error (the error messages)
-
-```bash
-# Standard error
-Started analysis of NA24631_1.fastq.gz
-Approx 5% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_1.fastq.gz
-Approx 50% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
-Approx 55% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
-Approx 60% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
-Approx 65% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_2.fastq.gz
-Approx 75% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_2.fastq.gz
-Approx 90% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_1.fastq.gz
-Analysis complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_2.fastq.gz
-Approx 50% complete for NA24631_2.fastq.gz
-Approx 55% complete for NA24631_2.fastq.gz
-Approx 60% complete for NA24631_2.fastq.gz
-Approx 65% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_2.fastq.gz
-Approx 75% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_2.fastq.gz
-Approx 90% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_2.fastq.gz
-```
-
-```bash
-# Standard error
-Failed to process ../results/fastqc
-java.io.FileNotFoundException: ../results/fastqc (Is a directory)
-        at java.io.FileInputStream.open0(Native Method)
-        at java.io.FileInputStream.open(FileInputStream.java:195)
-        at java.io.FileInputStream.<init>(FileInputStream.java:138)
-        at uk.ac.babraham.FastQC.Sequence.FastQFile.<init>(FastQFile.java:73)
-        at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:106)
-        at uk.ac.babraham.FastQC.Sequence.SequenceFactory.getSequenceFile(SequenceFactory.java:62)
-        at uk.ac.babraham.FastQC.Analysis.OfflineRunner.processFile(OfflineRunner.java:152)
-        at uk.ac.babraham.FastQC.Analysis.OfflineRunner.<init>(OfflineRunner.java:121)
-        at uk.ac.babraham.FastQC.FastQCApplication.main(FastQCApplication.java:316)
-```
 
 Different ways to write log files:
 
@@ -549,6 +494,14 @@ Different ways to write log files:
 |   `&>`   |  :x:                        | :x:                        | :heavy_check_mark:      | :heavy_check_mark:     |
 
 (Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
+
+> **Exercise:**
+>
+> Try creating an error in the shell command (for example remove the `-o` flag) and use the three different syntaxes for writing to your log file. What is and isn't printed to your screen and to your log file?
+
+Like this? Read some [more](https://opensource.com/article/18/10/linux-data-streams
+
+---
 
 Run again
 
