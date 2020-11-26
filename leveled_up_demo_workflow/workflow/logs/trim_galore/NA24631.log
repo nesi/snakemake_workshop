@@ -1,0 +1,322 @@
+Using an excessive number of cores has a diminishing return! It is recommended not to exceed 8 cores per trimming process (you asked for 8 cores). Please consider re-specifying
+Path to Cutadapt set as: 'cutadapt' (default)
+Cutadapt seems to be working fine (tested command 'cutadapt --version')
+Cutadapt version: 2.6
+Could not detect version of Python used by Cutadapt from the first line of Cutadapt (but found this: >>>#!/bin/sh<<<)
+Letting the (modified) Cutadapt deal with the Python version instead
+Parallel gzip (pigz) detected. Proceeding with multicore (de)compression using 8 cores
+
+No quality encoding type selected. Assuming that the data provided uses Sanger encoded Phred scores (default)
+
+Output will be written into the directory: /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/trimmed/
+
+
+AUTO-DETECTING ADAPTER TYPE
+===========================
+Attempting to auto-detect adapter type from the first 1 million sequences of the first file (>> ../../data/NA24631_1.fastq.gz <<)
+
+Found perfect matches for the following adapter sequences:
+Adapter type	Count	Sequence	Sequences analysed	Percentage
+Illumina	360	AGATCGGAAGAGC	27730	1.30
+Nextera	24	CTGTCTCTTATA	27730	0.09
+smallRNA	0	TGGAATTCTCGG	27730	0.00
+Using Illumina adapter for trimming (count: 360). Second best hit was Nextera (count: 24)
+
+Writing report to '/home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/trimmed/NA24631_1.fastq.gz_trimming_report.txt'
+
+SUMMARISING RUN PARAMETERS
+==========================
+Input filename: ../../data/NA24631_1.fastq.gz
+Trimming mode: paired-end
+Trim Galore version: 0.6.4_dev
+Cutadapt version: 2.6
+Python version: could not detect
+Number of cores used for trimming: 8
+Quality Phred score cutoff: 20
+Quality encoding type selected: ASCII+33
+Adapter sequence: 'AGATCGGAAGAGC' (Illumina TruSeq, Sanger iPCR; auto-detected)
+Maximum trimming error rate: 0.1 (default)
+Minimum required adapter overlap (stringency): 1 bp
+Minimum required sequence length for both reads before a sequence pair gets removed: 20 bp
+Output file(s) will be GZIP compressed
+
+Cutadapt seems to be fairly up-to-date (version 2.6). Setting -j 8
+Writing final adapter and quality trimmed output to NA24631_1_trimmed.fq.gz
+
+
+  >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'AGATCGGAAGAGC' from file ../../data/NA24631_1.fastq.gz <<< 
+This is cutadapt 2.6 with Python 3.7.8
+Command line parameters: -j 8 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24631_1.fastq.gz
+Processing reads on 8 cores in single-end mode ...
+Finished in 0.43 s (16 us/read; 3.86 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:                  27,730
+Reads with adapters:                     8,390 (30.3%)
+Reads written (passing filters):        27,730 (100.0%)
+
+Total basepairs processed:     3,189,003 bp
+Quality-trimmed:                  22,776 bp (0.7%)
+Total written (filtered):      3,140,203 bp (98.5%)
+
+=== Adapter 1 ===
+
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8390 times.
+
+No. of allowed errors:
+0-9 bp: 0; 10-13 bp: 1
+
+Bases preceding removed adapters:
+  A: 31.9%
+  C: 27.7%
+  G: 20.8%
+  T: 19.4%
+  none/other: 0.2%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+1	5123	6932.5	0	5123
+2	2119	1733.1	0	2119
+3	479	433.3	0	479
+4	130	108.3	0	130
+5	46	27.1	0	46
+6	19	6.8	0	19
+7	18	1.7	0	18
+8	10	0.4	0	10
+9	20	0.1	0	20
+10	21	0.0	1	20 1
+11	19	0.0	1	19
+12	14	0.0	1	14
+13	11	0.0	1	11
+14	10	0.0	1	8 2
+15	15	0.0	1	15
+16	11	0.0	1	9 2
+17	16	0.0	1	16
+18	13	0.0	1	13
+19	11	0.0	1	11
+20	10	0.0	1	10
+21	11	0.0	1	10 1
+22	7	0.0	1	7
+23	5	0.0	1	5
+24	5	0.0	1	5
+25	12	0.0	1	11 1
+26	13	0.0	1	13
+27	7	0.0	1	7
+28	12	0.0	1	12
+29	9	0.0	1	9
+30	10	0.0	1	9 1
+31	7	0.0	1	7
+32	11	0.0	1	11
+33	7	0.0	1	7
+34	7	0.0	1	7
+35	9	0.0	1	9
+36	10	0.0	1	10
+37	6	0.0	1	5 1
+38	7	0.0	1	7
+39	4	0.0	1	4
+40	2	0.0	1	2
+41	11	0.0	1	11
+42	4	0.0	1	4
+43	3	0.0	1	3
+44	3	0.0	1	3
+45	2	0.0	1	2
+46	5	0.0	1	5
+47	4	0.0	1	4
+48	1	0.0	1	1
+49	5	0.0	1	5
+50	4	0.0	1	4
+51	2	0.0	1	2
+52	3	0.0	1	3
+53	6	0.0	1	6
+54	2	0.0	1	2
+55	4	0.0	1	4
+56	2	0.0	1	2
+57	3	0.0	1	3
+58	4	0.0	1	4
+59	1	0.0	1	1
+60	1	0.0	1	0 1
+61	1	0.0	1	1
+62	2	0.0	1	2
+63	1	0.0	1	1
+64	2	0.0	1	2
+66	2	0.0	1	2
+67	1	0.0	1	1
+68	1	0.0	1	1
+69	1	0.0	1	1
+70	2	0.0	1	2
+71	1	0.0	1	1
+72	2	0.0	1	2
+73	3	0.0	1	1 2
+74	2	0.0	1	2
+75	3	0.0	1	3
+76	4	0.0	1	3 1
+77	3	0.0	1	3
+79	1	0.0	1	1
+80	1	0.0	1	1
+84	1	0.0	1	1
+90	1	0.0	1	1
+94	1	0.0	1	1
+95	1	0.0	1	0 1
+124	1	0.0	1	1
+125	6	0.0	1	4 2
+
+RUN STATISTICS FOR INPUT FILE: ../../data/NA24631_1.fastq.gz
+=============================================
+27730 sequences processed in total
+The length threshold of paired-end sequences gets evaluated later on (in the validation step)
+
+Writing report to '/home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/trimmed/NA24631_2.fastq.gz_trimming_report.txt'
+
+SUMMARISING RUN PARAMETERS
+==========================
+Input filename: ../../data/NA24631_2.fastq.gz
+Trimming mode: paired-end
+Trim Galore version: 0.6.4_dev
+Cutadapt version: 2.6
+Python version: could not detect
+Number of cores used for trimming: 8
+Quality Phred score cutoff: 20
+Quality encoding type selected: ASCII+33
+Adapter sequence: 'AGATCGGAAGAGC' (Illumina TruSeq, Sanger iPCR; auto-detected)
+Maximum trimming error rate: 0.1 (default)
+Minimum required adapter overlap (stringency): 1 bp
+Minimum required sequence length for both reads before a sequence pair gets removed: 20 bp
+Output file(s) will be GZIP compressed
+
+Cutadapt seems to be fairly up-to-date (version 2.6). Setting -j -j 8
+Writing final adapter and quality trimmed output to NA24631_2_trimmed.fq.gz
+
+
+  >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'AGATCGGAAGAGC' from file ../../data/NA24631_2.fastq.gz <<< 
+This is cutadapt 2.6 with Python 3.7.8
+Command line parameters: -j 8 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24631_2.fastq.gz
+Processing reads on 8 cores in single-end mode ...
+Finished in 0.40 s (14 us/read; 4.20 M reads/minute).
+
+=== Summary ===
+
+Total reads processed:                  27,730
+Reads with adapters:                     8,803 (31.7%)
+Reads written (passing filters):        27,730 (100.0%)
+
+Total basepairs processed:     3,206,373 bp
+Quality-trimmed:                  33,396 bp (1.0%)
+Total written (filtered):      3,141,798 bp (98.0%)
+
+=== Adapter 1 ===
+
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8803 times.
+
+No. of allowed errors:
+0-9 bp: 0; 10-13 bp: 1
+
+Bases preceding removed adapters:
+  A: 33.0%
+  C: 27.9%
+  G: 20.3%
+  T: 18.6%
+  none/other: 0.2%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+1	5338	6932.5	0	5338
+2	2113	1733.1	0	2113
+3	455	433.3	0	455
+4	114	108.3	0	114
+5	63	27.1	0	63
+6	28	6.8	0	28
+7	25	1.7	0	25
+8	18	0.4	0	18
+9	32	0.1	0	31 1
+10	25	0.0	1	24 1
+11	18	0.0	1	18
+12	26	0.0	1	26
+13	15	0.0	1	15
+14	27	0.0	1	27
+15	15	0.0	1	15
+16	23	0.0	1	21 2
+17	33	0.0	1	33
+18	12	0.0	1	12
+19	21	0.0	1	21
+20	17	0.0	1	16 1
+21	18	0.0	1	18
+22	12	0.0	1	12
+23	11	0.0	1	11
+24	22	0.0	1	22
+25	12	0.0	1	12
+26	15	0.0	1	15
+27	17	0.0	1	15 2
+28	19	0.0	1	19
+29	4	0.0	1	4
+30	23	0.0	1	23
+31	6	0.0	1	6
+32	12	0.0	1	12
+33	9	0.0	1	9
+34	14	0.0	1	13 1
+35	7	0.0	1	7
+36	8	0.0	1	7 1
+37	8	0.0	1	8
+38	10	0.0	1	10
+39	8	0.0	1	8
+40	9	0.0	1	9
+41	10	0.0	1	10
+42	11	0.0	1	10 1
+43	4	0.0	1	4
+44	12	0.0	1	12
+45	4	0.0	1	4
+46	6	0.0	1	6
+47	4	0.0	1	4
+48	8	0.0	1	8
+49	3	0.0	1	3
+50	5	0.0	1	5
+51	5	0.0	1	5
+52	3	0.0	1	3
+53	1	0.0	1	1
+54	2	0.0	1	2
+55	7	0.0	1	7
+56	3	0.0	1	3
+57	1	0.0	1	1
+58	2	0.0	1	2
+59	3	0.0	1	3
+60	2	0.0	1	2
+61	3	0.0	1	3
+62	2	0.0	1	2
+63	1	0.0	1	1
+64	1	0.0	1	1
+65	1	0.0	1	1
+66	2	0.0	1	2
+67	1	0.0	1	1
+68	6	0.0	1	5 1
+69	3	0.0	1	2 1
+70	8	0.0	1	7 1
+71	1	0.0	1	1
+72	2	0.0	1	2
+73	3	0.0	1	2 1
+74	1	0.0	1	0 1
+78	1	0.0	1	1
+79	1	0.0	1	1
+124	2	0.0	1	1 1
+125	6	0.0	1	5 1
+
+RUN STATISTICS FOR INPUT FILE: ../../data/NA24631_2.fastq.gz
+=============================================
+27730 sequences processed in total
+The length threshold of paired-end sequences gets evaluated later on (in the validation step)
+
+Validate paired-end files NA24631_1_trimmed.fq.gz and NA24631_2_trimmed.fq.gz
+file_1: NA24631_1_trimmed.fq.gz, file_2: NA24631_2_trimmed.fq.gz
+
+
+>>>>> Now validing the length of the 2 paired-end infiles: NA24631_1_trimmed.fq.gz and NA24631_2_trimmed.fq.gz <<<<<
+Writing validated paired-end Read 1 reads to NA24631_1_val_1.fq.gz
+Writing validated paired-end Read 2 reads to NA24631_2_val_2.fq.gz
+
+Total number of sequences analysed: 27730
+
+Number of sequence pairs removed because at least one read was shorter than the length cutoff (20 bp): 89 (0.32%)
+
+Deleting both intermediate output files NA24631_1_trimmed.fq.gz and NA24631_2_trimmed.fq.gz
+
+====================================================================================================
+

@@ -1,0 +1,13 @@
+[INFO   ]         multiqc : This is MultiQC v1.9 (e6bfa37)
+[INFO   ]         multiqc : Template    : default
+[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/fastqc/NA24694_1_fastqc.zip
+[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/fastqc/NA24631_1_fastqc.zip
+[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/fastqc/NA24695_1_fastqc.zip
+[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/fastqc/NA24694_2_fastqc.zip
+[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/fastqc/NA24631_2_fastqc.zip
+[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/fastqc/NA24695_2_fastqc.zip
+[INFO   ]          fastqc : Found 6 reports
+[INFO   ]         multiqc : Compressing plot data
+[INFO   ]         multiqc : Report      : ../results/multiqc_report.html
+[INFO   ]         multiqc : Data        : ../results/multiqc_data
+[INFO   ]         multiqc : MultiQC complete
