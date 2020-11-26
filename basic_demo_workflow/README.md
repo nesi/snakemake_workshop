@@ -1,4 +1,4 @@
-This is a 'final basic demo workflow' that should have been created by following this Snakemake workshop up to [section three - create a basic workflow](../03_create_a_basic_workflow.md). In includes all the files that comprise the **workflow**:
+This is a 'final basic demo workflow' that should have been created by following this Snakemake workshop up to [section 03 - create a basic workflow](../03_create_a_basic_workflow.md). In includes all the files that comprise the **workflow**:
 
 - `./workflow/Snakefile`
 - `./workflow/envs/`
