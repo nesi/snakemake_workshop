@@ -1128,7 +1128,7 @@ Notice it will run only one rule/sample at a time...why is that?
 
 ## 3.9 Throw it more cores
 
-Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 8`
+Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 8` (*only if you are working on a machine with this many cores! Your laptop may well not!*)
 
 ```bash
 # Remove output of last run
@@ -1139,7 +1139,11 @@ snakemake --dryrun --cores 32 --use-conda
 snakemake --cores 32 --use-conda
 ```
 
-<p align="center"><b>Now more steps can be run at one time - parallel computing here we come!</b><br></p>
+Notice it ran alot faster and there were more samples and rules running at one time. This is because we set each rule to run with 8 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 8 with the `--cores 8` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 32 with `--cores 32`, up to 4 samples could be run through .
+
+With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you can start to REALLY scale up.
+
+<p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
 ![parallel computing](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1200px-IBM_Blue_Gene_P_supercomputer.jpg)
 
