@@ -557,6 +557,10 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 # Target OUTPUT files for the whole workflow
 rule all:
     input:
+-       "../results/fastqc/NA24631_1_fastqc.html",
+-       "../results/fastqc/NA24631_2_fastqc.html",
+-       "../results/fastqc/NA24631_1_fastqc.zip",
+-       "../results/fastqc/NA24631_2_fastqc.zip"
 +       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
 +       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
 +       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
@@ -565,12 +569,17 @@ rule all:
 # Workflow
 rule fastqc:
     input:
+-       R1 = "../../data/NA24631_1.fastq.gz",
+-       R2 = "../../data/NA24631_2.fastq.gz"
 +       R1 = "../../data/{sample}_1.fastq.gz",
 +       R2 = "../../data/{sample}_2.fastq.gz"
     output:
+-       html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+-       zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
 +       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
 +       zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     log:
+-       "logs/fastqc/NA24631.log"
 +       "logs/fastqc/{sample}.log"
     threads: 8
     conda:
