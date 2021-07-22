@@ -25,4 +25,4 @@ In this workshop, we will work through an introduction to [Snakemake](https://sn
 - [Basic demo workflow](https://github.com/leahkemp/RezBaz2020_snakemake_workshop/tree/main/basic_demo_workflow)
 - [Leveled up demo workflow](https://github.com/leahkemp/RezBaz2020_snakemake_workshop/tree/main/leveled_up_demo_workflow)
 
-<p align="center"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/blob/master/workshop_material/01_introduction.md">Start the workshop!</a>
+<p align="center"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/01_introduction.html">Start the workshop!</a>
