@@ -73,5 +73,5 @@ cd RezBaz2020_snakemake_workshop
 
 See the [Git Guides](https://github.com/git-guides/git-clone) for information on cloning a repo
 
-<p align="left"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/blob/master/workshop_material/01_introduction.md">Previous page: 01 - Introduction</a>
-<p align="right"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/blob/master/workshop_material/03_create_a_basic_workflow.md">Next page: 03 - Create a basic workflow</a>
+<p align="left"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/01_introduction.html">Previous page: 01 - Introduction</a>
+<p align="right"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/03_create_a_basic_workflow.html">Next page: 03 - Create a basic workflow</a>
