@@ -65,4 +65,4 @@ Throughout this workshop, I'll be indicating the code to remove and the code to 
 
 *However, the actual `+` and `-` symbols should not be included in your own code*
 
-<p align="center"><b><a href="https://github.com/leahkemp/RezBaz2020_snakemake_workshop/blob/master/workshop_material/02_setup.md">Next page: 02 - Setup</a>
+<p align="center"><b><a href="https://https://leahkemp.github.io/RezBaz2020_snakemake_workshop/blob/master/workshop_material/02_setup.md">Next page: 02 - Setup</a>
