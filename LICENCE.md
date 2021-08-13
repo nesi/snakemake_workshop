@@ -21,7 +21,7 @@ license terms.
 Under the following terms:
 
 * **Attribution**---You must give appropriate credit (where practical, mentioning that
-  your work is derived from work that is funded by [ESR](https://www.esr.cri.nz/) and [Genomics Aotearoa](https://www.genomics-aotearoa.org.nz/)
+  your work is derived from work carried out by Leah Kemp and funded by [ESR](https://www.esr.cri.nz/) and [Genomics Aotearoa](https://www.genomics-aotearoa.org.nz/)
   provide a [link to the
   license][cc-by-human], and indicate if changes were made. You may do
   so in any reasonable manner, but not in any way that suggests the
