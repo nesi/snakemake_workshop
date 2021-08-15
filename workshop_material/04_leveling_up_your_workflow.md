@@ -213,9 +213,9 @@ snakemake --cores 32 --use-conda
 Didn't work? Error:
 
 ```bash
-KeyError in line 56 of /home/lkemp/RezBaz2020_snakemake_workshop/final_leveled_up_demo_workflow/workflow/Snakefile:
+KeyError in line 56 of /home/lkemp/snakemake_workshop/final_leveled_up_demo_workflow/workflow/Snakefile:
 'REFGENOME'
-  File "/home/lkemp/RezBaz2020_snakemake_workshop/final_leveled_up_demo_workflow/workflow/Snakefile", line 56, in <module>
+  File "/home/lkemp/snakemake_workshop/final_leveled_up_demo_workflow/workflow/Snakefile", line 56, in <module>
 ```
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is. We can do this by passing the location of our config file to the `--configfile` flag
@@ -675,5 +675,5 @@ snakemake --report ../results/report.html
 
 See [leveled_up_demo_workflow](../leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
 
-<p align="left"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/03_create_a_basic_workflow.html">Previous page: 03 - Create a basic workflow</a>
-<p align="right"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/05_we_want_more.html">Next page: 05 - We want more</a>
+<p align="left"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html">Previous page: 03 - Create a basic workflow</a>
+<p align="right"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/05_we_want_more.html">Next page: 05 - We want more</a>

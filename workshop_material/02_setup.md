@@ -67,11 +67,11 @@ To clone this repo (and use the example data I have provided), you will require 
 Once git is installed, clone this repo with the following:
 
 ```bash
-git clone https://github.com/leahkemp/RezBaz2020_snakemake_workshop.git
-cd RezBaz2020_snakemake_workshop
+git clone https://github.com/nesi/snakemake_workshop.git
+cd snakemake_workshop
 ```
 
 See the [Git Guides](https://github.com/git-guides/git-clone) for information on cloning a repo
 
-<p align="left"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/01_introduction.html">Previous page: 01 - Introduction</a>
-<p align="right"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/03_create_a_basic_workflow.html">Next page: 03 - Create a basic workflow</a>
+<p align="left"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction.html">Previous page: 01 - Introduction</a>
+<p align="right"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html">Next page: 03 - Create a basic workflow</a>

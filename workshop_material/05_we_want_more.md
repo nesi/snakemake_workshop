@@ -10,4 +10,4 @@
 
 - See https://github.com/snakemake-workflows for a bunch of genetics related snakemake workflows. Despite being genetics focussed, they provide a good place to see what can be done with a Snakemake workflow
 
-<p align="center"><b><a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html">Previous page: 04 - Leveling up your workflow!</a>
+<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html">Previous page: 04 - Leveling up your workflow!</a>
