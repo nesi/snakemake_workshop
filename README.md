@@ -1,9 +1,5 @@
 # Workflow languages – your foundation for accuracy and reproducibility in data analysis
 
-**This workshop is a part of [RezBaz 2020: Pick n Mix](https://resbaz.auckland.ac.nz/)** <br />
-**Date:** Friday 27 November 2020 <br />
-**Time:** 2:30pm - 3:30pm <br />
-
 Are you working with big data? Do you need to pass your data through various software? If you’ve ever been in this situation (as I have in a population genetics masters project), you would know it can become very difficult to maintain reproducibility and accuracy; wait, have I updated this output file? The more manual steps we do, the more human errors are inevitably introduced into our analysis, hampering accuracy and reproducibility.
 
 Be lazy, the machine does it better.
