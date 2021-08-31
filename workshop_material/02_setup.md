@@ -14,8 +14,6 @@
   - [Create a conda environment](#create-a-conda-environment)
   - [Clone this repo](#clone-this-repo)
 
-<details>
-<summary>Follow this section for running on NeSI</summary>
 
 ## Setup for running on NeSI
 
@@ -65,10 +63,6 @@ conda config --add channels conda-forge
 
 Continue to [Create a conda environment](#creating-a-conda-environment).
 
-</details>
-
-<details>
-<summary>Follow this section for running on your machine</summary>
 
 ## Setup for running on your machine
 
@@ -93,8 +87,6 @@ conda config --add channels defaults
 conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
-
-</details>
 
 ## Create a conda environment
 
