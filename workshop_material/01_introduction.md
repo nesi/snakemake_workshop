@@ -4,17 +4,10 @@
 
 - [01 - Introduction](#01---introduction)
 - [Table of contents](#table-of-contents)
-  - [My background](#my-background)
   - [Benefits of workflow languages](#benefits-of-workflow-languages)
   - [Benefits of Snakemake](#benefits-of-snakemake)
   - [Other workflow languages](#other-workflow-languages)
   - [This workshop](#this-workshop)
-
-## My background
-
-- Bioinformatician at the Institute of Environmental Science and Research (ESR)
-- Analyse human genomic data
-- MSc - population genetics
 
 ## Benefits of workflow languages
 
