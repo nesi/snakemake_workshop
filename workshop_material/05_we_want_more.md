@@ -6,8 +6,8 @@
 
 - Snakemake also provides a [great tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html) (and a [short tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/short.html) for those pressed for time)
 
-- Here is a fully established pipeline in production use that extends on the workflow we created in this workshop: https://github.com/ESR-NZ/human_genomics_pipeline
+- Here is a fully established pipeline in production use that extends on the workflow we created in this workshop: [https://github.com/ESR-NZ/human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
 
-- See https://github.com/snakemake-workflows for a bunch of genetics related snakemake workflows. Despite being genetics focussed, they provide a good place to see what can be done with a Snakemake workflow
+- See [https://github.com/snakemake-workflows](https://github.com/snakemake-workflows) for a bunch of genetics related snakemake workflows. Despite being genetics focussed, they provide a good place to see what can be done with a Snakemake workflow
 
 <p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html">Previous page: 04 - Leveling up your workflow!</a>
