@@ -4,21 +4,77 @@
 
 - [02 - Setup](#02---setup)
 - [Table of contents](#table-of-contents)
-  - [Install Miniconda](#install-miniconda)
-    - [Check your OS](#check-your-os)
-    - [Installing miniconda](#installing-miniconda)
+  - [Setup for running on NeSI](#setup-for-running-on-nesi)
+    - [Connect to Jupyter on NeSI](#connect-to-jupyter-on-nesi)
+    - [Setting up Miniconda](#setting-up-miniconda)
+  - [Setup for running on your machine](#setup-for-running-on-your-machine)
+    - [Install Miniconda](#install-miniconda)
+      - [Check your OS](#check-your-os)
+      - [Installing miniconda](#installing-miniconda)
   - [Create a conda environment](#create-a-conda-environment)
   - [Clone this repo](#clone-this-repo)
 
-## Install Miniconda
+## Setup for running on NeSI
+
+Choose between this section and [Setup for running on your machine](#setup-on-your-machine) (don't do both).
+
+### Connect to Jupyter on NeSI
+
+**TODO**: add some screenshots??
+
+Connect to [Jupyter on NeSI](https://jupyter.nesi.org.nz/) and login with your **NeSI HPC account** credentials (username, password and second factor as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account)).
+
+You should find yourself at the "Server Options" screen, where you can select a project code and resources for your Jupyter session:
+
+- you should be able to select the NeSI training project (nesi99991)
+- select a walltime of 8 hours
+- leave the other settings at their default values
+
+Click "Start", wait for your Jupyter session to be launched and you should find yourself in JupyterLab.
+
+From the launcher within JupyterLab you can select the "Terminal" button to launch a terminal session.
+
+When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, first switch to your home directory in the terminal:
+
+```bash
+cd
+```
+
+### Setting up Miniconda
+
+On NeSI we have lots of software preinstalled to simplify things for our users. To load Miniconda run the following in the terminal:
+
+```bash
+ml purge
+ml Miniconda
+```
+
+Next, [set up your channels](https://bioconda.github.io/user/install.html#set-up-channels) (channels are locations where packages/software are can be installed from)
+
+```bash
+conda config --add channels defaults
+conda config --add channels bioconda
+conda config --add channels conda-forge
+```
+
+**TODO**: setup conda to install to project dir??? other conda config???
+
+
+Continue to [Create a conda environment](#creating-a-conda-environment).
+
+## Setup for running on your machine
+
+Choose between this section and [Setup for running on NeSI](#setup-for-running-on-nesi) (don't do both).
+
+### Install Miniconda
 
 For this workshop, will analyse our data using various software. However, the only software we will need to manually install is [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
-### Check your OS
+#### Check your OS
 
 If you already use Linux or MacOS X, great! Ignore this paragraph!. If you use Windows, setup a Linux virtual machine (VM) with Vagrant (see instructions on how to do this [here](https://snakemake.readthedocs.io/en/stable/tutorial/setup.html#setup-a-linux-vm-with-vagrant-under-windows)).
 
-### Installing miniconda
+#### Installing miniconda
 
 Information on how to install Miniconda can be found [on their website](https://docs.conda.io/en/latest/miniconda.html). Snakemake also provides information on installing Miniconda in [their documentation](https://snakemake.readthedocs.io/en/stable/tutorial/setup.html#step-1-installing-miniconda-3)
 
