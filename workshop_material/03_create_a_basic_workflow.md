@@ -1447,25 +1447,25 @@ snakemake --filegraph | dot -Tpng > filegraph.png
 Run a dryrun of your snakemake workflow with:
 
 ```bash
-snakemake --dryrun --cores 8
+snakemake --dryrun
 ```
 
 Run your snakemake workflow with:
 
 ```bash
-snakemake --cores 8
+snakemake --cores 2
 ```
 
 Run a dryrun of your snakemake workflow (using conda to install your software) with:
 
 ```bash
-snakemake --dryrun --cores 8 --use-conda
+snakemake --dryrun --cores 2 --use-conda
 ```
 
 Run your snakemake workflow (using conda to install your software) with:
 
 ```bash
-snakemake --cores 8 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Create a global wildcard to get process all your samples in a directory with:
@@ -1477,10 +1477,10 @@ SAMPLES, = glob_wildcards("../relative/path/to/samples/{sample}_1.fastq.gz")
 Combine this with the expand function to tell Snakemake to look at your global wildcard to figure out what you refer to as `{sample}` in your workflow
 
 ```bash
-expand("../results/{sample}.bam", sample = SAMPLES)
+expand("../results/{sample}_1.fastq.gz", sample = SAMPLES)
 ```
 
-Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores with the `--cores` command
+Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores to be used at one time with the `--cores` command
 
 ```bash
 snakemake --cores 32 --use-conda
