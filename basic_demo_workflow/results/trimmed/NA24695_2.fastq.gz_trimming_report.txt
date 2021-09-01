@@ -3,10 +3,10 @@ SUMMARISING RUN PARAMETERS
 ==========================
 Input filename: ../../data/NA24695_2.fastq.gz
 Trimming mode: paired-end
-Trim Galore version: 0.6.4_dev
-Cutadapt version: 2.6
+Trim Galore version: 0.6.7
+Cutadapt version: 3.4
 Python version: could not detect
-Number of cores used for trimming: 8
+Number of cores used for trimming: 22
 Quality Phred score cutoff: 20
 Quality encoding type selected: ASCII+33
 Using Illumina adapter for trimming (count: 225). Second best hit was Nextera (count: 16)
@@ -17,10 +17,10 @@ Minimum required sequence length for both reads before a sequence pair gets remo
 Output file will be GZIP compressed
 
 
-This is cutadapt 2.6 with Python 3.7.8
-Command line parameters: -j 8 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24695_2.fastq.gz
-Processing reads on 8 cores in single-end mode ...
-Finished in 0.42 s (18 us/read; 3.41 M reads/minute).
+This is cutadapt 3.4 with Python 3.9.6
+Command line parameters: -j 22 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24695_2.fastq.gz
+Processing reads on 22 cores in single-end mode ...
+Finished in 0.25 s (11 µs/read; 5.62 M reads/minute).
 
 === Summary ===
 
@@ -34,10 +34,10 @@ Total written (filtered):      2,706,097 bp (98.0%)
 
 === Adapter 1 ===
 
-Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 7342 times.
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 7342 times
 
 No. of allowed errors:
-0-9 bp: 0; 10-13 bp: 1
+1-9 bp: 0; 10-13 bp: 1
 
 Bases preceding removed adapters:
   A: 32.5%

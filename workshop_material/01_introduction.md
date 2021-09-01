@@ -47,7 +47,7 @@ The real point is to use a workflow language (where applicable) and just use the
 
 ## This workshop
 
-This workshop is designed with someone who had some familiarity with the command line. However, I've tried to make it as accessible as possible to anyone who want to learn Snakemake.
+This workshop is designed with someone who had some familiarity with the command line. However, I've tried to make it as accessible as possible to anyone who wants to learn Snakemake.
 
 Throughout this workshop, I'll be indicating the code to remove and the code to insert (relative to the previous step) with the following:
 

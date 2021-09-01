@@ -1,13 +1,13 @@
-# Define samples from data directory using wildcards
+# define samples from data directory using wildcards
 SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 
-# Target OUTPUT files for the whole workflow
+# target OUTPUT files for the whole workflow
 rule all:
     input:
         "../results/multiqc_report.html",
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
 
-# Workflow
+# workflow
 rule fastqc:
     input:
         R1 = "../../data/{sample}_1.fastq.gz",
@@ -17,47 +17,33 @@ rule fastqc:
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     log:
         "logs/fastqc/{sample}.log"
-    threads: 8
+    threads: 2
     conda:
         "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-
+  
 rule multiqc:
     input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
-        "../results/multiqc_report.html"
+         "../results/multiqc_report.html"
     log:
-        "logs/multiqc/multiqc.log"
+         "logs/multiqc/multiqc.log"
     conda:
-        "envs/multiqc.yaml"
+         "envs/multiqc.yaml"
     shell:
-        "multiqc {input} -o ../results/ &> {log}"
+         "multiqc {input} -o ../results/ &> {log}"
 
 rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    log:
-        "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
-    threads: 8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-
-rule bwa:
      input:
-         fastq = ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"],
-         refgenome = "/store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta"
-     output: 
-         "../results/mapped/{sample}.bam"
+         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+     output:
+         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
      log:
-         "logs/bwa_mem/{sample}.log"
+         "logs/trim_galore/{sample}.log"
      conda:
-         "./envs/bwa.yaml"
-     threads: 8
+         "./envs/trim_galore.yaml"
+     threads: 2
      shell:
-         "bwa mem -t {threads} {input.refgenome} {input.fastq} > {output} 2> {log}"
+         "trim_galore {input} -o ../results/trimmed/ --paired --cores 2{threads} &> {log}"

@@ -1,13 +1,14 @@
-[INFO   ]         multiqc : This is MultiQC v1.9 (4c96b43)
-[INFO   ]         multiqc : Template    : default
-[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/basic_demo_workflow/results/fastqc/NA24694_1_fastqc.zip
-[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/basic_demo_workflow/results/fastqc/NA24631_1_fastqc.zip
-[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/basic_demo_workflow/results/fastqc/NA24695_1_fastqc.zip
-[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/basic_demo_workflow/results/fastqc/NA24694_2_fastqc.zip
-[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/basic_demo_workflow/results/fastqc/NA24631_2_fastqc.zip
-[INFO   ]         multiqc : Searching   : /home/lkemp/RezBaz2020_snakemake_workshop/basic_demo_workflow/results/fastqc/NA24695_2_fastqc.zip
-[INFO   ]          fastqc : Found 6 reports
-[INFO   ]         multiqc : Compressing plot data
-[INFO   ]         multiqc : Report      : ../results/multiqc_report.html
-[INFO   ]         multiqc : Data        : ../results/multiqc_data
-[INFO   ]         multiqc : MultiQC complete
+
+  /// MultiQC 🔍 | v1.11 (987e7f5)
+
+|           multiqc | Search path : /home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip
+|           multiqc | Search path : /home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip
+|           multiqc | Search path : /home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip
+|           multiqc | Search path : /home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip
+|           multiqc | Search path : /home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip
+|           multiqc | Search path : /home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip
+|         searching | ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 6/6  |            fastqc | Found 6 reports
+|           multiqc | Compressing plot data
+|           multiqc | Report      : ../results/multiqc_report.html
+|           multiqc | Data        : ../results/multiqc_data
+|           multiqc | MultiQC complete

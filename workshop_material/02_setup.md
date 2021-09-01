@@ -92,10 +92,10 @@ conda config --add channels conda-forge
 
 With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
 
-Create a conda environment (called `demo_workflow_env`) that has python and Snakemake installed (and all it's dependant software)
+Create a conda environment (called `snakemake_env`) that has Snakemake installed (and all it's dependant software)
 
 ```bash
-conda create -n demo_workflow_env python=3.7.6 snakemake=5.28.0
+conda create -n snakemake_env snakemake
 ```
 
 Respond yes to the following prompt to install the necessary software in the new conda environment:
@@ -104,23 +104,27 @@ Respond yes to the following prompt to install the necessary software in the new
 Proceed ([y]/n)?
 ```
 
+**Note. this installed Snakemake version 6.7.0 for me, you can use the same version this workshop was created with `conda create -n snakemake_env snakemake=6.7.0`**
+
 Activate the conda environment we just created
 
 ```bash
-conda activate demo_workflow_env
+conda activate snakemake_env
 ```
 
-Now we can see which conda environment we are in on the command line
+Now we can see which conda environment we are in on the command line, `(base)` has been replaced with `(snakemake_env)`
 
 ```bash
-(demo_workflow_env) lkemp@Wintermute:~$
+(snakemake_env) orac$ 
 ```
 
-*Snakemake has been installed within your `demo_workflow_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
+*Snakemake has been installed within your `snakemake_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
 
 ## Clone this repo
 
-To clone this repo (and use the example data I have provided), you will require you have git installed. See [this guide](https://www.atlassian.com/git/tutorials/install-git) for help with an installation of git.
+**TODO**: Provide instructions for loading a git module on NeSi?
+
+To clone this repo (and use the example data I have provided), you will need to have git installed. See [this guide](https://www.atlassian.com/git/tutorials/install-git) for help with an installation of git.
 
 Once git is installed, clone this repo with the following:
 
