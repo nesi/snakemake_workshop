@@ -11,7 +11,7 @@
   - [3.05 Dryrun](#305-dryrun)
   - [3.06 Create a DAG](#306-create-a-dag)
   - [3.07 Fullrun](#307-fullrun)
-  - [3.08 lazy evaluation](#308-lazy-evaluation)
+  - [3.08 Lazy evaluation](#308-lazy-evaluation)
   - [3.09 Run using the conda package management system](#309-run-using-the-conda-package-management-system)
   - [3.10 Capture our logs](#310-capture-our-logs)
   - [3.11 Scale up to analyse all of our samples](#311-scale-up-to-analyse-all-of-our-samples)
@@ -429,7 +429,7 @@ total 3.5M
 -rw-rw-r-- 1 lkemp lkemp 479K Sep  1 16:39 NA24631_2_fastqc.zip
 ```
 
-## 3.08 lazy evaluation
+## 3.08 Lazy evaluation
 
 What happens if we try a dryrun or full run now?
 
