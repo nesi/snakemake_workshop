@@ -3,4 +3,4 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - bioconda::multiqc=1.9
+  - bioconda::multiqc=1.11

@@ -1,14 +1,14 @@
-Using an excessive number of cores has a diminishing return! It is recommended not to exceed 8 cores per trimming process (you asked for 8 cores). Please consider re-specifying
 Path to Cutadapt set as: 'cutadapt' (default)
 Cutadapt seems to be working fine (tested command 'cutadapt --version')
-Cutadapt version: 2.6
+Cutadapt version: 3.4
 Could not detect version of Python used by Cutadapt from the first line of Cutadapt (but found this: >>>#!/bin/sh<<<)
 Letting the (modified) Cutadapt deal with the Python version instead
-Parallel gzip (pigz) detected. Proceeding with multicore (de)compression using 8 cores
+pigz 2.6
+Parallel gzip (pigz) detected. Proceeding with multicore (de)compression using 2 cores
 
 No quality encoding type selected. Assuming that the data provided uses Sanger encoded Phred scores (default)
 
-Output will be written into the directory: /home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/trimmed/
+Output will be written into the directory: /home/lkemp/snakemake_workshop/demo_workflow/results/trimmed/
 
 
 AUTO-DETECTING ADAPTER TYPE
@@ -22,16 +22,16 @@ Nextera	24	CTGTCTCTTATA	27730	0.09
 smallRNA	0	TGGAATTCTCGG	27730	0.00
 Using Illumina adapter for trimming (count: 360). Second best hit was Nextera (count: 24)
 
-Writing report to '/home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/trimmed/NA24631_1.fastq.gz_trimming_report.txt'
+Writing report to '/home/lkemp/snakemake_workshop/demo_workflow/results/trimmed/NA24631_1.fastq.gz_trimming_report.txt'
 
 SUMMARISING RUN PARAMETERS
 ==========================
 Input filename: ../../data/NA24631_1.fastq.gz
 Trimming mode: paired-end
-Trim Galore version: 0.6.4_dev
-Cutadapt version: 2.6
+Trim Galore version: 0.6.7
+Cutadapt version: 3.4
 Python version: could not detect
-Number of cores used for trimming: 8
+Number of cores used for trimming: 2
 Quality Phred score cutoff: 20
 Quality encoding type selected: ASCII+33
 Adapter sequence: 'AGATCGGAAGAGC' (Illumina TruSeq, Sanger iPCR; auto-detected)
@@ -40,15 +40,15 @@ Minimum required adapter overlap (stringency): 1 bp
 Minimum required sequence length for both reads before a sequence pair gets removed: 20 bp
 Output file(s) will be GZIP compressed
 
-Cutadapt seems to be fairly up-to-date (version 2.6). Setting -j 8
+Cutadapt seems to be fairly up-to-date (version 3.4). Setting -j 2
 Writing final adapter and quality trimmed output to NA24631_1_trimmed.fq.gz
 
 
   >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'AGATCGGAAGAGC' from file ../../data/NA24631_1.fastq.gz <<< 
-This is cutadapt 2.6 with Python 3.7.8
-Command line parameters: -j 8 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24631_1.fastq.gz
-Processing reads on 8 cores in single-end mode ...
-Finished in 0.43 s (16 us/read; 3.86 M reads/minute).
+This is cutadapt 3.4 with Python 3.9.6
+Command line parameters: -j 2 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24631_1.fastq.gz
+Processing reads on 2 cores in single-end mode ...
+Finished in 0.80 s (29 µs/read; 2.09 M reads/minute).
 
 === Summary ===
 
@@ -62,10 +62,10 @@ Total written (filtered):      3,140,203 bp (98.5%)
 
 === Adapter 1 ===
 
-Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8390 times.
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8390 times
 
 No. of allowed errors:
-0-9 bp: 0; 10-13 bp: 1
+1-9 bp: 0; 10-13 bp: 1
 
 Bases preceding removed adapters:
   A: 31.9%
@@ -166,16 +166,16 @@ RUN STATISTICS FOR INPUT FILE: ../../data/NA24631_1.fastq.gz
 27730 sequences processed in total
 The length threshold of paired-end sequences gets evaluated later on (in the validation step)
 
-Writing report to '/home/lkemp/RezBaz2020_snakemake_workshop/leveled_up_demo_workflow/results/trimmed/NA24631_2.fastq.gz_trimming_report.txt'
+Writing report to '/home/lkemp/snakemake_workshop/demo_workflow/results/trimmed/NA24631_2.fastq.gz_trimming_report.txt'
 
 SUMMARISING RUN PARAMETERS
 ==========================
 Input filename: ../../data/NA24631_2.fastq.gz
 Trimming mode: paired-end
-Trim Galore version: 0.6.4_dev
-Cutadapt version: 2.6
+Trim Galore version: 0.6.7
+Cutadapt version: 3.4
 Python version: could not detect
-Number of cores used for trimming: 8
+Number of cores used for trimming: 2
 Quality Phred score cutoff: 20
 Quality encoding type selected: ASCII+33
 Adapter sequence: 'AGATCGGAAGAGC' (Illumina TruSeq, Sanger iPCR; auto-detected)
@@ -184,15 +184,15 @@ Minimum required adapter overlap (stringency): 1 bp
 Minimum required sequence length for both reads before a sequence pair gets removed: 20 bp
 Output file(s) will be GZIP compressed
 
-Cutadapt seems to be fairly up-to-date (version 2.6). Setting -j -j 8
+Cutadapt seems to be fairly up-to-date (version 3.4). Setting -j -j 2
 Writing final adapter and quality trimmed output to NA24631_2_trimmed.fq.gz
 
 
   >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'AGATCGGAAGAGC' from file ../../data/NA24631_2.fastq.gz <<< 
-This is cutadapt 2.6 with Python 3.7.8
-Command line parameters: -j 8 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24631_2.fastq.gz
-Processing reads on 8 cores in single-end mode ...
-Finished in 0.40 s (14 us/read; 4.20 M reads/minute).
+This is cutadapt 3.4 with Python 3.9.6
+Command line parameters: -j 2 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24631_2.fastq.gz
+Processing reads on 2 cores in single-end mode ...
+Finished in 0.79 s (29 µs/read; 2.10 M reads/minute).
 
 === Summary ===
 
@@ -206,10 +206,10 @@ Total written (filtered):      3,141,798 bp (98.0%)
 
 === Adapter 1 ===
 
-Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8803 times.
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8803 times
 
 No. of allowed errors:
-0-9 bp: 0; 10-13 bp: 1
+1-9 bp: 0; 10-13 bp: 1
 
 Bases preceding removed adapters:
   A: 33.0%

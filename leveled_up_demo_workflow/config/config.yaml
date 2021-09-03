@@ -1,2 +1,6 @@
-# File path to the reference genome (.fasta)
-REFGENOME: "/store/lkemp/publicData/b37/human_g1k_v37_decoy.fasta"
+# set software parameters for...
+PARAMS:
+  # ... fastqc
+  FASTQC: "--kmers 5"
+  # ... multiqc
+  MULTIQC: "--flat"

@@ -1312,17 +1312,17 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 
 + rule trim_galore:
-+     input:
-+         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-+     output:
-+         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-+     log:
-+         "logs/trim_galore/{sample}.log"
-+     conda:
-+         "./envs/trim_galore.yaml"
-+     threads: 2
-+     shell:
-+         "trim_galore {input} -o ../results/trimmed/ --paired --cores 2{threads} &> {log}"
++    input:
++        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
++    output:
++        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
++    log:
++        "logs/trim_galore/{sample}.log"
++    conda:
++        "./envs/trim_galore.yaml"
++    threads: 2
++    shell:
++        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
 Create conda env files
@@ -1380,7 +1380,7 @@ Notice it will run only one rule/sample at a time...why is that?
 
 **TODO**: Revise this section based on the number of cores the students will have access to per session on NeSi
 
-Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 8` (*only if you are working on a machine with this many cores! Your laptop may well not!*)
+Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 2` (*only if you are working on a machine with this many cores! Your laptop may well not!*)
 
 ```bash
 # remove output of last run

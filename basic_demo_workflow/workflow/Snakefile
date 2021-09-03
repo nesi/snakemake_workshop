@@ -46,4 +46,4 @@ rule trim_galore:
          "./envs/trim_galore.yaml"
      threads: 2
      shell:
-         "trim_galore {input} -o ../results/trimmed/ --paired --cores 2{threads} &> {log}"
+         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"

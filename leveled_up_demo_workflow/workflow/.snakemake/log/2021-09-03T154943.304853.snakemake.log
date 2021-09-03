@@ -1,0 +1,94 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+all                1              1              1
+fastqc             3              2              2
+multiqc            1              1              1
+trim_galore        3              2              2
+total              8              1              2
+
+Select jobs to execute...
+
+[Fri Sep  3 15:49:48 2021]
+Job 4: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/e2d0308d0742a040f972a4db8533f08f
+Removing temporary output file ../results/fastqc/NA24695_1_fastqc.html.
+Removing temporary output file ../results/fastqc/NA24695_2_fastqc.html.
+[Fri Sep  3 15:49:51 2021]
+Finished job 4.
+1 of 8 steps (12%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:49:51 2021]
+Job 2: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/e2d0308d0742a040f972a4db8533f08f
+Removing temporary output file ../results/fastqc/NA24631_1_fastqc.html.
+Removing temporary output file ../results/fastqc/NA24631_2_fastqc.html.
+[Fri Sep  3 15:49:55 2021]
+Finished job 2.
+2 of 8 steps (25%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:49:55 2021]
+Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/d96fc595c2ed2d4b12b2aa4fefda840e
+[Fri Sep  3 15:49:59 2021]
+Finished job 5.
+3 of 8 steps (38%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:49:59 2021]
+Job 6: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/d96fc595c2ed2d4b12b2aa4fefda840e
+[Fri Sep  3 15:50:03 2021]
+Finished job 6.
+4 of 8 steps (50%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:50:03 2021]
+Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24695.log. Using 2 threads.
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/d96fc595c2ed2d4b12b2aa4fefda840e
+[Fri Sep  3 15:50:06 2021]
+Finished job 7.
+5 of 8 steps (62%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:50:06 2021]
+Job 3: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/e2d0308d0742a040f972a4db8533f08f
+Removing temporary output file ../results/fastqc/NA24694_1_fastqc.html.
+Removing temporary output file ../results/fastqc/NA24694_2_fastqc.html.
+[Fri Sep  3 15:50:11 2021]
+Finished job 3.
+6 of 8 steps (75%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:50:11 2021]
+Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
+
+Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/23b79dd03a8f819ece68cdeb62e20782
+[Fri Sep  3 15:50:22 2021]
+Finished job 1.
+7 of 8 steps (88%) done
+Select jobs to execute...
+
+[Fri Sep  3 15:50:22 2021]
+localrule all:
+    input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz
+    jobid: 0
+    resources: tmpdir=/tmp
+
+[Fri Sep  3 15:50:22 2021]
+Finished job 0.
+8 of 8 steps (100%) done
+Complete log: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-03T154943.304853.snakemake.log
