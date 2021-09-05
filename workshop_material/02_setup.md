@@ -1,5 +1,7 @@
 # 02 - Setup
 
+<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
+
 # Table of contents
 
 - [02 - Setup](#02---setup)
@@ -137,3 +139,4 @@ See the [Git Guides](https://github.com/git-guides/git-clone) for information on
 
 <p align="left"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction.html">Previous page: 01 - Introduction</a>
 <p align="right"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html">Next page: 03 - Create a basic workflow</a>
+<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>

@@ -1,5 +1,7 @@
 # 03 - Create a basic workflow
 
+<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
+
 # Table of contents
 
 - [03 - Create a basic workflow](#03---create-a-basic-workflow)
@@ -1492,3 +1494,4 @@ See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workfl
 
 <p align="left"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html">Previous page: 02 - Setup</a>
 <p align="right"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html">Next page: 04 - Leveling up your workflow!</a>
+<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
