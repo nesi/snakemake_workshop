@@ -1,7 +1,5 @@
 # 04 - Leveling up your workflow!
 
-<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
-
 # Table of contents
 
 - [04 - Leveling up your workflow!](#04---leveling-up-your-workflow)

@@ -1,7 +1,5 @@
 # 03 - Create a basic workflow
 
-<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
-
 # Table of contents
 
 - [03 - Create a basic workflow](#03---create-a-basic-workflow)

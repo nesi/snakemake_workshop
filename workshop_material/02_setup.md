@@ -1,7 +1,5 @@
 # 02 - Setup
 
-<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
-
 # Table of contents
 
 - [02 - Setup](#02---setup)
