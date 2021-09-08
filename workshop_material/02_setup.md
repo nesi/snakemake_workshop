@@ -132,6 +132,7 @@ Now we can see which conda environment we are in on the command line, `(base)` h
 ## Clone this repo
 
 To clone this repo (and use the example data I have provided), you will need to have git installed. See [this guide](https://www.atlassian.com/git/tutorials/install-git) for help with an installation of git.
+Note that git is already installed on NeSI.
 
 Once git is installed, clone this repo with the following:
 
