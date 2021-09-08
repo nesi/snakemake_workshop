@@ -22,19 +22,9 @@ Choose between this section and [Setup for running on your machine](#setup-for-r
 
 ### Connect to Jupyter on NeSI
 
-<img src="images/nesi_login_screen.png" alt="login screen" width="700"/>
-
-Connect to [Jupyter on NeSI](https://jupyter.nesi.org.nz/) and login with your **NeSI HPC account** credentials (username, password and second factor as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account)).
-
-<img src="images/nesi_server_options.png" alt="server options" width="700"/>
-
-You should find yourself at the "Server Options" screen, where you can select a project code and resources for your Jupyter session:
-
-- you should be able to select the NeSI training project (nesi99991)
-- select a walltime of 8 hours
-- leave the other settings at their default values
-
-Click "Start", wait for your Jupyter session to be launched and you should find yourself in JupyterLab.
+1. Follow https://jupyter.nesi.org.nz/hub/login
+2. <p>Enter NeSI username, HPC password and 6 digit second factor token (as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account))<br><img src="nesi_images/jupyter_login_labels_updated.png" alt="drawing" width="720"/></p>
+3. <p>Choose server options as below<br><img src="nesi_images/nesi99991_screenshot.png" alt="drawing" width="700"/></p>
 
 From the launcher within JupyterLab you can select the "Terminal" button to launch a terminal session.
 
