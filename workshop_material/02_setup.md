@@ -22,8 +22,8 @@ Choose between this section and [Setup for running on your machine](#setup-on-yo
 ### Connect to Jupyter on NeSI
 
 1. Follow https://jupyter.nesi.org.nz/hub/login
-2. <p>Enter NeSI username, HPC password and 6 digit second factor token<br><img src="" alt="drawing" width="720"/></p>
-3. <p>Choose server options as below<br><img src="workshop_material/images/nesi99991_screenshot.png" alt="drawing" width="700"/></p>
+2. <p>Enter NeSI username, HPC password and 6 digit second factor token<br><img src="/home/dinindu/Documents/GitHub/snakemake_workshop/workshop_material/nesi_images/jupyter_login_labels_updated.png" alt="drawing" width="720"/></p>
+3. <p>Choose server options as below<br><img src="/home/dinindu/Documents/GitHub/snakemake_workshop/workshop_material/nesi_images/nesi99991_screenshot.png" alt="drawing" width="700"/></p>
 
 
 Connect to [Jupyter on NeSI](https://jupyter.nesi.org.nz/) and login with your **NeSI HPC account** credentials (username, password and second factor as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account)).
