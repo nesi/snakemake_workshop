@@ -46,8 +46,9 @@ cd
 On NeSI we have lots of software preinstalled to simplify things for our users. To load Miniconda run the following in the terminal:
 
 ```bash
-ml purge
-ml Miniconda
+module purge
+module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
 ```
 
 Next, [set up your channels](https://bioconda.github.io/user/install.html#set-up-channels) (channels are locations where packages/software are can be installed from)
