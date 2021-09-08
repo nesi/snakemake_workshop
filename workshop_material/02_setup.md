@@ -17,7 +17,7 @@
 
 ## Setup for running on NeSI
 
-Choose between this section and [Setup for running on your machine](#setup-on-your-machine) (don't do both).
+Choose between this section and [Setup for running on your machine](#setup-for-running-on-your-machine) (don't do both).
 
 ### Connect to Jupyter on NeSI
 
@@ -61,7 +61,7 @@ conda config --add channels conda-forge
 **TODO**: setup conda to install to project dir??? other conda config???
 
 
-Continue to [Create a conda environment](#creating-a-conda-environment).
+Continue to [Create a conda environment](#create-a-conda-environment).
 
 
 ## Setup for running on your machine
