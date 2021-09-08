@@ -106,7 +106,7 @@ Within the `workflow` directory (where we will create and run our workflow), we 
 
 First lets run the first step in our workflow ([fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)) directly on the command line to get the syntax of the command right and check what outputs files we expect to get. Knowing what files the software will output is important for Snakemake since it is a lazy "pull" based system where software/rules will only run if you tell it to create the output file. We will talk more about this later!
 
-First install [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) into our `snakemake_env` conda environment
+First install [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) into our `snakemake_env` conda environment (skip this step on NeSI)
 
 ```bash
 conda install fastqc

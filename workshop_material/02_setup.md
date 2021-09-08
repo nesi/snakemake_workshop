@@ -17,24 +17,23 @@
 
 ## Setup for running on NeSI
 
-Choose between this section and [Setup for running on your machine](#setup-on-your-machine) (don't do both).
+Choose between this section and [Setup for running on your machine](#setup-for-running-on-your-machine) (don't do both).
 
 ### Connect to Jupyter on NeSI
 
 1. Follow https://jupyter.nesi.org.nz/hub/login
-2. <p>Enter NeSI username, HPC password and 6 digit second factor token<br><img src="https://github.com/DininduSenanayake/snakemake_workshop/blob/main/workshop_material/nesi_images/jupyter_login_labels_updated.png" alt="drawing" width="720"/></p>
-3. <p>Choose server options as below<br><img src="https://github.com/DininduSenanayake/snakemake_workshop/blob/main/workshop_material/nesi_images/nesi99991_screenshot.png" alt="drawing" width="700"/></p>
-
-
-Connect to [Jupyter on NeSI](https://jupyter.nesi.org.nz/) and login with your **NeSI HPC account** credentials (username, password and second factor as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account)).
-
+2. <p>Enter NeSI username, HPC password and 6 digit second factor token (as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account))<br><img src="nesi_images/jupyter_login_labels_updated.png" alt="drawing" width="720"/></p>
+3. <p>Choose server options as below<br><img src="nesi_images/nesi99991_screenshot.png" alt="drawing" width="700"/></p>
 
 From the launcher within JupyterLab you can select the "Terminal" button to launch a terminal session.
 
-When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, first switch to your home directory in the terminal:
+**TODO: add a screenshot of the terminal button in the launcher**
+
+When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, you should change to another location. Here we will switch to our project directory, since home directories can run out of space quickly.
 
 ```bash
-cd
+mkdir -p /nesi/project/nesi99991/snakemake20210914/$USER
+cd /nesi/project/nesi99991/snakemake20210914/$USER
 ```
 
 ### Setting up Miniconda
@@ -42,8 +41,9 @@ cd
 On NeSI we have lots of software preinstalled to simplify things for our users. To load Miniconda run the following in the terminal:
 
 ```bash
-ml purge
-ml Miniconda
+module purge
+module load Miniconda3
+source $(conda info --base)/etc/profile.d/conda.sh
 ```
 
 Next, [set up your channels](https://bioconda.github.io/user/install.html#set-up-channels) (channels are locations where packages/software are can be installed from)
@@ -54,11 +54,7 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-**TODO**: setup conda to install to project dir??? other conda config???
-
-
-Continue to [Create a conda environment](#creating-a-conda-environment).
-
+Continue to [Create a conda environment](#create-a-conda-environment).
 
 ## Setup for running on your machine
 
@@ -91,7 +87,7 @@ With Miniconda, we can create a conda environment which acts as a space containe
 Create a conda environment (called `snakemake_env`) that has Snakemake installed (and all it's dependant software)
 
 ```bash
-conda create -n snakemake_env snakemake
+conda create -n snakemake_env snakemake mamba
 ```
 
 Respond yes to the following prompt to install the necessary software in the new conda environment:
@@ -118,9 +114,8 @@ Now we can see which conda environment we are in on the command line, `(base)` h
 
 ## Clone this repo
 
-**TODO**: Provide instructions for loading a git module on NeSi?
-
 To clone this repo (and use the example data I have provided), you will need to have git installed. See [this guide](https://www.atlassian.com/git/tutorials/install-git) for help with an installation of git.
+Note that git is already installed on NeSI.
 
 Once git is installed, clone this repo with the following:
 
