@@ -7,11 +7,12 @@
   - [Setup for running on NeSI](#setup-for-running-on-nesi)
     - [Connect to Jupyter on NeSI](#connect-to-jupyter-on-nesi)
     - [Setting up Miniconda](#setting-up-miniconda)
+    - [Activate the conda environment](#activate-the-conda-environment)
   - [Setup for running on your machine](#setup-for-running-on-your-machine)
     - [Install Miniconda](#install-miniconda)
       - [Check your OS](#check-your-os)
       - [Installing miniconda](#installing-miniconda)
-  - [Create a conda environment](#create-a-conda-environment)
+    - [Create a conda environment](#create-a-conda-environment)
   - [Clone this repo](#clone-this-repo)
 
 
@@ -51,18 +52,21 @@ module load Miniconda3
 source $(conda info --base)/etc/profile.d/conda.sh
 ```
 
-Next, [set up your channels](https://bioconda.github.io/user/install.html#set-up-channels) (channels are locations where packages/software are can be installed from)
+### Activate the conda environment
 
-```bash
-conda config --add channels defaults
-conda config --add channels bioconda
-conda config --add channels conda-forge
+A conda environment containing has already been created and contains all needed dependencies for this workshop.
+
+Activate this conda environment using
+```
+conda activate /nesi/project/nesi99991/snakemake20210914/snakemake_env
 ```
 
-**TODO**: setup conda to install to project dir??? other conda config???
+We can see which conda environment we are in on the command line, the `bash-4.2$` has been replaced with
+```
+(/nesi/project/nesi99991/snakemake20210914/snakemake_env) bash-4.2$
+```
 
-
-Continue to [Create a conda environment](#create-a-conda-environment).
+Continue to [Clone this repo](#clone-this-repo).
 
 
 ## Setup for running on your machine
@@ -89,7 +93,7 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-## Create a conda environment
+### Create a conda environment
 
 With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
 
