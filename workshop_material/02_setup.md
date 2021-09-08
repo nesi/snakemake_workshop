@@ -22,9 +22,11 @@ Choose between this section and [Setup for running on your machine](#setup-for-r
 
 ### Connect to Jupyter on NeSI
 
-**TODO**: add some screenshots??
+<img src="images/nesi_login_screen.png" alt="login screen" width="700"/>
 
 Connect to [Jupyter on NeSI](https://jupyter.nesi.org.nz/) and login with your **NeSI HPC account** credentials (username, password and second factor as set on [MyNeSI](https://my.nesi.org.nz/account/hpc-account)).
+
+<img src="images/nesi_server_options.png" alt="server options" width="700"/>
 
 You should find yourself at the "Server Options" screen, where you can select a project code and resources for your Jupyter session:
 
@@ -35,6 +37,8 @@ You should find yourself at the "Server Options" screen, where you can select a 
 Click "Start", wait for your Jupyter session to be launched and you should find yourself in JupyterLab.
 
 From the launcher within JupyterLab you can select the "Terminal" button to launch a terminal session.
+
+**TODO: add a screenshot of the terminal button in the launcher**
 
 When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, first switch to your home directory in the terminal:
 
