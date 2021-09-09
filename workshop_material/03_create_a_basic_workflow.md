@@ -1485,6 +1485,12 @@ Run your snakemake workflow (using conda to install your software) with:
 snakemake --cores 2 --use-conda
 ```
 
+Run your snakemake workflow using multiple jobs on NeSI:
+
+```bash
+snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
+```
+
 Create a global wildcard to get process all your samples in a directory with:
 
 ```bash
