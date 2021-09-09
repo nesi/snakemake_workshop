@@ -6,12 +6,13 @@
 - [Table of contents](#table-of-contents)
   - [Setup for running on NeSI](#setup-for-running-on-nesi)
     - [Connect to Jupyter on NeSI](#connect-to-jupyter-on-nesi)
-    - [Setting up Miniconda](#setting-up-miniconda)
+    - [Setting up Miniconda on NeSI](#setting-up-miniconda-on-nesi)
+    - [Create a conda environment on NeSI](#create-a-conda-environment-on-nesi)
   - [Setup for running on your machine](#setup-for-running-on-your-machine)
     - [Install Miniconda](#install-miniconda)
       - [Check your OS](#check-your-os)
       - [Installing miniconda](#installing-miniconda)
-  - [Create a conda environment](#create-a-conda-environment)
+    - [Create a conda environment](#create-a-conda-environment)
   - [Clone this repo](#clone-this-repo)
 
 
@@ -29,14 +30,14 @@ From the launcher within JupyterLab you can select the "Terminal" button to laun
 
 **TODO: add a screenshot of the terminal button in the launcher**
 
-When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, you should change to another location. Here we will switch to our project directory, since home directories can run out of space quickly.
+When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, you should change to another location. Here we will switch to our project directory, since home directories can run out of space quickly. If you are using your own project use that instead of "nesi99991".
 
 ```bash
 mkdir -p /nesi/project/nesi99991/snakemake20210914/$USER
 cd /nesi/project/nesi99991/snakemake20210914/$USER
 ```
 
-### Setting up Miniconda
+### Setting up Miniconda on NeSI
 
 On NeSI we have lots of software preinstalled to simplify things for our users. To load Miniconda run the following in the terminal:
 
@@ -54,7 +55,39 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-Continue to [Create a conda environment](#create-a-conda-environment).
+### Create a conda environment on NeSI
+
+With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
+
+Create a conda environment (called `snakemake_env`) that has Snakemake installed (and all it's dependant software). The `--prefix snakemake_env` argument tells conda to create the environment within the current directory rather than the default which would be in your home directory (on NeSI we have quotas on home directories and conda environments can quickly fill it up).
+
+```bash
+conda create --prefix snakemake_env snakemake mamba
+```
+
+Respond yes to the following prompt to install the necessary software in the new conda environment:
+
+```bash
+Proceed ([y]/n)?
+```
+
+**Note. this installed Snakemake version 6.7.0 for me, you can use the same version this workshop was created with `conda create -n snakemake_env snakemake=6.7.0`**
+
+Activate the conda environment we just created
+
+```bash
+conda activate ./snakemake_env
+```
+
+Now we can see which conda environment we are in on the command line, `(base)` has been replaced with `(/path/to/snakemake_env)`
+
+```bash
+(/path/to/snakemake_env) orac$ 
+```
+
+*Snakemake has been installed within your `snakemake_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
+
+Continue to [Clone this repo](#clone-this-repo).
 
 ## Setup for running on your machine
 
@@ -80,7 +113,7 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
-## Create a conda environment
+### Create a conda environment
 
 With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
 
