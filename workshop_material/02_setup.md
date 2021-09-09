@@ -28,7 +28,7 @@ Choose between this section and [Setup for running on your machine](#setup-for-r
 
 From the launcher within JupyterLab you can select the "Terminal" button to launch a terminal session.
 
-**TODO: add a screenshot of the terminal button in the launcher**
+<img src="nesi_images/jupyterLauncher.png" alt="terminal" width="500"/>
 
 When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, you should change to another location. Here we will switch to our project directory, since home directories can run out of space quickly. If you are using your own project use that instead of "nesi99991".
 
