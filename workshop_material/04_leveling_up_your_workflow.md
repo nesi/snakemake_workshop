@@ -5,6 +5,7 @@
 - [04 - Leveling up your workflow!](#04---leveling-up-your-workflow)
 - [Table of contents](#table-of-contents)
   - [Catching up](#catching-up)
+  - [4.0 Use a profile for HPC](#40-use-a-profile-for-hpc)
   - [4.1 Pull out parameters](#41-pull-out-parameters)
   - [4.2 Pull out user configurable options](#42-pull-out-user-configurable-options)
   - [4.3 Leave messages for the user](#43-leave-messages-for-the-user)
@@ -70,6 +71,66 @@ rule trim_galore:
      shell:
          "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
+
+## 4.0 Use a profile for HPC
+
+**TODO add link to 3.16**
+
+In section 3.16, we have seen that a snakemake workflow can be run on an HPC cluster.
+To reduce the boilerplate, we can use a [configuration profile](https://snakemake.readthedocs.io/en/stable/executing/cli.html#profiles) to configure default options.
+In this case, we use it to set the `--cluster` and the `--jobs` options.
+
+Make a `slurm` profile folder
+
+```bash
+# create the profile folder
+mkdir slurm
+touch slurm/config.yaml
+
+# write the following to config.yaml
+jobs: 20
+cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
+```
+
+Then run the snakemake workflow using the `slurm` profile
+
+```bash
+# remove output of last run
+rm -r ../results/*
+
+# run dryrun/run again
+snakemake --dryrun --profile slurm --use-conda
+snakemake --profile slurm --use-conda
+```
+
+You can specify different resources (memory, cpus, gpus, etc.) for each target in the workflow and refer to them in the `cluster` option using placeholders.
+Default resources for all rules can also be set using the `default-resources` option.
+
+Update the profile `slurm/config.yaml` file as follows
+
+```diff
+jobs: 20
+- cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
++ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus}"
++ default-resources: [cpus=2, mem_mb=512, time_min=10]
+```
+
+and add resources definitions in the workflow
+
+**TODO diff to add CPUs for 2 targets**
+
+Run the workflow again
+
+```bash
+# remove output of last run
+rm -r ../results/*
+
+# run dryrun/run again
+snakemake --dryrun --profile slurm --use-conda
+snakemake --profile slurm --use-conda
+```
+
+**TODO how to get feedback about these changes?**
 
 ## 4.1 Pull out parameters
 

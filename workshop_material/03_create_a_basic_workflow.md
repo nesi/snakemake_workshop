@@ -1412,6 +1412,8 @@ rm -r ../results/*
 snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
 ```
 
+**TODO add a note about squeue? links to NeSI doc? mention to run on login node?**
+
 <p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
 ![parallel computing](https://lh6.googleusercontent.com/P6_hUEcjxQLhnVwAHYw-ptCZID1SOi_Mjz1LsM_V7QAqzkZKdVyiN_eSZanZ6QU6mcMaQDjzfimLR12azcnnLA5fUVPdg7jwxI19rNaY2P8aAHLsyx_6z46wlgegIXtVGf3pCnRS)
