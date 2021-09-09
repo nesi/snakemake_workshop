@@ -55,6 +55,12 @@ conda config --add channels bioconda
 conda config --add channels conda-forge
 ```
 
+To save your [home storage](https://support.nesi.org.nz/hc/en-gb/articles/360000177256-NeSI-File-Systems-and-Quotas), configure an alternative storage for the downloaded packages
+
+```bash
+conda config --add pkgs_dirs /nesi/project/nesi99991/snakemake20210914/$USER/conda_pkgs
+```
+
 ### Create a conda environment on NeSI
 
 With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
