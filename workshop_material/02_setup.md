@@ -85,10 +85,10 @@ Activate the conda environment we just created
 conda activate ./snakemake_env
 ```
 
-Now we can see which conda environment we are in on the command line, `(base)` has been replaced with `(/path/to/snakemake_env)`
+Now we can see which conda environment we are in on the command line, `bash-4.2$` has been replaced with `(/path/to/snakemake_env) bash-4.2$`
 
 ```bash
-(/path/to/snakemake_env) orac$ 
+(/path/to/snakemake_env) bash-4.2$
 ```
 
 *Snakemake has been installed within your `snakemake_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
