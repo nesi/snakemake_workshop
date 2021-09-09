@@ -19,6 +19,7 @@
   - [3.13 More about Snakemake's lazy behaviour](#313-more-about-snakemakes-lazy-behaviour)
   - [3.14 Add even more rules](#314-add-even-more-rules)
   - [3.15 Throw it more cores](#315-throw-it-more-cores)
+  - [3.16 Throw it even more cores](#316-throw-it-even-more-cores)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
 - [Our final snakemake workflow!](#our-final-snakemake-workflow)
@@ -1393,7 +1394,23 @@ snakemake --cores 32 --use-conda
 
 Notice it ran alot faster and there were more samples and rules running at one time. This is because we set each rule to run with 8 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 8 with the `--cores 8` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 32 with `--cores 32`, up to 4 samples could be run through .
 
-With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you can start to REALLY scale up.
+## 3.16 Throw it even more cores
+
+With a high performance cluster (HPC) such as [NeSi](https://www.nesi.org.nz/), you can start to REALLY scale up.
+
+To run the workflow on the cluster, we need to ensure that each step is run as a dedicated job in the queuing system of the HPC. On NeSI, the queuing system is managed by [Slurm](https://slurm.schedmd.com/documentation.html).
+
+Use the `--cluster` option to specify the job submission command, using `sbatch` on NeSI.
+This command defines resources used for each job (maximum time, memory, number of cores...).
+In addition, you need to specify a maximum number of concurrent jobs using `--jobs`.
+
+```bash
+# remove output of last run
+rm -r ../results/*
+
+# run again on the cluster
+snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
+```
 
 <p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
