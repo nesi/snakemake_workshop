@@ -1379,22 +1379,20 @@ Notice it will run only one rule/sample at a time...why is that?
 
 ## 3.15 Throw it more cores
 
-**TODO**: Revise this section based on the number of cores the students will have access to per session on NeSi
-
-Run again allowing Snakemake to use more cores overall `--cores 32` rather than `--cores 2` (*only if you are working on a machine with this many cores! Your laptop may well not!*)
+Run again allowing Snakemake to use more cores overall `--cores 4` rather than `--cores 2`
 
 ```bash
 # remove output of last run
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 32 --use-conda
-snakemake --cores 32 --use-conda
+snakemake --dryrun --cores 4 --use-conda
+snakemake --cores 4 --use-conda
 ```
 
-Notice it ran alot faster and there were more samples and rules running at one time. This is because we set each rule to run with 8 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 8 with the `--cores 8` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 32 with `--cores 32`, up to 4 samples could be run through .
+Notice the whole workflow ran alot faster and several samples/files/rules were running at one time. This is because we set each rule to run with 2 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 2 with the `--cores 2` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 4 with `--cores 4`, up to 2 samples could be run through at one time.
 
-With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you can start to REALLY scale up.
+With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you can start to REALLY scale up, particularly when you have many samples to analyse or files to process. This is because the number of cores available in a HPC is HUGE compared to a laptop or even an high end server.
 
 <p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
@@ -1484,7 +1482,7 @@ expand("../results/{sample}_1.fastq.gz", sample = SAMPLES)
 Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores to be used at one time with the `--cores` command
 
 ```bash
-snakemake --cores 32 --use-conda
+snakemake --cores 4 --use-conda
 ```
 
 # Our final snakemake workflow!
