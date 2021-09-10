@@ -76,6 +76,12 @@ Proceed ([y]/n)?
 
 **Note. this installed Snakemake version 6.7.0 for me, you can use the same version this workshop was created with `conda create -n snakemake_env snakemake=6.7.0`**
 
+Change default conda prompt to the environment name.  (The default prompt would include the entire directory path)
+
+```bash
+conda config --set env_prompt '({name})'
+```
+
 Activate the conda environment we just created
 
 ```bash
@@ -85,7 +91,7 @@ conda activate ./snakemake_env
 Now we can see which conda environment we are in on the command line, `bash-4.2$` has been replaced with `(/path/to/snakemake_env) bash-4.2$`
 
 ```bash
-(/path/to/snakemake_env) bash-4.2$
+(snakemake_env) bash-4.2$
 ```
 
 *Snakemake has been installed within your `snakemake_env` environment, so you won't be able to see or use your Snakemake install unless you are within this environment*
