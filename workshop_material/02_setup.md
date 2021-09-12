@@ -34,7 +34,11 @@ mkdir -p /nesi/project/nesi99991/snakemake20210914/$USER
 cd /nesi/project/nesi99991/snakemake20210914/$USER
 ```
 
+You can also navigate to the above directory in the JupyterLab file browser, which can be useful for editing files and viewing images and html documents.
+
 ### Setting up Miniconda on NeSI
+
+We will now configure conda. Note that this will change your existing conda configuration if you already have one. In that case, we recommend you rename your current conda configuration file (`mv ~/.condarc ~/.condarc.bkp`) and then restore it after the workshop (`mv ~/.condarc.bkp ~/.condarc`).
 
 On NeSI we have lots of software preinstalled to simplify things for our users. To load Miniconda run the following in the terminal:
 
@@ -58,6 +62,14 @@ To save your [home storage](https://support.nesi.org.nz/hc/en-gb/articles/360000
 conda config --add pkgs_dirs /nesi/nobackup/nesi99991/conda_pkgs/$USER
 ```
 
+Note that the above uses the nesi99991 (training project) nobackup directory for the package cache. After this workshop you can change this to your own project by editing `~/.condarc`.
+
+Change the default conda prompt to the environment name (the default prompt would include the entire directory path)
+
+```bash
+conda config --set env_prompt '({name})'
+```
+
 ### Create a conda environment on NeSI
 
 With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
@@ -75,12 +87,6 @@ Proceed ([y]/n)?
 ```
 
 **Note. this installed Snakemake version 6.7.0 for me, you can use the same version this workshop was created with `conda create -n snakemake_env snakemake=6.7.0`**
-
-Change default conda prompt to the environment name.  (The default prompt would include the entire directory path)
-
-```bash
-conda config --set env_prompt '({name})'
-```
 
 Activate the conda environment we just created
 
@@ -126,10 +132,10 @@ conda config --add channels conda-forge
 
 With Miniconda, we can create a conda environment which acts as a space contained from the rest of the machine in which our workflow will automatically install all the necessary software it uses, supporting the portability and reproducibility of your workflow.
 
-Create a conda environment (called `snakemake_env`) that has Snakemake installed (and all it's dependant software)
+Create a conda environment (called `snakemake_env`) that has Snakemake installed (and all it's dependant software) and git (which will be used to clone this repository later)
 
 ```bash
-conda create -n snakemake_env snakemake mamba
+conda create -n snakemake_env snakemake mamba git
 ```
 
 Respond yes to the following prompt to install the necessary software in the new conda environment:
@@ -156,10 +162,7 @@ Now we can see which conda environment we are in on the command line, `(base)` h
 
 ## Clone this repo
 
-To clone this repo (and use the example data I have provided), you will need to have git installed. See [this guide](https://www.atlassian.com/git/tutorials/install-git) for help with an installation of git.
-Note that git is already installed on NeSI.
-
-Once git is installed, clone this repo with the following:
+Clone this repo with the following:
 
 ```bash
 git clone https://github.com/nesi/snakemake_workshop.git
