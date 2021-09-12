@@ -221,7 +221,7 @@ rule fastqc:
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     log:
         "logs/fastqc/{sample}.log"
-    threads: 8
+    threads: 2
     conda:
         "envs/fastqc.yaml"
     shell:
@@ -250,7 +250,7 @@ rule trim_galore:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
-    threads: 8
+    threads: 2
     shell:
 -       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 +       "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
@@ -327,7 +327,7 @@ rule fastqc:
 +       fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
     log:
         "logs/fastqc/{sample}.log"
-    threads: 8
+    threads: 2
     conda:
         "envs/fastqc.yaml"
     shell:
@@ -360,7 +360,7 @@ rule trim_galore:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
-    threads: 8
+    threads: 2
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
@@ -455,7 +455,7 @@ rule trim_galore:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
-    threads: 8
+    threads: 2
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
@@ -541,7 +541,7 @@ rule trim_galore:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
-    threads: 8
+    threads: 2
 +   message:
 +     "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
@@ -679,7 +679,7 @@ rule trim_galore:
         "logs/trim_galore/{sample}.log"
     conda:
         "./envs/trim_galore.yaml"
-    threads: 8
+    threads: 2
     message:
       "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
