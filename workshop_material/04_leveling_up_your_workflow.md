@@ -5,13 +5,13 @@
 - [04 - Leveling up your workflow!](#04---leveling-up-your-workflow)
 - [Table of contents](#table-of-contents)
   - [Catching up](#catching-up)
-  - [4.0 Use a profile for HPC](#40-use-a-profile-for-hpc)
-  - [4.1 Pull out parameters](#41-pull-out-parameters)
-  - [4.2 Pull out user configurable options](#42-pull-out-user-configurable-options)
-  - [4.3 Leave messages for the user](#43-leave-messages-for-the-user)
-  - [4.4 Create temporary files](#44-create-temporary-files)
-  - [4.5 Generating a snakemake report](#45-generating-a-snakemake-report)
-  - [4.6 Linting your workflow](#46-linting-your-workflow)
+  - [4.1 Use a profile for HPC](#41-use-a-profile-for-hpc)
+  - [4.2 Pull out parameters](#42-pull-out-parameters)
+  - [4.3 Pull out user configurable options](#43-pull-out-user-configurable-options)
+  - [4.4 Leave messages for the user](#44-leave-messages-for-the-user)
+  - [4.5 Create temporary files](#45-create-temporary-files)
+  - [4.6 Generating a snakemake report](#46-generating-a-snakemake-report)
+  - [4.7 Linting your workflow](#47-linting-your-workflow)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
 - [Our final snakemake workflow!](#our-final-snakemake-workflow)
@@ -72,7 +72,7 @@ rule trim_galore:
          "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
-## 4.0 Use a profile for HPC
+## 4.1 Use a profile for HPC
 
 **TODO add link to 3.16**
 
@@ -199,7 +199,7 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 
 **TODO add a note about login node to run Snakemake?**
 
-## 4.1 Pull out parameters
+## 4.2 Pull out parameters
 
 ```diff
 # define samples from data directory using wildcards
@@ -266,7 +266,7 @@ rm -r ../results/*
 snakemake --dryrun --cores 2 --use-conda
 ```
 
-## 4.2 Pull out user configurable options
+## 4.3 Pull out user configurable options
 
 We can separate the user configurable options away from the workflow. This supports reproducibility by minimising the chance the user makes changes to the core workflow.
 
@@ -473,7 +473,7 @@ rm -r ../results/*
 - snakemake --cores 2 --use-conda --configfile ../config/config.yaml
 ```
 
-## 4.3 Leave messages for the user
+## 4.4 Leave messages for the user
 
 We can provide the user of our workflow more information on what is happening at each stage/rule of our workflow via the `message:` directive. We are able to call many variables such as:
 
@@ -588,7 +588,7 @@ Job 4: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../da
 Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
 ```
 
-## 4.4 Create temporary files
+## 4.5 Create temporary files
 
 In our workflow, we are likely to be creating files that we don't want, but are used or produced by our workflow (intermediate files). We can mark such files as temporary so Snakemake will remove the file once it doesn't need to use it anymore.
 
@@ -717,7 +717,7 @@ total 4.5M
 
 *This become particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scaleable when our data becomes big data.*
 
-## 4.5 Generating a snakemake report
+## 4.6 Generating a snakemake report
 
 With Snakemake, we can automatically generate detailed self-contained HTML reports after we run our workflow with the following command:
 
@@ -740,7 +740,7 @@ These reports are highly configurable, have a look at an example of what can be 
 
 *See more information on creating Snakemake reports [in the Snakemake documentation](https://snakemake.readthedocs.io/en/stable/snakefiles/reporting.html)*
 
-## 4.6 Linting your workflow
+## 4.7 Linting your workflow
 
 Snakemake has a built in linter to support you building best practice workflows, let's try it out:
 
