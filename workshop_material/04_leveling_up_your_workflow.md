@@ -59,17 +59,17 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 
 rule trim_galore:
-     input:
-         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-     output:
-         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-     log:
-         "logs/trim_galore/{sample}.log"
-     conda:
-         "./envs/trim_galore.yaml"
-     threads: 2
-     shell:
-         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    log:
+        "logs/trim_galore/{sample}.log"
+    conda:
+        "./envs/trim_galore.yaml"
+    threads: 2
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
 ## 4.1 Use a profile for HPC
@@ -157,19 +157,19 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 
 rule trim_galore:
-     input:
-         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-     output:
-         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-     log:
-         "logs/trim_galore/{sample}.log"
-     conda:
-         "./envs/trim_galore.yaml"
-     threads: 2
-+    resources:
-+        cpus=8
-     shell:
-         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    log:
+        "logs/trim_galore/{sample}.log"
+    conda:
+        "./envs/trim_galore.yaml"
+    threads: 2
++   resources:
++       cpus=8
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
 Run the workflow again
@@ -251,6 +251,8 @@ rule trim_galore:
     conda:
         "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
     shell:
 -       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 +       "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
@@ -361,6 +363,8 @@ rule trim_galore:
     conda:
         "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
@@ -456,6 +460,8 @@ rule trim_galore:
     conda:
         "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
@@ -542,8 +548,10 @@ rule trim_galore:
     conda:
         "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
 +   message:
-+     "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
++       "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
@@ -681,7 +689,7 @@ rule trim_galore:
         "./envs/trim_galore.yaml"
     threads: 2
     message:
-      "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
+        "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
