@@ -115,9 +115,62 @@ jobs: 20
 + default-resources: [cpus=2, mem_mb=512, time_min=10]
 ```
 
-and add resources definitions in the workflow
+and add resources definitions in the workflow.
+Here we give more CPU resources to `trim_galore` to make it run faster.
 
-**TODO diff to add CPUs for 2 targets**
+```diff
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    conda:
+        "envs/fastqc.yaml"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    conda:
+        "envs/multiqc.yaml"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+
+rule trim_galore:
+     input:
+         ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+     output:
+         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+     log:
+         "logs/trim_galore/{sample}.log"
+     conda:
+         "./envs/trim_galore.yaml"
+     threads: 2
++    resources:
++        cpus=8
+     shell:
+         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+```
 
 Run the workflow again
 
@@ -130,7 +183,21 @@ snakemake --dryrun --profile slurm --use-conda
 snakemake --profile slurm --use-conda
 ```
 
-**TODO how to get feedback about these changes?**
+If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
+
+My output:
+
+```
+JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
+22278374      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn018
+22278375      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
+22278376      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
+22278377      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
+22278378      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
+22278379      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
+```
+
+**TODO add a note about login node to run Snakemake?**
 
 ## 4.1 Pull out parameters
 
