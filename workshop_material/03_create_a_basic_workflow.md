@@ -1415,7 +1415,23 @@ rm -r ../results/*
 snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
 ```
 
-**TODO add a note about squeue? links to NeSI doc? mention to run on login node?**
+If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
+
+```bash
+squeue -u your_nesi_login
+```
+
+where `your_nesi_login` needs to be replace with your actual NeSI login.
+
+An additional trick is to use the `watch` command to repeatly call any command in the terminal, giving you a lightweigth monitoring tools ;-).
+Here we will use it to see your jobs gets queued and executed in real time:
+
+```bash
+watch squeue -u your_nesi_login
+```
+
+You can exit the view create by `watch` by presisng CTRL+C.
+
 
 # Takeaways
 
