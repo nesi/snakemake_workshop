@@ -1079,9 +1079,9 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
 rule multiqc:
-     input:
--        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    input:
+-       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
     log:
@@ -1128,7 +1128,7 @@ rule all:
 -       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
 -       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
 -       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-       "../results/multiqc_report.html"
+        "../results/multiqc_report.html"
 
 # workflow
 rule fastqc:
