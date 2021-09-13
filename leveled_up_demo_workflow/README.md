@@ -3,6 +3,7 @@ This is a 'final leveled up demo workflow' that should have been created by foll
 - `./workflow/Snakefile`
 - `./workflow/envs/`
 - `./workflow/config/`
+- `./workflow/slurm/`
 
 It also includes all the **outputs** that are produced by running the workflow:
 

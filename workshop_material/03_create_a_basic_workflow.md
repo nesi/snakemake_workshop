@@ -19,6 +19,7 @@
   - [3.13 More about Snakemake's lazy behaviour](#313-more-about-snakemakes-lazy-behaviour)
   - [3.14 Add even more rules](#314-add-even-more-rules)
   - [3.15 Throw it more cores](#315-throw-it-more-cores)
+  - [3.16 Throw it even more cores](#316-throw-it-even-more-cores)
 - [Takeaways](#takeaways)
 - [Summary commands](#summary-commands)
 - [Our final snakemake workflow!](#our-final-snakemake-workflow)
@@ -1078,9 +1079,9 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
 rule multiqc:
-     input:
--        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    input:
+-       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
     log:
@@ -1127,7 +1128,7 @@ rule all:
 -       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
 -       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
 -       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-       "../results/multiqc_report.html"
+        "../results/multiqc_report.html"
 
 # workflow
 rule fastqc:
@@ -1392,11 +1393,45 @@ snakemake --cores 4 --use-conda
 
 Notice the whole workflow ran alot faster and several samples/files/rules were running at one time. This is because we set each rule to run with 2 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 2 with the `--cores 2` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 4 with `--cores 4`, up to 2 samples could be run through at one time.
 
+## 3.16 Throw it even more cores
+
 With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you can start to REALLY scale up, particularly when you have many samples to analyse or files to process. This is because the number of cores available in a HPC is HUGE compared to a laptop or even an high end server.
 
 <p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
 ![parallel computing](https://lh6.googleusercontent.com/P6_hUEcjxQLhnVwAHYw-ptCZID1SOi_Mjz1LsM_V7QAqzkZKdVyiN_eSZanZ6QU6mcMaQDjzfimLR12azcnnLA5fUVPdg7jwxI19rNaY2P8aAHLsyx_6z46wlgegIXtVGf3pCnRS)
+
+To run the workflow on the cluster, we need to ensure that each step is run as a dedicated job in the queuing system of the HPC. On NeSI, the queuing system is managed by [Slurm](https://slurm.schedmd.com/documentation.html).
+
+Use the `--cluster` option to specify the job submission command, using `sbatch` on NeSI.
+This command defines resources used for each job (maximum time, memory, number of cores...).
+In addition, you need to specify a maximum number of concurrent jobs using `--jobs`.
+
+```bash
+# remove output of last run
+rm -r ../results/*
+
+# run again on the cluster
+snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
+```
+
+If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
+
+```bash
+squeue -u your_nesi_login
+```
+
+where `your_nesi_login` needs to be replace with your actual NeSI login.
+
+An additional trick is to use the `watch` command to repeatly call any command in the terminal, giving you a lightweigth monitoring tools ;-).
+Here we will use it to see your jobs gets queued and executed in real time:
+
+```bash
+watch squeue -u your_nesi_login
+```
+
+You can exit the view create by `watch` by presisng CTRL+C.
+
 
 # Takeaways
 
@@ -1465,6 +1500,12 @@ Run your snakemake workflow (using conda to install your software) with:
 
 ```bash
 snakemake --cores 2 --use-conda
+```
+
+Run your snakemake workflow using multiple jobs on NeSI:
+
+```bash
+snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
 ```
 
 Create a global wildcard to get process all your samples in a directory with:
