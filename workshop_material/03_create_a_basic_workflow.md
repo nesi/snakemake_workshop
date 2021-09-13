@@ -42,13 +42,13 @@ ls -lh ./data/
 Output:
 
 ```bash
-total 17M
--rw-rw-r-- 1 lkemp lkemp 2.1M Sep  1 12:43 NA24631_1.fastq.gz
--rw-rw-r-- 1 lkemp lkemp 2.3M Sep  1 12:43 NA24631_2.fastq.gz
--rw-rw-r-- 1 lkemp lkemp 2.1M Sep  1 12:43 NA24694_1.fastq.gz
--rw-rw-r-- 1 lkemp lkemp 2.3M Sep  1 12:43 NA24694_2.fastq.gz
--rw-rw-r-- 1 lkemp lkemp 1.8M Sep  1 12:43 NA24695_1.fastq.gz
--rw-rw-r-- 1 lkemp lkemp 1.9M Sep  1 12:43 NA24695_2.fastq.gz
+total 13M
+-rw-rw----+ 1 lkemp nesi99991 2.1M Sep 10 04:32 NA24631_1.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.3M Sep 10 04:32 NA24631_2.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.1M Sep 10 04:32 NA24694_1.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.3M Sep 10 04:32 NA24694_2.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 1.8M Sep 10 04:32 NA24695_1.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 1.9M Sep 10 04:32 NA24695_2.fastq.gz
 ```
 
 ## 3.02 Snakemake workflow file structure
@@ -83,9 +83,9 @@ ls -lh demo_workflow/
 Output:
 
 ```bash
-total 64K
-drwxrwxr-x 2 lkemp lkemp  0 Sep  1 13:07 results
-drwxrwxr-x 3 lkemp lkemp 49 Sep  1 13:08 workflow
+total 1.0K
+drwxrws---+ 2 lkemp nesi99991 4.0K Sep 13 02:57 results
+drwxrws---+ 3 lkemp nesi99991 4.0K Sep 13 02:57 workflow
 ```
 
 ```bash
@@ -95,9 +95,9 @@ ls -lh demo_workflow/workflow/
 Output:
 
 ```bash
-total 56K
-drwxrwxr-x 2 lkemp lkemp 0 Sep  1 13:07 envs
--rw-rw-r-- 1 lkemp lkemp 0 Sep  1 13:08 Snakefile
+total 512
+drwxrws---+ 2 lkemp nesi99991 4.0K Sep 13 02:57 envs
+-rw-rw----+ 1 lkemp nesi99991    0 Sep 13 02:57 Snakefile
 ```
 
 Within the `workflow` directory (where we will create and run our workflow), we have a place to put our conda environments for our software in `envs` directory and a file that will be the backbone of our workflow called `Snakefile`
@@ -186,11 +186,11 @@ ls -lh ./fastqc_test
 My output:
 
 ```bash
-total 96K
--rw-rw-r-- 1 lkemp lkemp 250K Sep  1 13:39 NA24631_1_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 327K Sep  1 13:39 NA24631_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 249K Sep  1 13:39 NA24631_2_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 327K Sep  1 13:39 NA24631_2_fastqc.zip
+total 2.5M
+-rw-rw----+ 1 lkemp nesi99991 718K Sep 10 04:38 NA24631_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 475K Sep 10 04:38 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 726K Sep 10 04:38 NA24631_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 479K Sep 10 04:38 NA24631_2_fastqc.zip
 ```
 
 ## 3.04 Create the first rule in your workflow
@@ -253,7 +253,7 @@ rule all:
 When you have multiple input and output files:
 
 - You can "name" you inputs/outputs, they can be called separately in the shell command
-- Remember to use commas between multiple inputs/outputs, t's a common source of error!
+- Remember to use commas between multiple inputs/outputs, it's a common source of error!
 
 Let's test the workflow! First we need to be in the `workflow` directory, where the Snakefile is
 
@@ -277,31 +277,30 @@ Job stats:
 job       count    min threads    max threads
 ------  -------  -------------  -------------
 all           1              1              1
-fastqc        1              2              2
-total         2              1              2
+fastqc        1              1              1
+total         2              1              1
 
 
-[Wed Sep  1 16:16:46 2021]
+[Mon Sep 13 03:03:00 2021]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
-    threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 
-[Wed Sep  1 16:16:46 2021]
+[Mon Sep 13 03:03:00 2021]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 Job stats:
 job       count    min threads    max threads
 ------  -------  -------------  -------------
 all           1              1              1
-fastqc        1              2              2
-total         2              1              2
+fastqc        1              1              1
+total         2              1              1
 
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
@@ -346,13 +345,13 @@ total         2              1              2
 
 Select jobs to execute...
 
-[Wed Sep  1 16:39:00 2021]
+[Mon Sep 13 03:03:42 2021]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
     threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 Started analysis of NA24631_1.fastq.gz
 Approx 5% complete for NA24631_1.fastq.gz
@@ -365,26 +364,26 @@ Approx 35% complete for NA24631_1.fastq.gz
 Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 Approx 50% complete for NA24631_1.fastq.gz
-Approx 55% complete for NA24631_1.fastq.gz
 Started analysis of NA24631_2.fastq.gz
-Approx 60% complete for NA24631_1.fastq.gz
-Approx 65% complete for NA24631_1.fastq.gz
+Approx 55% complete for NA24631_1.fastq.gz
 Approx 5% complete for NA24631_2.fastq.gz
+Approx 60% complete for NA24631_1.fastq.gz
 Approx 10% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_1.fastq.gz
-Approx 75% complete for NA24631_1.fastq.gz
+Approx 65% complete for NA24631_1.fastq.gz
 Approx 15% complete for NA24631_2.fastq.gz
+Approx 70% complete for NA24631_1.fastq.gz
 Approx 20% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_1.fastq.gz
+Approx 75% complete for NA24631_1.fastq.gz
 Approx 25% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_1.fastq.gz
-Approx 90% complete for NA24631_1.fastq.gz
+Approx 80% complete for NA24631_1.fastq.gz
 Approx 30% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_1.fastq.gz
 Approx 35% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_1.fastq.gz
+Approx 90% complete for NA24631_1.fastq.gz
 Approx 40% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_1.fastq.gz
+Approx 95% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_2.fastq.gz
+Analysis complete for NA24631_1.fastq.gz
 Approx 50% complete for NA24631_2.fastq.gz
 Approx 55% complete for NA24631_2.fastq.gz
 Approx 60% complete for NA24631_2.fastq.gz
@@ -396,21 +395,21 @@ Approx 85% complete for NA24631_2.fastq.gz
 Approx 90% complete for NA24631_2.fastq.gz
 Approx 95% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_2.fastq.gz
-[Wed Sep  1 16:39:05 2021]
+[Mon Sep 13 03:03:46 2021]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Wed Sep  1 16:39:05 2021]
+[Mon Sep 13 03:03:46 2021]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
-[Wed Sep  1 16:39:05 2021]
+[Mon Sep 13 03:03:46 2021]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-01T163858.955750.snakemake.log
+Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030341.513736.snakemake.log
 ```
 
 It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
@@ -453,7 +452,7 @@ Output
 ```bash
 Building DAG of jobs...
 Nothing to be done.
-Complete log: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-01T164059.005443.snakemake.log
+Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030445.098954.snakemake.log
 ```
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
@@ -548,20 +547,20 @@ fastqc        1              2              2
 total         2              1              2
 
 
-[Wed Sep  1 16:56:35 2021]
+[Mon Sep 13 03:06:45 2021]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
     threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 
-[Wed Sep  1 16:56:35 2021]
+[Mon Sep 13 03:06:45 2021]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 Job stats:
 job       count    min threads    max threads
@@ -588,7 +587,7 @@ My output:
 Building DAG of jobs...
 Creating conda environment envs/fastqc.yaml...
 Downloading and installing remote packages.
-Environment for envs/fastqc.yaml created (location: .snakemake/conda/e2d0308d0742a040f972a4db8533f08f)
+Environment for envs/fastqc.yaml created (location: .snakemake/conda/67c1376bae89b8de73037e703ea4b6f5)
 Using shell: /usr/bin/bash
 Provided cores: 2
 Rules claiming more threads will be scaled down.
@@ -601,15 +600,15 @@ total         2              1              2
 
 Select jobs to execute...
 
-[Wed Sep  1 16:59:02 2021]
+[Mon Sep 13 03:10:27 2021]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
     threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
-Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/e2d0308d0742a040f972a4db8533f08f
+Activating conda environment: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/67c1376bae89b8de73037e703ea4b6f5
 Started analysis of NA24631_1.fastq.gz
 Approx 5% complete for NA24631_1.fastq.gz
 Approx 10% complete for NA24631_1.fastq.gz
@@ -622,12 +621,12 @@ Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 Approx 50% complete for NA24631_1.fastq.gz
 Approx 55% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
 Approx 60% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
+Started analysis of NA24631_2.fastq.gz
 Approx 65% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
 Approx 70% complete for NA24631_1.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
 Approx 75% complete for NA24631_1.fastq.gz
 Approx 15% complete for NA24631_2.fastq.gz
 Approx 80% complete for NA24631_1.fastq.gz
@@ -652,21 +651,21 @@ Approx 85% complete for NA24631_2.fastq.gz
 Approx 90% complete for NA24631_2.fastq.gz
 Approx 95% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_2.fastq.gz
-[Wed Sep  1 16:59:07 2021]
+[Mon Sep 13 03:10:33 2021]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Wed Sep  1 16:59:07 2021]
+[Mon Sep 13 03:10:33 2021]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
-[Wed Sep  1 16:59:07 2021]
+[Mon Sep 13 03:10:33 2021]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-01T165811.298374.snakemake.log
+Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030734.543325.snakemake.log
 ```
 
 ## 3.10 Capture our logs
@@ -757,31 +756,31 @@ total         2              1              2
 
 Select jobs to execute...
 
-[Wed Sep  1 17:10:53 2021]
+[Mon Sep 13 03:14:19 2021]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     log: logs/fastqc/NA24631.log
     jobid: 1
     threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
-Activating conda environment: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/e2d0308d0742a040f972a4db8533f08f
-[Wed Sep  1 17:10:57 2021]
+Activating conda environment: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/67c1376bae89b8de73037e703ea4b6f5
+[Mon Sep 13 03:14:24 2021]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Wed Sep  1 17:10:57 2021]
+[Mon Sep 13 03:14:24 2021]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
-[Wed Sep  1 17:10:57 2021]
+[Mon Sep 13 03:14:24 2021]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-01T171048.704109.snakemake.log
+Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T031415.725355.snakemake.log
 ```
 
 We now have a log file, lets have a look at the first 10 lines of our log with:
@@ -868,7 +867,7 @@ Visualise workflow
 snakemake --dag | dot -Tpng > dag_2.png
 ```
 
-Now we have three samples running though our workflow
+Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) inidicated by the dashed lines
 
 ![DAG_2](./images/dag_2.png)
 
@@ -894,29 +893,29 @@ fastqc        3              2              2
 total         4              1              2
 
 
-[Wed Sep  1 17:20:50 2021]
-rule fastqc:
-    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
-    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
-    log: logs/fastqc/NA24695.log
-    jobid: 3
-    wildcards: sample=NA24695
-    threads: 2
-    resources: tmpdir=/tmp
-
-
-[Wed Sep  1 17:20:50 2021]
+[Mon Sep 13 03:23:58 2021]
 rule fastqc:
     input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
     output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
     log: logs/fastqc/NA24694.log
-    jobid: 2
+    jobid: 3
     wildcards: sample=NA24694
     threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 
-[Wed Sep  1 17:20:50 2021]
+[Mon Sep 13 03:23:58 2021]
+rule fastqc:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    log: logs/fastqc/NA24695.log
+    jobid: 2
+    wildcards: sample=NA24695
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/22281190
+
+
+[Mon Sep 13 03:23:58 2021]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
@@ -924,14 +923,14 @@ rule fastqc:
     jobid: 1
     wildcards: sample=NA24631
     threads: 2
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 
-[Wed Sep  1 17:20:50 2021]
+[Mon Sep 13 03:23:58 2021]
 localrule all:
-    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/tmp
+    resources: tmpdir=/dev/shm/jobs/22281190
 
 Job stats:
 job       count    min threads    max threads
@@ -957,10 +956,10 @@ ls -lh ./logs/fastqc
 Output:
 
 ```bash
-total 96K
--rw-rw-r-- 1 lkemp lkemp 1.7K Sep  1 17:22 NA24631.log
--rw-rw-r-- 1 lkemp lkemp 1.7K Sep  1 17:22 NA24694.log
--rw-rw-r-- 1 lkemp lkemp 1.7K Sep  1 17:22 NA24695.log
+total 1.5K
+-rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24631.log
+-rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24694.log
+-rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24695.log
 ```
 
 ## 3.12 Add more rules
@@ -1041,7 +1040,7 @@ Didn't work? Error:
 
 ```bash
 Building DAG of jobs...
-WildcardError in line 29 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
+WildcardError in line 29 of /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
 Wildcards in input files cannot be determined from output files:
 'sample'
 ```
@@ -1180,7 +1179,7 @@ Although the workflow ran the same, the DAG actually changed slightly, now there
 
 ![DAG_4](./images/dag_4.png)
 
-**Beware: Snakemake will also NOT run rules that is doesn't need to run in order to get the target files defined in rule: all**
+<p align="center"><b>Beware: Snakemake will also NOT run rules that it doesn't need to run in order to get the target files defined in rule: all</b><br></p>
 
 For example if only our fastqc outputs are defined as the target in `rule: all`
 
@@ -1268,7 +1267,7 @@ Let's add the rest of the rules. We want to get to:
 
 ![rulegraph_1](./images/rulegraph_1.png)
 
-We currently have fastqc and multiqc, so we still need to add trim_galore and bwa
+We currently have fastqc and multiqc, so we still need to add trim_galore
 
 ```diff
 # define samples from data directory using wildcards
@@ -1375,7 +1374,7 @@ snakemake --dryrun --cores 2 --use-conda
 snakemake --cores 2 --use-conda
 ```
 
-Notice it will run only one rule/sample at a time...why is that?
+Notice it will run only one rule/sample/file at a time...why is that?
 
 ## 3.15 Throw it more cores
 

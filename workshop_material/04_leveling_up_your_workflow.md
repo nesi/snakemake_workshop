@@ -71,6 +71,41 @@ rule trim_galore:
          "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
+You should also have three conda environment files
+
+- fastqc.yaml
+
+```yaml
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconda::fastqc=0.11.9
+```
+
+- multiqc.yaml
+
+```yaml
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconda::multiqc=1.11
+```
+
+- trim_galore.yaml
+
+```yaml
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconda::trim-galore=0.6.5
+```
+
 ## 4.1 Pull out parameters
 
 ```diff
@@ -218,8 +253,8 @@ rule multiqc:
     conda:
         "envs/multiqc.yaml"
     shell:
- -       "multiqc {input} -o ../results/ &> {log}"
- +       "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+-       "multiqc {input} -o ../results/ &> {log}"
++       "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
 
 rule trim_galore:
     input:
@@ -339,10 +374,10 @@ Then we don't need to specify where the configuration file is on the command lin
 rm -r ../results/*
 
 # run dryrun/run again
-+ snakemake --dryrun --cores 2 --use-conda
-+ snakemake --cores 2 --use-conda
 - snakemake --dryrun --cores 2 --use-conda --configfile ../config/config.yaml
 - snakemake --cores 2 --use-conda --configfile ../config/config.yaml
++ snakemake --dryrun --cores 2 --use-conda
++ snakemake --cores 2 --use-conda
 ```
 
 ## 4.3 Leave messages for the user
@@ -432,32 +467,64 @@ snakemake --cores 2 --use-conda
 Now our messages are printed to the screen as our workflow runs
 
 ```bash
-[Fri Sep  3 15:39:12 2021]
-Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24695.log. Using 2 threads.
+Building DAG of jobs...
+Conda environment envs/trim_galore.yaml will be created.
+Conda environment envs/fastqc.yaml will be created.
+Conda environment envs/multiqc.yaml will be created.
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+all                1              1              1
+fastqc             3              2              2
+multiqc            1              1              1
+trim_galore        3              2              2
+total              8              1              2
 
 
-[Fri Sep  3 15:39:12 2021]
-Job 3: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
-
-
-[Fri Sep  3 15:39:12 2021]
-Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
-
-
-[Fri Sep  3 15:39:12 2021]
-Job 6: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
-
-
-[Fri Sep  3 15:39:12 2021]
+[Mon Sep 13 04:30:13 2021]
 Job 2: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
 
 
-[Fri Sep  3 15:39:12 2021]
-Job 4: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
+[Mon Sep 13 04:30:13 2021]
+Job 4: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
 
 
-[Fri Sep  3 15:39:12 2021]
+[Mon Sep 13 04:30:13 2021]
+Job 6: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24695.log. Using 2 threads.
+
+
+[Mon Sep 13 04:30:13 2021]
+Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
+
+
+[Mon Sep 13 04:30:13 2021]
+Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
+
+
+[Mon Sep 13 04:30:13 2021]
+Job 3: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
+
+
+[Mon Sep 13 04:30:13 2021]
 Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
+
+
+[Mon Sep 13 04:30:13 2021]
+localrule all:
+    input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+    jobid: 0
+    resources: tmpdir=/dev/shm/jobs/22281190
+
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+all                1              1              1
+fastqc             3              2              2
+multiqc            1              1              1
+trim_galore        3              2              2
+total              8              1              2
+
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
 ## 4.4 Create temporary files
@@ -473,19 +540,19 @@ ls -lh ../results/fastqc/
 My output:
 
 ```bash
-total 11M
--rw-rw-r-- 1 lkemp lkemp 718K Sep  3 15:40 NA24631_1_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 475K Sep  3 15:40 NA24631_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 726K Sep  3 15:40 NA24631_2_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 479K Sep  3 15:40 NA24631_2_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 746K Sep  3 15:40 NA24694_1_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 482K Sep  3 15:40 NA24694_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 728K Sep  3 15:40 NA24694_2_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 480K Sep  3 15:40 NA24694_2_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 721K Sep  3 15:40 NA24695_1_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 476K Sep  3 15:40 NA24695_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 732K Sep  3 15:40 NA24695_2_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 484K Sep  3 15:40 NA24695_2_fastqc.zip
+total 7.5M
+-rw-rw----+ 1 lkemp nesi99991 718K Sep 13 04:36 NA24631_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 475K Sep 13 04:36 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 726K Sep 13 04:36 NA24631_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 479K Sep 13 04:36 NA24631_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 746K Sep 13 04:36 NA24694_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 482K Sep 13 04:36 NA24694_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 728K Sep 13 04:36 NA24694_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 480K Sep 13 04:36 NA24694_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 721K Sep 13 04:35 NA24695_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 476K Sep 13 04:35 NA24695_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 732K Sep 13 04:35 NA24695_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:35 NA24695_2_fastqc.zip
 ```
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
@@ -510,8 +577,9 @@ rule fastqc:
         R2 = "../../data/{sample}_2.fastq.gz"
     output:
 -       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
 +       html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+
     params:
         fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
     log:
@@ -573,18 +641,18 @@ Now when we have a look at the `results/trimmed/` directory with:
 ls -lh ../results/fastqc/
 ```
 
-These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 11 megabytes to 4.5 megabytes in this directory).
+These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 7.5 megabytes to 3 megabytes in this directory).
 
 My output:
 
 ```bash
-total 4.5M
--rw-rw-r-- 1 lkemp lkemp 475K Sep  3 15:49 NA24631_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 479K Sep  3 15:49 NA24631_2_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 482K Sep  3 15:50 NA24694_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 480K Sep  3 15:50 NA24694_2_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 476K Sep  3 15:49 NA24695_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 484K Sep  3 15:49 NA24695_2_fastqc.zip
+total 3.0M
+-rw-rw----+ 1 lkemp nesi99991 475K Sep 13 04:38 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 479K Sep 13 04:38 NA24631_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 482K Sep 13 04:38 NA24694_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 480K Sep 13 04:38 NA24694_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 476K Sep 13 04:37 NA24695_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:37 NA24695_2_fastqc.zip
 ```
 
 *This become particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scaleable when our data becomes big data.*
