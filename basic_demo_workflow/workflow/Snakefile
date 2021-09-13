@@ -45,5 +45,7 @@ rule trim_galore:
     conda:
         "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
