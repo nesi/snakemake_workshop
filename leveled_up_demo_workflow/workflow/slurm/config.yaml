@@ -1,0 +1,3 @@
+jobs: 20
+cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus}"
+default-resources: [cpus=2, mem_mb=512, time_min=10]
