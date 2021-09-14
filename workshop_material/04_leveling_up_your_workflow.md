@@ -265,7 +265,7 @@ Run a dryrun to check it works
 rm -r ../results/*
 
 # run dryrun again
-snakemake --dryrun --profile slurm --use-conda
+snakemake --dryrun --cores 2 --use-conda
 ```
 
 ## 4.3 Pull out user configurable options
@@ -376,8 +376,8 @@ Let's use our configuration file! Run workflow again:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --use-conda
-snakemake --profile slurm --use-conda
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Didn't work? Error:
@@ -395,10 +395,10 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 rm -r ../results/*
 
 # run dryrun/run again
-- snakemake --dryrun --profile slurm --use-conda
-- snakemake --profile slurm --use-conda
-+ snakemake --dryrun --profile slurm --use-conda --configfile ../config/config.yaml
-+ snakemake --profile slurm --use-conda --configfile ../config/config.yaml
+- snakemake --dryrun --cores 2 --use-conda
+- snakemake --cores 2 --use-conda
++ snakemake --dryrun --cores 2 --use-conda --configfile ../config/config.yaml
++ snakemake --cores 2 --use-conda --configfile ../config/config.yaml
 ```
 
 Alternatively, we can define our config file in our Snakefile in a situation where the configuration file is likely to always be named the same and be in the exact same location `../config/config.yaml` and you don't need the flexibility for the user to specify their own configuration files:
@@ -473,10 +473,10 @@ Then we don't need to specify where the configuration file is on the command lin
 rm -r ../results/*
 
 # run dryrun/run again
-- snakemake --dryrun --profile slurm --use-conda --configfile ../config/config.yaml
-- snakemake --profile slurm --use-conda --configfile ../config/config.yaml
-+ snakemake --dryrun --profile slurm --use-conda
-+ snakemake --profile slurm --use-conda
++ snakemake --dryrun --cores 2 --use-conda
++ snakemake --cores 2 --use-conda
+- snakemake --dryrun --cores 2 --use-conda --configfile ../config/config.yaml
+- snakemake --cores 2 --use-conda --configfile ../config/config.yaml
 ```
 
 ## 4.4 Leave messages for the user
@@ -561,8 +561,8 @@ rule trim_galore:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --use-conda
-snakemake --profile slurm --use-conda
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Now our messages are printed to the screen as our workflow runs
@@ -699,8 +699,8 @@ rule trim_galore:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --use-conda
-snakemake --profile slurm --use-conda
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Now when we have a look at the `../results/fastqc/` directory with:
