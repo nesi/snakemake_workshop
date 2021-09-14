@@ -703,7 +703,7 @@ snakemake --dryrun --profile slurm --use-conda
 snakemake --profile slurm --use-conda
 ```
 
-Now when we have a look at the `results/trimmed/` directory with:
+Now when we have a look at the `../results/fastqc/` directory with:
 
 ```bash
 ls -lh ../results/fastqc/
