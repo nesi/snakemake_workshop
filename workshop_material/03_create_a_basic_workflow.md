@@ -719,12 +719,11 @@ A tangent about [standard streams](https://en.wikipedia.org/wiki/Standard_stream
 
 Different ways to write log files:
 
-<table align="center">
-  <tr><th align="center">Syntax</th><th align="center">Standard output in terminal</th><th align="center">Standard error in terminal</th><th align="center">Standard output in file</th><th align="center">Standard error in file</th></tr>
-  <tr><td>></td><td>&#10799</td><td>&#10004</td><td>&#10004</td><td>&#10799</td></tr>
-  <tr><td>2></td><td>&#10004</td><td>&#10799</td><td>&#10799</td><td>&#10004</td></tr>
-  <tr><td>&></td><td>&#10799</td><td>&#10799</td><td>&#10004</td><td>&#10004</td></tr>
-</table>
+|  Syntax  | standard output in terminal | standard error in terminal | standard output in file | standard error in file |
+|----------|-----------------------------|----------------------------|-------------------------|------------------------|
+|   `>`    |  NO                         | YES                        | YES                     | NO                     |
+|   `2>`   |  YES                        | NO                         | NO                      | YES                    |
+|   `&>`   |  NO                         | NO                         | YES                     | YES                    |
 
 (Table adapted from [here](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file))
 
