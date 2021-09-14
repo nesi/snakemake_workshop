@@ -86,7 +86,7 @@ Respond yes to the following prompt to install the necessary software in the new
 Proceed ([y]/n)?
 ```
 
-**Note. this installed Snakemake version 6.7.0 for me, you can use the same version this workshop was created with `conda create -n snakemake_env snakemake=6.7.0`**
+**Note. this installed Snakemake version 6.8.0 for me, you can use the same version this workshop was created with `conda create -n snakemake_env snakemake=6.8.0`**
 
 Activate the conda environment we just created
 
