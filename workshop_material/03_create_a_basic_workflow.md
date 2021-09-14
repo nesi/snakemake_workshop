@@ -1428,7 +1428,7 @@ Here we will use it to see your jobs gets queued and executed in real time:
 watch squeue -u your_nesi_login
 ```
 
-You can exit the view create by `watch` by presisng CTRL+C.
+You can exit the view create by `watch` by pressing CTRL+C.
 
 
 # Takeaways

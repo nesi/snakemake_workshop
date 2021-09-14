@@ -109,8 +109,6 @@ dependencies:
 
 ## 4.1 Use a profile for HPC
 
-**TODO add link to 3.16**
-
 In section 3.16, we have seen that a snakemake workflow can be run on an HPC cluster.
 To reduce the boilerplate, we can use a [configuration profile](https://snakemake.readthedocs.io/en/stable/executing/cli.html#profiles) to configure default options.
 In this case, we use it to set the `--cluster` and the `--jobs` options.
@@ -231,8 +229,6 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 22278378      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
 22278379      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
 ```
-
-**TODO add a note about login node to run Snakemake?**
 
 ## 4.2 Pull out parameters
 
