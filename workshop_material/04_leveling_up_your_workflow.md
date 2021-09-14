@@ -89,7 +89,7 @@ touch slurm/config.yaml
 
 # write the following to config.yaml
 jobs: 20
-cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
+cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991"
 ```
 
 Then run the snakemake workflow using the `slurm` profile
@@ -111,7 +111,7 @@ Update the profile `slurm/config.yaml` file as follows
 ```diff
 jobs: 20
 - cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
-+ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus}"
++ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus} --account nesi99991"
 + default-resources: [cpus=2, mem_mb=512, time_min=10]
 ```
 
