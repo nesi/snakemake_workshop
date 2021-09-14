@@ -209,7 +209,7 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 rule all:
     input:
         "../results/multiqc_report.html",
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
 
 # workflow
 rule fastqc:
@@ -315,7 +315,7 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 rule all:
     input:
         "../results/multiqc_report.html",
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
 
 # workflow
 rule fastqc:
