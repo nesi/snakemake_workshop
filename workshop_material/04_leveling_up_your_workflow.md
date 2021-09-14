@@ -326,7 +326,7 @@ rule fastqc:
         html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
 +   params:
-+       fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
++       fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -342,7 +342,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
 +   params:
-+       multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
++       multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -425,7 +425,7 @@ rule fastqc:
         html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     params:
-        fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
+        fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -440,7 +440,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
     params:
-        multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
+        multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -509,7 +509,7 @@ rule fastqc:
         html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     params:
-        fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
+        fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -526,7 +526,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
     params:
-        multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
+        multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -649,7 +649,7 @@ rule fastqc:
 +       html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     params:
-        fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
+        fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -666,7 +666,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
     params:
-        multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
+        multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
