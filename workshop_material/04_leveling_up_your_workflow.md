@@ -124,7 +124,7 @@ touch slurm/config.yaml
 
 # write the following to config.yaml
 jobs: 20
-cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
+cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991"
 ```
 
 Then run the snakemake workflow using the `slurm` profile
@@ -146,7 +146,7 @@ Update the profile `slurm/config.yaml` file as follows
 ```diff
 jobs: 20
 - cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
-+ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus}"
++ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus} --account nesi99991"
 + default-resources: [cpus=2, mem_mb=512, time_min=10]
 ```
 
@@ -244,7 +244,7 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 rule all:
     input:
         "../results/multiqc_report.html",
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
 
 # workflow
 rule fastqc:
@@ -350,7 +350,7 @@ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
 rule all:
     input:
         "../results/multiqc_report.html",
-        expand("../results/mapped/{sample}.bam", sample = SAMPLES)
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
 
 # workflow
 rule fastqc:
@@ -361,7 +361,7 @@ rule fastqc:
         html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
 +   params:
-+       fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
++       fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -377,7 +377,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
 +   params:
-+       multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
++       multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -460,7 +460,7 @@ rule fastqc:
         html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     params:
-        fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
+        fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -475,7 +475,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
     params:
-        multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
+        multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -544,7 +544,7 @@ rule fastqc:
         html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
     params:
-        fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
+        fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -561,7 +561,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
     params:
-        multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
+        multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -717,7 +717,7 @@ rule fastqc:
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
 
     params:
-        fastqc_params = expand("{fastqc_params}", fastqc_params = config['PARAMS']['FASTQC'])
+        fastqc_params = config['PARAMS']['FASTQC']
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
@@ -734,7 +734,7 @@ rule multiqc:
     output:
         "../results/multiqc_report.html"
     params:
-        multiqc_params = expand("{multiqc_params}", multiqc_params = config['PARAMS']['MULTIQC'])
+        multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
     conda:
@@ -771,7 +771,7 @@ snakemake --dryrun --cores 2 --use-conda
 snakemake --cores 2 --use-conda
 ```
 
-Now when we have a look at the `results/trimmed/` directory with:
+Now when we have a look at the `../results/fastqc/` directory with:
 
 ```bash
 ls -lh ../results/fastqc/
