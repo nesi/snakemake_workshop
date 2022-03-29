@@ -18,7 +18,7 @@ This workshop is intended for anyone who has several steps in their data analysi
 
 ## Setup
 
-This is an online workshop that will use Jupyter on [NeSI](https://www.nesi.org.nz/). You will need to have a NeSI account in order to fully participate in the workshop. Those that register will be sent instructions on how to do this approximately 10 days before the event. **Ticket sales for this event end on 3 September 2021.**
+This is an online workshop that will use Jupyter on [NeSI](https://www.nesi.org.nz/). You will need to have a NeSI account in order to fully participate in the workshop. Those that register will be sent instructions on how to do this approximately 10 days before the event. 
 
 ## Workshop
 
