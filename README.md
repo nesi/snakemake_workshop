@@ -12,8 +12,6 @@ In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you th
 - how to create a workflow to organise your computations, and
 - how an HPC scheduler (such as Slurm) fits into your workflow
 
-This workshop is being run as part of [NZ Research Software Engineering Conference 2021](https://www.rseconference.nz/) which has the theme of Open Research – Workflows, Data and Communities​; However, you do not need to register for the conference in order to register for the workshop. The workshop is free to attend and entirely online.
-
 ## Who should attend
 
 This workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
