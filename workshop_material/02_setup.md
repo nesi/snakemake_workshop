@@ -33,7 +33,8 @@ Choose between this section and [Setup for running on your machine](#setup-for-r
 1. Follow [https://jupyter.nesi.org.nz/hub/login](https://jupyter.nesi.org.nz/hub/login)
 2. <p>Enter NeSI username, HPC password and 6 digit second factor token (as set on <a href="https://my.nesi.org.nz/account/hpc-account">MyNeSI</a>)<br><img src="nesi_images/jupyter_login_labels_updated.png" alt="drawing" width="720"/></p>
 3. <p>Choose server options as below
-<br>>>make sure to choose the correct project code `nesi99991`, number of CPUs **4**, memory **4GB**** prior to pressing <img src="nesi_images/start_button.png" alt="drawing" width="60"/> button.
+
+>><br>make sure to choose the correct project code `nesi99991`, number of CPUs **4**, memory **4GB**** prior to pressing <img src="nesi_images/start_button.png" alt="drawing" width="60"/> button.
 
 <br><img src="nesi_images/jupyter_server2022.png" alt="drawing" width="700"/></p>
 
