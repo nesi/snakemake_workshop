@@ -7,22 +7,9 @@
   </span>
 </p>
 
+* Do not remove this line (it will not be displayed)
+{:toc}
 
-# Table of contents
-
-- [04 - Leveling up your workflow!](#04---leveling-up-your-workflow)
-- [Table of contents](#table-of-contents)
-  - [Catching up](#catching-up)
-  - [4.1 Use a profile for HPC](#41-use-a-profile-for-hpc)
-  - [4.2 Pull out parameters](#42-pull-out-parameters)
-  - [4.3 Pull out user configurable options](#43-pull-out-user-configurable-options)
-  - [4.4 Leave messages for the user](#44-leave-messages-for-the-user)
-  - [4.5 Create temporary files](#45-create-temporary-files)
-  - [4.6 Generating a snakemake report](#46-generating-a-snakemake-report)
-  - [4.7 Linting your workflow](#47-linting-your-workflow)
-- [Takeaways](#takeaways)
-- [Summary commands](#summary-commands)
-- [Our final snakemake workflow!](#our-final-snakemake-workflow)
 
 ## Catching up
 
