@@ -7,29 +7,9 @@
   </span>
 </p>
 
-# Table of contents
+* Do not remove this line (it will not be displayed)
+{:toc}
 
-- [03 - Create a basic workflow](#03---create-a-basic-workflow)
-- [Table of contents](#table-of-contents)
-  - [3.01 Aim](#301-aim)
-  - [3.02 Snakemake workflow file structure](#302-snakemake-workflow-file-structure)
-  - [3.03 Run the software on the command line](#303-run-the-software-on-the-command-line)
-  - [3.04 Create the first rule in your workflow](#304-create-the-first-rule-in-your-workflow)
-  - [3.05 Dryrun](#305-dryrun)
-  - [3.06 Create a DAG](#306-create-a-dag)
-  - [3.07 Fullrun](#307-fullrun)
-  - [3.08 Lazy evaluation](#308-lazy-evaluation)
-  - [3.09 Run using the conda package management system](#309-run-using-the-conda-package-management-system)
-  - [3.10 Capture our logs](#310-capture-our-logs)
-  - [3.11 Scale up to analyse all of our samples](#311-scale-up-to-analyse-all-of-our-samples)
-  - [3.12 Add more rules](#312-add-more-rules)
-  - [3.13 More about Snakemake's lazy behaviour](#313-more-about-snakemakes-lazy-behaviour)
-  - [3.14 Add even more rules](#314-add-even-more-rules)
-  - [3.15 Throw it more cores](#315-throw-it-more-cores)
-  - [3.16 Throw it even more cores](#316-throw-it-even-more-cores)
-- [Takeaways](#takeaways)
-- [Summary commands](#summary-commands)
-- [Our final snakemake workflow!](#our-final-snakemake-workflow)
 
 ## 3.01 Aim
 
