@@ -187,3 +187,5 @@ See the [Git Guides](https://github.com/git-guides/git-clone) for information on
     <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html" style="background: var(--bs-green);font-weight:bold">3 - Creating a Basic WF &raquo;</a></b>
   </span>
 </p>
+
+<p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
