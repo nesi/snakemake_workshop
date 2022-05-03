@@ -8,5 +8,7 @@
 
 - Here is a fully established pipeline being used in production use that extends on the workflow we created in this workshop: [https://github.com/ESR-NZ/human_genomics_pipeline](https://github.com/ESR-NZ/human_genomics_pipeline)
 
+- - - 
+
 <p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html">Previous page: 04 - Leveling up your workflow!</a>
-<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
+<p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
