@@ -26,7 +26,7 @@ In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you th
 
 This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
 
-Here's a sneak-peak of what to expect from this workshop (content is subject to revisions): https://tinyurl.com/snakemakeworkshop
+[Here's a sneak-peak](https://tinyurl.com/snakemakeworkshop) of what to expect from this workshop (content is subject to revisions): 
 
 ## Setup
 
