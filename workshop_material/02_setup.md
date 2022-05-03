@@ -7,21 +7,9 @@
   </span>
 </p>
 
+* Do not remove this line (it will not be displayed)
+{:toc}
 
-# Table of contents
-
-- [02 - Setup](#02---setup)
-- [Table of contents](#table-of-contents)
-  - [Setup for running on NeSI](#setup-for-running-on-nesi)
-    - [Connect to Jupyter on NeSI](#connect-to-jupyter-on-nesi)
-    - [Setting up Miniconda on NeSI](#setting-up-miniconda-on-nesi)
-    - [Create a conda environment on NeSI](#create-a-conda-environment-on-nesi)
-  - [Setup for running on your machine](#setup-for-running-on-your-machine)
-    - [Install Miniconda](#install-miniconda)
-      - [Check your OS](#check-your-os)
-      - [Installing miniconda](#installing-miniconda)
-    - [Create a conda environment](#create-a-conda-environment)
-  - [Clone this repo](#clone-this-repo)
 
 
 ## Setup for running on NeSI
