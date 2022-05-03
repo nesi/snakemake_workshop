@@ -1535,6 +1535,11 @@ snakemake --cores 4 --use-conda
 
 See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workflow we've created up to this point
 
-<p align="left"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html">Previous page: 02 - Setup</a>
-<p align="right"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html">Next page: 04 - Leveling up your workflow!</a>
-<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Homepage</a>
+- - - 
+
+<p style="text-align:left;">
+  <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html" style="background: var(--bs-green);font-weight:bold">&laquo; 3 - Creating a Basic WF</a></b> 
+  <span style="float:right;">
+    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html" style="background: var(--bs-green);font-weight:bold">4 - Leveling up your work &raquo;</a></b>
+  </span>
+</p>
