@@ -1404,7 +1404,7 @@ With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you ca
 
 <p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
-![parallel computing](https://lh6.googleusercontent.com/P6_hUEcjxQLhnVwAHYw-ptCZID1SOi_Mjz1LsM_V7QAqzkZKdVyiN_eSZanZ6QU6mcMaQDjzfimLR12azcnnLA5fUVPdg7jwxI19rNaY2P8aAHLsyx_6z46wlgegIXtVGf3pCnRS)
+<p align="center"><img src="nesi_images/mahuika_maui_real.png" alt="drawing" width="800"/></p>
 
 To run the workflow on the cluster, we need to ensure that each step is run as a dedicated job in the queuing system of the HPC. On NeSI, the queuing system is managed by [Slurm](https://slurm.schedmd.com/documentation.html).
 
