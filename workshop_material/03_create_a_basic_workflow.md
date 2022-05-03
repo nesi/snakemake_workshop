@@ -1543,3 +1543,5 @@ See [basic_demo_workflow](../basic_demo_workflow) for the final Snakemake workfl
     <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html" style="background: var(--bs-green);font-weight:bold">4 - Leveling up your work &raquo;</a></b>
   </span>
 </p>
+
+<p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
