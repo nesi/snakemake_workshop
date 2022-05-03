@@ -1,5 +1,12 @@
 # 03 - Create a basic workflow
 
+<p style="text-align:left;">
+  <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html" style="background: var(--bs-green);font-weight:bold">&laquo; 3 - Creating a Basic WF</a></b> 
+  <span style="float:right;">
+    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html" style="background: var(--bs-green);font-weight:bold">4 - Leveling up your work &raquo;</a></b>
+  </span>
+</p>
+
 # Table of contents
 
 - [03 - Create a basic workflow](#03---create-a-basic-workflow)
