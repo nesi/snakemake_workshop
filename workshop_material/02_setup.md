@@ -3,7 +3,7 @@
 <p style="text-align:left;">
   <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction.html" style="background: var(--bs-green);font-weight:bold">&laquo; 1-Introduction</a></b> 
   <span style="float:right;">
-    <b><a class="btn" href="https://genomicsaotearoa.github.io/RNA-seq-workshop/4.Differential_Expression/rnaseq-diffexp.html" style="background: var(--bs-green);font-weight:bold">4. DE Analysis &raquo;</a></b>
+    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html" style="background: var(--bs-green);font-weight:bold">3 - Creating a Basic WF &raquo;</a></b>
   </span>
 </p>
 
