@@ -1,4 +1,4 @@
-# Online workflow code-along: intro to Snakemake
+# Online workflow code-along: Introduction to Snakemake
 
 ## Automate Your Workflow With Snakemake
 
