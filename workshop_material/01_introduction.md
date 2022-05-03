@@ -7,14 +7,9 @@
   </span>
 </p>
 
-# Table of contents
+* Do not remove this line (it will not be displayed)
+{:toc}
 
-- [01 - Introduction](#01---introduction)
-- [Table of contents](#table-of-contents)
-  - [Benefits of workflow languages](#benefits-of-workflow-languages)
-  - [Benefits of Snakemake](#benefits-of-snakemake)
-  - [Other workflow languages](#other-workflow-languages)
-  - [This workshop](#this-workshop)
 
 ## Benefits of workflow languages
 
