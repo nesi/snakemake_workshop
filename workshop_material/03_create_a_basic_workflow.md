@@ -534,8 +534,6 @@ total         2              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-Notice it now says that "Conda environment envs/fastqc.yaml will be created.". Now the software our workflow uses will be automatically installed! TODO update this sentence
-
 Let's do a full run
 
 ```diff
@@ -629,6 +627,8 @@ Finished job 0.
 2 of 2 steps (100%) done
 Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030734.543325.snakemake.log
 ```
+
+Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
 
 ## 3.10 Capture our logs
 
