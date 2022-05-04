@@ -1366,16 +1366,14 @@ You can exit the view create by `watch` by pressing CTRL+C.
 
 ---
 
-TODO replace first 2 sentences
-- There is an enormous range of quality open source (free) software available from conda package repositories such as [bioconda](https://bioconda.github.io/conda-package_index.html), [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) and containers repositories such as [docker hub](https://hub.docker.com/)
-- Once familiar with singularity/conda, the software are very straightforward to integrate in your snakemake workflow
+- Once familiar with environment modules, the software are very straightforward to integrate in your snakemake workflow
 - Run your commands directly on the command line before wrapping it up in a Snakemake rule
 - First do a dryrun to check the Snakemake structure is set up correctly
 - Work iteratively (get each rule working before moving onto the next)
 - File paths are relative to the Snakefile
 - Run your workflow from where your Snakefile is
 - Visualise your workflow by creating a DAG (directed acyclic graph), a rulegraph or filegraph
-- Use conda to install software in your workflow - this improves reproducibility and portability
+- Use environment modules to load software in your workflow - this improves reproducibility
 - Snakemake is lazy...
   - It will only do something if it hasn't already done it
   - It will pick up where it left off, rather than run the whole workflow again
