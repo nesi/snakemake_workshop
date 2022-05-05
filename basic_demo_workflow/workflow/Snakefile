@@ -45,7 +45,5 @@ rule trim_galore:
     envmodules:
         "TrimGalore/0.6.4-gimkl-2018b"
     threads: 2
-    resources:
-        cpus=8
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"

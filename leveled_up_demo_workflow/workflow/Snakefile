@@ -58,6 +58,8 @@ rule trim_galore:
     conda:
         "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
     message:
         "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
