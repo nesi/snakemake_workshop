@@ -131,6 +131,16 @@ snakemake --dryrun --profile slurm --use-conda
 snakemake --profile slurm --use-conda
 ```
 
+If you interrupt the execution of a snakemake workflow using CTRL-C, already submitted Slurm jobs won't be cancelled.
+We tell snakemake how to cancel Slurm jobs using `scancel` via the `--cluster-cancel` option and adding `--parsable` to the `sbatch` command, to make it return the job ID.
+
+```diff
+jobs: 20
+- cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
++ cluster: "sbatch --parsable --time 00:10:00 --mem=512MB --cpus-per-task 8"
++ cluster-cancel: scancel
+```
+
 You can specify different resources (memory, cpus, gpus, etc.) for each target in the workflow and refer to them in the `cluster` option using placeholders.
 Default resources for all rules can also be set using the `default-resources` option.
 
@@ -138,9 +148,10 @@ Update the profile `slurm/config.yaml` file as follows
 
 ```diff
 jobs: 20
-- cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
-+ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus} --account nesi99991"
+- cluster: "sbatch --parsable --time 00:10:00 --mem=512MB --cpus-per-task 8"
++ cluster: "sbatch --parsable --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus} --account nesi99991"
 + default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
 ```
 
 and add resources definitions in the workflow.
