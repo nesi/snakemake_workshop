@@ -25,15 +25,15 @@ rule fastqc:
   
 rule multiqc:
     input:
-         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
-         "../results/multiqc_report.html"
+        "../results/multiqc_report.html"
     log:
-         "logs/multiqc/multiqc.log"
+        "logs/multiqc/multiqc.log"
     envmodules:
         "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     shell:
-         "multiqc {input} -o ../results/ &> {log}"
+        "multiqc {input} -o ../results/ &> {log}"
 
 rule trim_galore:
     input:
