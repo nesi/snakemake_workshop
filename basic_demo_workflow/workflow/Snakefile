@@ -43,7 +43,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        "TrimGalore/0.6.4-gimkl-2018b"
     threads: 2
     resources:
         cpus=8
