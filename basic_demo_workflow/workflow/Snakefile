@@ -18,22 +18,22 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
 rule multiqc:
     input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+         expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
-        "../results/multiqc_report.html"
+         "../results/multiqc_report.html"
     log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+         "logs/multiqc/multiqc.log"
+    conda:
+         "envs/multiqc.yaml"
     shell:
-        "multiqc {input} -o ../results/ &> {log}"
+         "multiqc {input} -o ../results/ &> {log}"
 
 rule trim_galore:
     input:
@@ -42,8 +42,10 @@ rule trim_galore:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
     log:
         "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    conda:
+        "./envs/trim_galore.yaml"
     threads: 2
+    resources:
+        cpus=8
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
