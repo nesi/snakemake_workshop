@@ -47,6 +47,7 @@ Workflow file structure:
 demo_workflow/
       |_______results/
       |_______workflow/
+                 |_______envs/
                  |_______Snakefile
 ```
 
@@ -57,7 +58,7 @@ We will create and run our workflow from the `workflow` directory send all of ou
 Create this file structure and our main Snakefile with:
 
 ```bash
-mkdir -p demo_workflow/{results,workflow}
+mkdir -p demo_workflow/{results,workflow/envs}
 touch demo_workflow/workflow/Snakefile
 ```
 
@@ -83,19 +84,20 @@ Output:
 
 ```bash
 total 512
+drwxrws---+ 2 lkemp nesi99991 4.0K Sep 13 02:57 envs
 -rw-rw----+ 1 lkemp nesi99991    0 Sep 13 02:57 Snakefile
 ```
 
-Within the `workflow` directory (where we will create and run our workflow), we have a `Snakefile` file that will be the backbone of our workflow.
+Within the `workflow` directory (where we will create and run our workflow), we have a place to put our conda environments for our software in `envs` directory and a file that will be the backbone of our workflow called `Snakefile`
 
 ## 3.03 Run the software on the command line
 
 First lets run the first step in our workflow ([fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)) directly on the command line to get the syntax of the command right and check what outputs files we expect to get. Knowing what files the software will output is important for Snakemake since it is a lazy "pull" based system where software/rules will only run if you tell it to create the output file. We will talk more about this later!
 
-First make sure to have [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) available. On NeSI, load the corresponding module
+First install [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) into our `snakemake_env` conda environment (skip this step on NeSI)
 
 ```bash
-module load FastQC/0.11.9
+conda install fastqc
 ```
 
 See what parameters are available so we know how we want to run this software before we put it in a Snakemake workflow
@@ -455,11 +457,35 @@ Notice our workflow 'job nodes' are now dashed lines, this indicates that their 
 
 This can be quite informative if your workflow errors out at a rule. You can visually check which rules successfully ran and which didn't.
 
-## 3.09 Run using environment modules
+## 3.09 Run using the conda package management system
 
-fastqc worked because we loaded it in our current shell session. Let's specify the environment module for fastqc so the user of the workflow doesn't need to load it manually.
+fastqc worked because we already had it installed locally (in our `snakemake_env` conda environment). Let's specify a conda environment for fastqc so the user of the workflow doesn't need to install it manually.
 
-Update our rule to use it using the `envmodules:` directive
+Make a conda environment file for fastqc
+
+```bash
+# create the file
+touch ./envs/fastqc.yaml
+
+# see what versions of fastqc are available
+conda search fastqc
+
+# write the following to fastqc.yaml
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconda::fastqc=0.11.9
+```
+
+This will install [fastqc (version 0.11.9)](https://anaconda.org/bioconda/fastqc) from bioconda into a 'clean' conda environment separate from the rest of your computer
+
+Have a look at [bioconda's list of packages](https://bioconda.github.io/conda-package_index.html) to see the VERY extensive list of quality open source (free) bioinformatics software that is available for download and use. Note that is only one of the conda package repositories that exist, also have a look at the [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) conda package repositories.
+
+See [here](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-file-manually) for information on creating conda environment files.
+
+Update our rule to use it using the `conda:` directive, pointing the rule to the `envs` directory which has our conda environment file for fastqc (directory relative to the Snakefile)
 
 ```diff
 # target OUTPUT files for the whole workflow
@@ -479,13 +505,13 @@ rule fastqc:
         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
     threads: 2
-+   envmodules:
-+       "FastQC/0.11.9"
++   conda:
++       "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
-Run again, now telling Snakemake to use [environment modules](https://nesi.github.io/hpc-intro/14-modules/index.html) to automatically load our software by using the `--use-envmodules` flag
+Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/latest/) to automatically install our software by using the `--use-conda` flag
 
 ```diff
 # first remove output of last run
@@ -493,7 +519,7 @@ rm -r ../results/*
 
 # Run dryrun again
 - snakemake --dryrun --cores 2
-+ snakemake --dryrun --cores 2 --use-envmodules
++ snakemake --dryrun --cores 2 --use-conda
 ```
 
 My output:
@@ -534,11 +560,13 @@ total         2              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
+Notice it now says that "Conda environment envs/fastqc.yaml will be created.". Now the software our workflow uses will be automatically installed!
+
 Let's do a full run
 
 ```diff
 - snakemake --cores 2
-+ snakemake --cores 2 --use-envmodules
++ snakemake --cores 2 --use-conda
 ```
 
 My output:
@@ -628,8 +656,6 @@ Finished job 0.
 Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030734.543325.snakemake.log
 ```
 
-Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
-
 ## 3.10 Capture our logs
 
 So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting at the computer watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break.
@@ -662,8 +688,8 @@ rule fastqc:
 +   log:
 +       "logs/fastqc/NA24631.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
 -       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
@@ -697,8 +723,8 @@ Run again
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Output:
@@ -816,8 +842,8 @@ rule fastqc:
 -       "logs/fastqc/NA24631.log"
 +       "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
@@ -839,7 +865,7 @@ Run workflow again
 rm -r ../results/*
 
 # run dryrun again
-snakemake --dryrun --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
 ```
 
 See how it now runs over all three of our samples in the output of the dryrun:
@@ -905,7 +931,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 ```bash
 # full run again
-snakemake --cores 2 --use-envmodules
+snakemake --cores 2 --use-conda
 ```
 
 All three samples were run through our workflow! And we have a log file for each sample for the fastqc rule
@@ -924,6 +950,21 @@ total 1.5K
 ```
 
 ## 3.12 Add more rules
+
+- Make a conda environment file for multiqc
+
+```bash
+# create the file
+touch ./envs/multiqc.yaml
+
+# write the following to multiqc.yaml
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconda::multiqc=1.11
+```
 
 - Connect the outputs of fastqc to the inputs of multiqc
 - Add a new final target for `rule all:`
@@ -953,8 +994,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -965,8 +1006,8 @@ rule fastqc:
 +         "../results/multiqc_report.html"
 +     log:
 +         "logs/multiqc/multiqc.log"
-+     envmodules:
-+         "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
++     conda:
++         "envs/multiqc.yaml"
 +     shell:
 +         "multiqc {input} -o ../results/ &> {log}"
 ```
@@ -978,8 +1019,8 @@ Run workflow again
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Didn't work? Error:
@@ -1017,8 +1058,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -1030,8 +1071,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 ```
@@ -1053,8 +1094,8 @@ Run again
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 ## 3.13 More about Snakemake's lazy behaviour
@@ -1085,8 +1126,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -1097,8 +1138,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 ```
@@ -1110,7 +1151,7 @@ Run workflow again
 rm -r ../results/*
 
 # run dryrun again
-snakemake --dryrun --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
 ```
 
 It still works because it is the last file in the workflow sequence, Snakemake will do all the steps necessary to get to this target file (therefore it runs both fastqc and multiqc)
@@ -1153,8 +1194,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -1165,8 +1206,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 ```
@@ -1175,7 +1216,7 @@ Run again
 
 ```bash
 # run dryrun again
-snakemake --dryrun --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
 ```
 
 Partial output:
@@ -1240,8 +1281,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    envmodules:
-        "FastQC/0.11.9"
+    conda:
+        "envs/fastqc.yaml"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -1252,8 +1293,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    conda:
+        "envs/multiqc.yaml"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -1264,11 +1305,26 @@ rule multiqc:
 +        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
 +    log:
 +        "logs/trim_galore/{sample}.log"
-+    envmodules:
-+       "TrimGalore/0.6.4-gimkl-2018b"
++    conda:
++        "./envs/trim_galore.yaml"
 +    threads: 2
 +    shell:
 +        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+```
+
+Create conda env files
+
+```bash
+# create files
+touch ./envs/trim_galore.yaml
+
+# write the following to trim_galore.yaml
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - bioconda::trim-galore=0.6.5
 ```
 
 Visualise workflow
@@ -1301,8 +1357,8 @@ Run the rest of the workflow
 
 ```bash
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
+snakemake --cores 2 --use-conda
 ```
 
 Notice it will run only one rule/sample/file at a time...why is that?
@@ -1316,8 +1372,8 @@ Run again allowing Snakemake to use more cores overall `--cores 4` rather than `
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 4 --use-envmodules
-snakemake --cores 4 --use-envmodules
+snakemake --dryrun --cores 4 --use-conda
+snakemake --cores 4 --use-conda
 ```
 
 Notice the whole workflow ran alot faster and several samples/files/rules were running at one time. This is because we set each rule to run with 2 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 2 with the `--cores 2` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 4 with `--cores 4`, up to 2 samples could be run through at one time.
@@ -1341,7 +1397,7 @@ In addition, you need to specify a maximum number of concurrent jobs using `--jo
 rm -r ../results/*
 
 # run again on the cluster
-snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-envmodules
+snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-conda
 ```
 
 If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
@@ -1366,14 +1422,15 @@ You can exit the view create by `watch` by pressing CTRL+C.
 
 ---
 
-- Once familiar with environment modules, the software are very straightforward to integrate in your snakemake workflow
+- There is an enormous range of quality open source (free) software available from conda package repositories such as [bioconda](https://bioconda.github.io/conda-package_index.html), [conda-forge](https://conda-forge.org/feedstocks/) and [main](https://anaconda.org/anaconda/repo) and containers repositories such as [docker hub](https://hub.docker.com/)
+- Once familiar with singularity/conda, the software are very straightforward to integrate in your snakemake workflow
 - Run your commands directly on the command line before wrapping it up in a Snakemake rule
 - First do a dryrun to check the Snakemake structure is set up correctly
 - Work iteratively (get each rule working before moving onto the next)
 - File paths are relative to the Snakefile
 - Run your workflow from where your Snakefile is
 - Visualise your workflow by creating a DAG (directed acyclic graph), a rulegraph or filegraph
-- Use environment modules to load software in your workflow - this improves reproducibility
+- Use conda to install software in your workflow - this improves reproducibility and portability
 - Snakemake is lazy...
   - It will only do something if it hasn't already done it
   - It will pick up where it left off, rather than run the whole workflow again
@@ -1418,22 +1475,22 @@ Run your snakemake workflow with:
 snakemake --cores 2
 ```
 
-Run a dryrun of your snakemake workflow (using environment modules to load your software) with:
+Run a dryrun of your snakemake workflow (using conda to install your software) with:
 
 ```bash
-snakemake --dryrun --cores 2 --use-envmodules
+snakemake --dryrun --cores 2 --use-conda
 ```
 
-Run your snakemake workflow (using environment modules to load your software) with:
+Run your snakemake workflow (using conda to install your software) with:
 
 ```bash
-snakemake --cores 2 --use-envmodules
+snakemake --cores 2 --use-conda
 ```
 
 Run your snakemake workflow using multiple jobs on NeSI:
 
 ```bash
-snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-envmodules
+snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-conda
 ```
 
 Create a global wildcard to get process all your samples in a directory with:
@@ -1451,7 +1508,7 @@ expand("../results/{sample}_1.fastq.gz", sample = SAMPLES)
 Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores to be used at one time with the `--cores` command
 
 ```bash
-snakemake --cores 4 --use-envmodules
+snakemake --cores 4 --use-conda
 ```
 
 # Our final snakemake workflow!
