@@ -770,7 +770,7 @@ total 3.0M
 </details>
 <br/>
 
-*This become particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scaleable when our data becomes big data.*
+*This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.*
 
 ## 4.6 Generating a snakemake report
 

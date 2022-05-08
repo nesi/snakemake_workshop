@@ -880,7 +880,7 @@ Visualise workflow
 snakemake --dag | dot -Tpng > dag_2.png
 ```
 
-Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) inidicated by the dashed lines
+Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) indicated by the dashed lines
 
 <details><summary markdown="span">My DAG (click to expand)</summary>
 
@@ -1423,7 +1423,7 @@ snakemake --dryrun --cores 4 --use-envmodules
 snakemake --cores 4 --use-envmodules
 ```
 
-Notice the whole workflow ran alot faster and several samples/files/rules were running at one time. This is because we set each rule to run with 2 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 2 with the `--cores 2` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 4 with `--cores 4`, up to 2 samples could be run through at one time.
+Notice the whole workflow ran much faster and several samples/files/rules were running at one time. This is because we set each rule to run with 2 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 2 with the `--cores 2` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 4 with `--cores 4`, up to 2 samples could be run through at one time.
 
 ## 3.16 Throw it even more cores
 
@@ -1455,7 +1455,7 @@ squeue -u your_nesi_login
 
 where `your_nesi_login` needs to be replace with your actual NeSI login.
 
-An additional trick is to use the `watch` command to repeatly call any command in the terminal, giving you a lightweigth monitoring tools ;-).
+An additional trick is to use the `watch` command to repeatedly call any command in the terminal, giving you a lightweight monitoring tool ;-).
 Here we will use it to see your jobs gets queued and executed in real time:
 
 ```bash
