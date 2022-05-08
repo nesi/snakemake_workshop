@@ -786,7 +786,12 @@ In our report:
 - You are also provided with runtime information under the `Statistics` tab outlining how long each rule/sample ran for, and the date/time each file was created.
 - Under the `Configuration` tab, all of our user configuration is explicitly outlined
 
+<details><summary markdown="span">My report (click to expand)</summary>
+
 ![snakemake_report](./images/snakemake_report.gif)
+
+</details>
+<br/>
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
 
