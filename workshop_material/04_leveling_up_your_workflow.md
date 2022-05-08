@@ -13,8 +13,6 @@
 
 ## Catching up
 
-From section 03, you should have the following files:
-
 <details><summary markdown="span">From section 03, you should have the following Snakefile (click to expand)</summary>
 
 ```python
