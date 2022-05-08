@@ -1,7 +1,6 @@
 This is a 'final leveled up demo workflow' that should have been created by following this Snakemake workshop up to [section 04 - Leveling up your workflow](https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html). In includes all the files that comprise the **workflow**:
 
 - `./workflow/Snakefile`
-- `./workflow/envs/`
 - `./workflow/config/`
 - `./workflow/slurm/`
 
