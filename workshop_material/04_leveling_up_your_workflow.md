@@ -61,7 +61,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
@@ -158,7 +158,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
 +   resources:
 +       cpus=8
@@ -241,7 +241,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -353,7 +353,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -450,7 +450,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -538,7 +538,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -711,7 +711,7 @@ rule trim_galore:
     log:
         "logs/trim_galore/{sample}.log"
     envmodules:
-        "TrimGalore/0.6.4-gimkl-2018b"
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     message:
         "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
