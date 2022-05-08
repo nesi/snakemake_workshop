@@ -584,7 +584,7 @@ Let's do a full run
 + snakemake --cores 2 --use-envmodules
 ```
 
-<details><summary markdown="span">My script (click to expand)</summary>
+<details><summary markdown="span">My output (click to expand)</summary>
 
 ```bash
 Building DAG of jobs...
@@ -747,7 +747,7 @@ snakemake --dryrun --cores 2 --use-envmodules
 snakemake --cores 2 --use-envmodules
 ```
 
-<details><summary markdown="span">My script (click to expand)</summary>
+<details><summary markdown="span">My output (click to expand)</summary>
 
 ```bash
 Building DAG of jobs...
@@ -799,7 +799,7 @@ We now have a log file, lets have a look at the first 10 lines of our log with:
 head ./logs/fastqc/NA24631.log
 ```
 
-<details><summary markdown="span">My script (click to expand)</summary>
+<details><summary markdown="span">My output (click to expand)</summary>
 
 ```bash
 Started analysis of NA24631_1.fastq.gz
@@ -1047,7 +1047,9 @@ snakemake --dryrun --cores 2 --use-envmodules
 snakemake --cores 2 --use-envmodules
 ```
 
-Didn't work? Error:
+Didn't work?
+
+<details><summary markdown="span">My error (click to expand)</summary>
 
 ```bash
 Building DAG of jobs...
@@ -1055,6 +1057,9 @@ WildcardError in line 29 of /scale_wlg_persistent/filesets/project/nesi99991/sna
 Wildcards in input files cannot be determined from output files:
 'sample'
 ```
+
+</details>
+<br/>
 
 Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
 

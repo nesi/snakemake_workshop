@@ -179,7 +179,7 @@ snakemake --profile slurm --use-envmodules
 
 If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
 
-My output:
+<details><summary markdown="span">My output (click to expand)</summary>
 
 ```
 JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
@@ -190,6 +190,9 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 22278378      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
 22278379      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
 ```
+
+</details>
+<br/>
 
 ## 4.2 Pull out parameters
 
@@ -372,13 +375,18 @@ snakemake --dryrun --cores 2 --use-envmodules
 snakemake --cores 2 --use-envmodules
 ```
 
-Didn't work? Error:
+Didn't work?
+
+<details><summary markdown="span">My error (click to expand)</summary>
 
 ```bash
 KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
 'PARAMS'
   File "/home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile", line 19, in <module>
 ```
+
+</details>
+<br/>
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is so it can't find our config variables. We can do this by passing the location of our config file to the `--configfile` flag
 
@@ -559,6 +567,8 @@ snakemake --cores 2 --use-envmodules
 
 Now our messages are printed to the screen as our workflow runs
 
+<details><summary markdown="span">My output (click to expand)</summary>
+
 ```bash
 Building DAG of jobs...
 Conda environment envs/trim_galore.yaml will be created.
@@ -620,6 +630,9 @@ total              8              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
+</details>
+<br/>
+
 ## 4.5 Create temporary files
 
 In our workflow, we are likely to be creating files that we don't want, but are used or produced by our workflow (intermediate files). We can mark such files as temporary so Snakemake will remove the file once it doesn't need to use it anymore.
@@ -630,7 +643,7 @@ For example, we might not want to keep our fastqc output files since our multiqc
 ls -lh ../results/fastqc/
 ```
 
-My output:
+<details><summary markdown="span">My output (click to expand)</summary>
 
 ```bash
 total 7.5M
@@ -647,6 +660,9 @@ total 7.5M
 -rw-rw----+ 1 lkemp nesi99991 732K Sep 13 04:35 NA24695_2_fastqc.html
 -rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:35 NA24695_2_fastqc.zip
 ```
+
+</details>
+<br/>
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
 
@@ -736,7 +752,7 @@ ls -lh ../results/fastqc/
 
 These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 7.5 megabytes to 3 megabytes in this directory).
 
-My output:
+<details><summary markdown="span">My output (click to expand)</summary>
 
 ```bash
 total 3.0M
@@ -747,6 +763,9 @@ total 3.0M
 -rw-rw----+ 1 lkemp nesi99991 476K Sep 13 04:37 NA24695_1_fastqc.zip
 -rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:37 NA24695_2_fastqc.zip
 ```
+
+</details>
+<br/>
 
 *This become particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scaleable when our data becomes big data.*
 
