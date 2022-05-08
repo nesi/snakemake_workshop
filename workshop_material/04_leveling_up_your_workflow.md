@@ -13,7 +13,9 @@
 
 ## Catching up
 
-From section 03, your Snakefile should look like:
+From section 03, you should have the following files:
+
+<details><summary markdown="span">From section 03, you should have the following Snakefile (click to expand)</summary>
 
 ```python
 # define samples from data directory using wildcards
@@ -67,6 +69,9 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 
 ```
+
+</details>
+<br/>
 
 ## 4.1 Use a profile for HPC
 
