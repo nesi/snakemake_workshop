@@ -1057,7 +1057,6 @@ rule fastqc:
 -       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
 +       html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-
     params:
         fastqc_params = config['PARAMS']['FASTQC']
     log:
@@ -1129,7 +1128,6 @@ rule fastqc:
     output:
         html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
         zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-
     params:
         fastqc_params = config['PARAMS']['FASTQC']
     log:
