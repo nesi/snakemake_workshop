@@ -13,7 +13,9 @@
 
 ## Catching up
 
-From section 03, your Snakefile should look like:
+From section 03, you should have the following Snakefile:
+
+{% capture e4dot1 %}
 
 ```python
 # define samples from data directory using wildcards
@@ -36,8 +38,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -48,8 +50,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -60,47 +62,18 @@ rule trim_galore:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+
 ```
 
-You should also have three conda environment files
+{% endcapture %}
 
-- fastqc.yaml
-
-```yaml
-channels:
-  - bioconda
-  - conda-forge
-  - defaults
-dependencies:
-  - bioconda::fastqc=0.11.9
-```
-
-- multiqc.yaml
-
-```yaml
-channels:
-  - bioconda
-  - conda-forge
-  - defaults
-dependencies:
-  - bioconda::multiqc=1.11
-```
-
-- trim_galore.yaml
-
-```yaml
-channels:
-  - bioconda
-  - conda-forge
-  - defaults
-dependencies:
-  - bioconda::trim-galore=0.6.5
-```
+{% include exercise.html title="e4dot1" content=e4dot1%}
+<br>
 
 ## 4.1 Use a profile for HPC
 
@@ -127,8 +100,8 @@ Then run the snakemake workflow using the `slurm` profile
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --use-conda
-snakemake --profile slurm --use-conda
+snakemake --dryrun --profile slurm --use-envmodules
+snakemake --profile slurm --use-envmodules
 ```
 
 If you interrupt the execution of a snakemake workflow using CTRL-C, already submitted Slurm jobs won't be cancelled.
@@ -178,8 +151,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -190,8 +163,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -202,8 +175,8 @@ rule trim_galore:
         ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
 +   resources:
 +       cpus=8
@@ -218,13 +191,15 @@ Run the workflow again
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --use-conda
-snakemake --profile slurm --use-conda
+snakemake --dryrun --profile slurm --use-envmodules
+snakemake --profile slurm --use-envmodules
 ```
 
 If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
 
 My output:
+
+{% capture e4dot2 %}
 
 ```
 JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
@@ -235,6 +210,11 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 22278378      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
 22278379      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
 ```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot2" content=e4dot2%}
+<br>
 
 ## 4.2 Pull out parameters
 
@@ -259,8 +239,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
@@ -271,8 +251,8 @@ rule multiqc:
         "../results/multiqc_report.html"
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     shell:
         "multiqc {input} -o ../results/ &> {log}"
 
@@ -285,8 +265,8 @@ rule trim_galore:
 +       "--paired"
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -302,7 +282,7 @@ Run a dryrun to check it works
 rm -r ../results/*
 
 # run dryrun again
-snakemake --dryrun --cores 2 --use-conda
+snakemake --dryrun --cores 2 --use-envmodules
 ```
 
 ## 4.3 Pull out user configurable options
@@ -367,8 +347,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     shell:
 -       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
@@ -382,8 +362,8 @@ rule multiqc:
 +       multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     shell:
 -       "multiqc {input} -o ../results/ &> {log}"
 +       "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
@@ -397,8 +377,8 @@ rule trim_galore:
         "--paired"
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -413,17 +393,26 @@ Let's use our configuration file! Run workflow again:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-conda
-snakemake --cores 2 --use-conda
+snakemake --dryrun --cores 2 --use-envmodules
+snakemake --cores 2 --use-envmodules
 ```
 
-Didn't work? Error:
+Didn't work?
+
+My error:
+
+{% capture e4dot3 %}
 
 ```bash
 KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
 'PARAMS'
   File "/home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile", line 19, in <module>
 ```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot3" content=e4dot3%}
+<br>
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is so it can't find our config variables. We can do this by passing the location of our config file to the `--configfile` flag
 
@@ -432,10 +421,10 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 rm -r ../results/*
 
 # run dryrun/run again
-- snakemake --dryrun --cores 2 --use-conda
-- snakemake --cores 2 --use-conda
-+ snakemake --dryrun --cores 2 --use-conda --configfile ../config/config.yaml
-+ snakemake --cores 2 --use-conda --configfile ../config/config.yaml
+- snakemake --dryrun --cores 2 --use-envmodules
+- snakemake --cores 2 --use-envmodules
++ snakemake --dryrun --cores 2 --use-envmodules --configfile ../config/config.yaml
++ snakemake --cores 2 --use-envmodules --configfile ../config/config.yaml
 ```
 
 Alternatively, we can define our config file in our Snakefile in a situation where the configuration file is likely to always be named the same and be in the exact same location `../config/config.yaml` and you don't need the flexibility for the user to specify their own configuration files:
@@ -466,8 +455,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     shell:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
   
@@ -480,8 +469,8 @@ rule multiqc:
         multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     shell:
         "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
 
@@ -494,8 +483,8 @@ rule trim_galore:
         "--paired"
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -510,10 +499,10 @@ Then we don't need to specify where the configuration file is on the command lin
 rm -r ../results/*
 
 # run dryrun/run again
-- snakemake --dryrun --cores 2 --use-conda --configfile ../config/config.yaml
-- snakemake --cores 2 --use-conda --configfile ../config/config.yaml
-+ snakemake --dryrun --cores 2 --use-conda
-+ snakemake --cores 2 --use-conda
+- snakemake --dryrun --cores 2 --use-envmodules --configfile ../config/config.yaml
+- snakemake --cores 2 --use-envmodules --configfile ../config/config.yaml
++ snakemake --dryrun --cores 2 --use-envmodules
++ snakemake --cores 2 --use-envmodules
 ```
 
 ## 4.4 Leave messages for the user
@@ -550,8 +539,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
 +   message:
 +       "Undertaking quality control checks {input}"
     shell:
@@ -566,8 +555,8 @@ rule multiqc:
         multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
 +   message:
 +       "Compiling a HTML report for quality control checks. Writing to {output}."
     shell:
@@ -582,8 +571,8 @@ rule trim_galore:
         "--paired"
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     resources:
         cpus=8
@@ -598,11 +587,15 @@ rule trim_galore:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-conda
-snakemake --cores 2 --use-conda
+snakemake --dryrun --cores 2 --use-envmodules
+snakemake --cores 2 --use-envmodules
 ```
 
 Now our messages are printed to the screen as our workflow runs
+
+My output:
+
+{% capture e4dot4 %}
 
 ```bash
 Building DAG of jobs...
@@ -665,6 +658,11 @@ total              8              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
+{% endcapture %}
+
+{% include exercise.html title="e4dot4" content=e4dot4%}
+<br>
+
 ## 4.5 Create temporary files
 
 In our workflow, we are likely to be creating files that we don't want, but are used or produced by our workflow (intermediate files). We can mark such files as temporary so Snakemake will remove the file once it doesn't need to use it anymore.
@@ -676,6 +674,8 @@ ls -lh ../results/fastqc/
 ```
 
 My output:
+
+{% capture e4dot5 %}
 
 ```bash
 total 7.5M
@@ -692,6 +692,11 @@ total 7.5M
 -rw-rw----+ 1 lkemp nesi99991 732K Sep 13 04:35 NA24695_2_fastqc.html
 -rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:35 NA24695_2_fastqc.zip
 ```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot5" content=e4dot5%}
+<br>
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
 
@@ -723,8 +728,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     message:
         "Undertaking quality control checks {input}"
     shell:
@@ -739,8 +744,8 @@ rule multiqc:
         multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     message:
         "Compiling a HTML report for quality control checks. Writing to {output}."
     shell:
@@ -755,8 +760,8 @@ rule trim_galore:
         "--paired"
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
     message:
         "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
@@ -769,8 +774,8 @@ rule trim_galore:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --cores 2 --use-conda
-snakemake --cores 2 --use-conda
+snakemake --dryrun --cores 2 --use-envmodules
+snakemake --cores 2 --use-envmodules
 ```
 
 Now when we have a look at the `../results/fastqc/` directory with:
@@ -783,6 +788,8 @@ These html files have been removed once Snakemake no longer needs the files for 
 
 My output:
 
+{% capture e4dot6 %}
+
 ```bash
 total 3.0M
 -rw-rw----+ 1 lkemp nesi99991 475K Sep 13 04:38 NA24631_1_fastqc.zip
@@ -793,7 +800,12 @@ total 3.0M
 -rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:37 NA24695_2_fastqc.zip
 ```
 
-*This become particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scaleable when our data becomes big data.*
+{% endcapture %}
+
+{% include exercise.html title="e4dot6" content=e4dot6%}
+<br>
+
+*This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.*
 
 ## 4.6 Generating a snakemake report
 
@@ -812,7 +824,16 @@ In our report:
 - You are also provided with runtime information under the `Statistics` tab outlining how long each rule/sample ran for, and the date/time each file was created.
 - Under the `Configuration` tab, all of our user configuration is explicitly outlined
 
+My report:
+
+{% capture e4dot7 %}
+
 ![snakemake_report](./images/snakemake_report.gif)
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot7" content=e4dot7%}
+<br>
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
 
@@ -826,11 +847,18 @@ Snakemake has a built in linter to support you building best practice workflows,
 snakemake --lint
 ```
 
-Output
+My output:
+
+{% capture e3dot8 %}
 
 ```bash
 Congratulations, your workflow is in a good condition!
 ```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot8" content=e3dot8%}
+<br>
 
 Woohoo we have a best practice workflow!
 
@@ -861,10 +889,10 @@ params:
     "--paired"
 ```
 
-Run your snakemake workflow (using conda to install your software AND with a configuration file) with:
+Run your snakemake workflow (using environment modules to load your software AND with a configuration file) with:
 
 ```bash
-snakemake --cores 2 --use-conda --configfile ../config/config.yaml
+snakemake --cores 2 --use-envmodules --configfile ../config/config.yaml
 ```
 
 Alternatively, define your config file in the Snakefile:
@@ -894,7 +922,7 @@ snakemake --report ../results/report.html
 
 # Our final snakemake workflow!
 
-See [leveled_up_demo_workflow](../leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
+See [leveled_up_demo_workflow](https://github.com/nesi/snakemake_workshop/tree/main/leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
 
 - - - 
 <p style="text-align:left;">

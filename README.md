@@ -26,6 +26,11 @@ In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you th
 
 This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
 
+## Attribution notice :
+
+* Material used in this workshop is based on the following repository
+    * Author     : Leah Kemp (ESR)
+    * Repository : https://leahkemp.github.io/RezBaz2020_snakemake_workshop/
 
 ## Setup
 
@@ -47,5 +52,9 @@ If you have any questions or would like more information about this session, ple
 
 - [Basic demo workflow](https://github.com/nesi/snakemake_workshop/tree/main/basic_demo_workflow)
 - [Leveled up demo workflow](https://github.com/nesi/snakemake_workshop/tree/main/leveled_up_demo_workflow)
+
+**Appendices:**
+
+- [Setup for running on your machine using conda](workshop_material/99_appendix_setup_on_your_machine.md)
 
 <p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction.html">Start the workshop!</a>

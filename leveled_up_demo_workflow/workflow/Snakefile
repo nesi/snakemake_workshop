@@ -23,8 +23,8 @@ rule fastqc:
     log:
         "logs/fastqc/{sample}.log"
     threads: 2
-    conda:
-        "envs/fastqc.yaml"
+    envmodules:
+        "FastQC/0.11.9"
     message:
         "Undertaking quality control checks {input}"
     shell:
@@ -39,8 +39,8 @@ rule multiqc:
         multiqc_params = config['PARAMS']['MULTIQC']
     log:
         "logs/multiqc/multiqc.log"
-    conda:
-        "envs/multiqc.yaml"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
     message:
         "Compiling a HTML report for quality control checks. Writing to {output}."
     shell:
@@ -55,9 +55,11 @@ rule trim_galore:
         "--paired"
     log:
         "logs/trim_galore/{sample}.log"
-    conda:
-        "./envs/trim_galore.yaml"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
+    resources:
+        cpus=8
     message:
         "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
