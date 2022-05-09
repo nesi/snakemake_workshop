@@ -44,7 +44,7 @@ total 13M
 {% endcapture %}
 
 {% include exercise.html title="e3dot1" content=e3dot1%}
-
+<br>
 
 ## 3.02 Snakemake workflow file structure
 
@@ -87,7 +87,7 @@ drwxrws---+ 3 lkemp nesi99991 4.0K Sep 13 02:57 workflow
 {% endcapture %}
 
 {% include exercise.html title="e3dot2" content=e3dot2%}
-
+<br>
 
 ```bash
 ls -lh demo_workflow/workflow/
@@ -105,7 +105,7 @@ total 512
 {% endcapture %}
 
 {% include exercise.html title="e3dot3" content=e3dot3%}
-
+<br>
 
 Within the `workflow` directory (where we will create and run our workflow), we have a `Snakefile` file that will be the backbone of our workflow.
 
@@ -189,7 +189,7 @@ Analysis complete for NA24631_2.fastq.gz
 {% endcapture %}
 
 {% include exercise.html title="e3dot4" content=e3dot4%}
-
+<br>
 
 What are the output files of fastqc? Find out with:
 
@@ -212,7 +212,7 @@ total 2.5M
 {% endcapture %}
 
 {% include exercise.html title="e3dot5" content=e3dot5%}
-
+<br>
 
 ## 3.04 Create the first rule in your workflow
 
@@ -331,7 +331,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 {% endcapture %}
 
 {% include exercise.html title="e3dot6" content=e3dot6%}
-
+<br>
 
 The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`), with a minimum of 2 threads (min threads 2) and a maximum of 2 threads (`max threads 2`)
 
@@ -352,7 +352,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot7" content=e3dot7%}
-
+<br>
 
 Our diagram has a node for each job which are connected by edges representing dependencies
 
@@ -454,7 +454,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 {% endcapture %}
 
 {% include exercise.html title="e3dot8" content=e3dot8%}
-
+<br>
 
 It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
 
@@ -477,6 +477,7 @@ total 3.5M
 {% endcapture %}
 
 {% include exercise.html title="e3dot9" content=e3dot9%}
+<br>
 
 ## 3.08 Lazy evaluation
 
@@ -498,7 +499,7 @@ Nothing to be done.
 {% endcapture %}
 
 {% include exercise.html title="e3dot10" content=e3dot10%}
-
+<br>
 
 ```bash
 snakemake --cores 2
@@ -517,7 +518,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 {% endcapture %}
 
 {% include exercise.html title="e3dot11" content=e3dot11%}
-
+<br>
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
 
@@ -536,7 +537,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot12" content=e3dot12%}
-
+<br>
 
 Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
 
@@ -626,7 +627,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 {% endcapture %}
 
 {% include exercise.html title="e3dot13" content=e3dot13%}
-
+<br>
 
 Let's do a full run
 
@@ -727,7 +728,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 {% endcapture %}
 
 {% include exercise.html title="e3dot14" content=e3dot14%}
-
+<br>
 
 Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
 
@@ -850,7 +851,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 {% endcapture %}
 
 {% include exercise.html title="e3dot15" content=e3dot15%}
-
+<br>
 
 We now have a log file, lets have a look at the first 10 lines of our log with:
 
@@ -878,7 +879,7 @@ Approx 45% complete for NA24631_1.fastq.gz
 {% endcapture %}
 
 {% include exercise.html title="e3dot16" content=e3dot16%}
-
+<br>
 
 <p align="center"><b>We have logs. Tidy logs.</b><br></p>
 
@@ -954,7 +955,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot17" content=e3dot17%}
-
+<br>
 
 Run workflow again
 
@@ -1034,7 +1035,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 {% endcapture %}
 
 {% include exercise.html title="e3dot18" content=e3dot18%}
-
+<br>
 
 ```bash
 # full run again
@@ -1061,7 +1062,7 @@ total 1.5K
 {% endcapture %}
 
 {% include exercise.html title="e3dot19" content=e3dot19%}
-
+<br>
 
 ## 3.12 Add more rules
 
@@ -1138,7 +1139,7 @@ Wildcards in input files cannot be determined from output files:
 {% endcapture %}
 
 {% include exercise.html title="e3dot20" content=e3dot20%}
-
+<br>
 
 Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
 
@@ -1202,7 +1203,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot21" content=e3dot21%}
-
+<br>
 
 Run again
 
@@ -1290,7 +1291,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot22" content=e3dot22%}
-
+<br>
 
 <p align="center"><b>Beware: Snakemake will also NOT run rules that it doesn't need to run in order to get the target files defined in rule: all</b><br></p>
 
@@ -1363,7 +1364,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 {% endcapture %}
 
 {% include exercise.html title="e3dot23" content=e3dot23%}
-
+<br>
 
 Our multiqc rule won't be run/evaluated
 
@@ -1384,7 +1385,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot24" content=e3dot24%}
-
+<br>
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
 
@@ -1471,7 +1472,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot25" content=e3dot25%}
-
+<br>
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
@@ -1488,7 +1489,7 @@ My rulegraph:
 {% endcapture %}
 
 {% include exercise.html title="e3dot26" content=e3dot26%}
-
+<br>
 
 An aside: another option that will show all your input and output files at each step:
 
@@ -1505,7 +1506,7 @@ My filegraph:
 {% endcapture %}
 
 {% include exercise.html title="e3dot27" content=e3dot27%}
-
+<br>
 
 Run the rest of the workflow
 
