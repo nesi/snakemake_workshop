@@ -1237,16 +1237,16 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
 + rule multiqc:
-+    input:
-+        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-+    output:
-+        "../results/multiqc_report.html"
-+    log:
-+        "logs/multiqc/multiqc.log"
-+    envmodules:
-+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-+    shell:
-+        "multiqc {input} -o ../results/ &> {log}"
++   input:
++       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++   output:
++       "../results/multiqc_report.html"
++   log:
++       "logs/multiqc/multiqc.log"
++   envmodules:
++       "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
++   shell:
++       "multiqc {input} -o ../results/ &> {log}"
 ```
 
 Current snakefile:
