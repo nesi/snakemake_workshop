@@ -13,7 +13,9 @@
 
 ## Catching up
 
-<details><summary markdown="span">From section 03, you should have the following Snakefile (click to expand)</summary>
+From section 03, you should have the following Snakefile:
+
+{% capture e4dot1 %}
 
 ```python
 # define samples from data directory using wildcards
@@ -68,8 +70,10 @@ rule trim_galore:
 
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot1" content=e4dot1%}
+<br>
 
 ## 4.1 Use a profile for HPC
 
@@ -182,7 +186,9 @@ snakemake --profile slurm --use-envmodules
 
 If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e4dot2 %}
 
 ```
 JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
@@ -194,8 +200,10 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 22278379      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot2" content=e4dot2%}
+<br>
 
 ## 4.2 Pull out parameters
 
@@ -380,7 +388,9 @@ snakemake --cores 2 --use-envmodules
 
 Didn't work?
 
-<details><summary markdown="span">My error (click to expand)</summary>
+My error:
+
+{% capture e4dot3 %}
 
 ```bash
 KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
@@ -388,8 +398,10 @@ KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Sna
   File "/home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile", line 19, in <module>
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot3" content=e4dot3%}
+<br>
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is so it can't find our config variables. We can do this by passing the location of our config file to the `--configfile` flag
 
@@ -570,7 +582,9 @@ snakemake --cores 2 --use-envmodules
 
 Now our messages are printed to the screen as our workflow runs
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e4dot4 %}
 
 ```bash
 Building DAG of jobs...
@@ -633,8 +647,10 @@ total              8              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot4" content=e4dot4%}
+<br>
 
 ## 4.5 Create temporary files
 
@@ -646,7 +662,9 @@ For example, we might not want to keep our fastqc output files since our multiqc
 ls -lh ../results/fastqc/
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e4dot5 %}
 
 ```bash
 total 7.5M
@@ -664,8 +682,10 @@ total 7.5M
 -rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:35 NA24695_2_fastqc.zip
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot5" content=e4dot5%}
+<br>
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
 
@@ -755,7 +775,9 @@ ls -lh ../results/fastqc/
 
 These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 7.5 megabytes to 3 megabytes in this directory).
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e4dot6 %}
 
 ```bash
 total 3.0M
@@ -767,8 +789,10 @@ total 3.0M
 -rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:37 NA24695_2_fastqc.zip
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot6" content=e4dot6%}
+<br>
 
 *This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.*
 
@@ -789,12 +813,16 @@ In our report:
 - You are also provided with runtime information under the `Statistics` tab outlining how long each rule/sample ran for, and the date/time each file was created.
 - Under the `Configuration` tab, all of our user configuration is explicitly outlined
 
-<details><summary markdown="span">My report (click to expand)</summary>
+My report:
+
+{% capture e4dot7 %}
 
 ![snakemake_report](./images/snakemake_report.gif)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e4dot7" content=e4dot7%}
+<br>
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
 
