@@ -836,11 +836,18 @@ Snakemake has a built in linter to support you building best practice workflows,
 snakemake --lint
 ```
 
-Output
+My output:
+
+{% capture e3dot8 %}
 
 ```bash
 Congratulations, your workflow is in a good condition!
 ```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot8" content=e3dot8%}
+<br>
 
 Woohoo we have a best practice workflow!
 
