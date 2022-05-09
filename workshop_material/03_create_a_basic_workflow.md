@@ -45,6 +45,7 @@ total 13M
 
 {% include exercise.html title="e3dot1" content=e3dot1%}
 
+
 ## 3.02 Snakemake workflow file structure
 
 Workflow file structure:
@@ -87,6 +88,7 @@ drwxrws---+ 3 lkemp nesi99991 4.0K Sep 13 02:57 workflow
 
 {% include exercise.html title="e3dot2" content=e3dot2%}
 
+
 ```bash
 ls -lh demo_workflow/workflow/
 ```
@@ -103,6 +105,7 @@ total 512
 {% endcapture %}
 
 {% include exercise.html title="e3dot3" content=e3dot3%}
+
 
 Within the `workflow` directory (where we will create and run our workflow), we have a `Snakefile` file that will be the backbone of our workflow.
 
@@ -187,6 +190,7 @@ Analysis complete for NA24631_2.fastq.gz
 
 {% include exercise.html title="e3dot4" content=e3dot4%}
 
+
 What are the output files of fastqc? Find out with:
 
 ```bash
@@ -208,6 +212,7 @@ total 2.5M
 {% endcapture %}
 
 {% include exercise.html title="e3dot5" content=e3dot5%}
+
 
 ## 3.04 Create the first rule in your workflow
 
@@ -327,6 +332,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% include exercise.html title="e3dot6" content=e3dot6%}
 
+
 The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`), with a minimum of 2 threads (min threads 2) and a maximum of 2 threads (`max threads 2`)
 
 ## 3.06 Create a DAG
@@ -346,6 +352,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot7" content=e3dot7%}
+
 
 Our diagram has a node for each job which are connected by edges representing dependencies
 
@@ -448,6 +455,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% include exercise.html title="e3dot8" content=e3dot8%}
 
+
 It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
 
 ```bash
@@ -491,6 +499,7 @@ Nothing to be done.
 
 {% include exercise.html title="e3dot10" content=e3dot10%}
 
+
 ```bash
 snakemake --cores 2
 ```
@@ -509,6 +518,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% include exercise.html title="e3dot11" content=e3dot11%}
 
+
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
 
 Also, what happens if we create another directed acyclic graph (DAG) after the workflow has been run?
@@ -526,6 +536,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot12" content=e3dot12%}
+
 
 Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
 
@@ -615,6 +626,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 {% endcapture %}
 
 {% include exercise.html title="e3dot13" content=e3dot13%}
+
 
 Let's do a full run
 
@@ -715,6 +727,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 {% endcapture %}
 
 {% include exercise.html title="e3dot14" content=e3dot14%}
+
 
 Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
 
@@ -838,6 +851,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% include exercise.html title="e3dot15" content=e3dot15%}
 
+
 We now have a log file, lets have a look at the first 10 lines of our log with:
 
 ```bash
@@ -864,6 +878,7 @@ Approx 45% complete for NA24631_1.fastq.gz
 {% endcapture %}
 
 {% include exercise.html title="e3dot16" content=e3dot16%}
+
 
 <p align="center"><b>We have logs. Tidy logs.</b><br></p>
 
@@ -939,6 +954,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot17" content=e3dot17%}
+
 
 Run workflow again
 
@@ -1019,6 +1035,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% include exercise.html title="e3dot18" content=e3dot18%}
 
+
 ```bash
 # full run again
 snakemake --cores 2 --use-envmodules
@@ -1044,6 +1061,7 @@ total 1.5K
 {% endcapture %}
 
 {% include exercise.html title="e3dot19" content=e3dot19%}
+
 
 ## 3.12 Add more rules
 
@@ -1121,6 +1139,7 @@ Wildcards in input files cannot be determined from output files:
 
 {% include exercise.html title="e3dot20" content=e3dot20%}
 
+
 Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
 
 ```diff
@@ -1183,6 +1202,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot21" content=e3dot21%}
+
 
 Run again
 
@@ -1271,6 +1291,7 @@ My DAG:
 
 {% include exercise.html title="e3dot22" content=e3dot22%}
 
+
 <p align="center"><b>Beware: Snakemake will also NOT run rules that it doesn't need to run in order to get the target files defined in rule: all</b><br></p>
 
 For example if only our fastqc outputs are defined as the target in `rule: all`
@@ -1343,6 +1364,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% include exercise.html title="e3dot23" content=e3dot23%}
 
+
 Our multiqc rule won't be run/evaluated
 
 Visualise workflow
@@ -1362,6 +1384,7 @@ My DAG:
 {% endcapture %}
 
 {% include exercise.html title="e3dot24" content=e3dot24%}
+
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
 
@@ -1449,6 +1472,7 @@ My DAG:
 
 {% include exercise.html title="e3dot25" content=e3dot25%}
 
+
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
 ```bash
@@ -1465,6 +1489,7 @@ My rulegraph:
 
 {% include exercise.html title="e3dot26" content=e3dot26%}
 
+
 An aside: another option that will show all your input and output files at each step:
 
 ```bash
@@ -1480,6 +1505,7 @@ My filegraph:
 {% endcapture %}
 
 {% include exercise.html title="e3dot27" content=e3dot27%}
+
 
 Run the rest of the workflow
 
