@@ -36,8 +36,8 @@ We have provided a guide for setting up your own machine using conda [here](99_a
 When you connect to NeSI JupyterLab you always start in a new hidden directory. To make sure you can find your work next time, you should change to another location. Here we will switch to our project directory, since home directories can run out of space quickly. If you are using your own project use that instead of "nesi99991".
 
 ```bash
-mkdir -p /nesi/project/nesi99991/snakemake20210914/$USER
-cd /nesi/project/nesi99991/snakemake20210914/$USER
+mkdir -p /nesi/project/nesi99991/snakemake20220512/$USER
+cd /nesi/project/nesi99991/snakemake20220512/$USER
 ```
 
 You can also navigate to the above directory in the JupyterLab file browser, which can be useful for editing files and viewing images and html documents.
