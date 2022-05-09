@@ -27,7 +27,9 @@ We have paired end sequencing data for three samples `NA24631` to process in the
 ls -lh ./data/
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot1 %}
 
 ```bash
 total 13M
@@ -39,8 +41,9 @@ total 13M
 -rw-rw----+ 1 lkemp nesi99991 1.9M Sep 10 04:32 NA24695_2.fastq.gz
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot1" content=e3dot1%}
 
 ## 3.02 Snakemake workflow file structure
 
@@ -70,7 +73,9 @@ Now you should have the very beginnings of your Snakemake workflow in a `demo_wo
 ls -lh demo_workflow/
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot2 %}
 
 ```bash
 total 1.0K
@@ -78,22 +83,26 @@ drwxrws---+ 2 lkemp nesi99991 4.0K Sep 13 02:57 results
 drwxrws---+ 3 lkemp nesi99991 4.0K Sep 13 02:57 workflow
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot2" content=e3dot2%}
 
 ```bash
 ls -lh demo_workflow/workflow/
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot3 %}
 
 ```bash
 total 512
 -rw-rw----+ 1 lkemp nesi99991    0 Sep 13 02:57 Snakefile
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot3" content=e3dot3%}
 
 Within the `workflow` directory (where we will create and run our workflow), we have a `Snakefile` file that will be the backbone of our workflow.
 
@@ -125,7 +134,9 @@ Run fastqc directly on the command line on one of the samples
 fastqc ./data/NA24631_1.fastq.gz ./data/NA24631_2.fastq.gz -o ./fastqc_test -t 2
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot4 %}
 
 ```bash
 Started analysis of NA24631_1.fastq.gz
@@ -172,8 +183,9 @@ Approx 95% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_2.fastq.gz
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot4" content=e3dot4%}
 
 What are the output files of fastqc? Find out with:
 
@@ -181,7 +193,9 @@ What are the output files of fastqc? Find out with:
 ls -lh ./fastqc_test
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot5 %}
 
 ```bash
 total 2.5M
@@ -191,8 +205,9 @@ total 2.5M
 -rw-rw----+ 1 lkemp nesi99991 479K Sep 10 04:38 NA24631_2_fastqc.zip
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot5" content=e3dot5%}
 
 ## 3.04 Create the first rule in your workflow
 
@@ -270,7 +285,9 @@ Then let's carry out a dryrun of the workflow, where no actual analysis is under
 snakemake --dryrun
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot6 %}
 
 ```bash
 Building DAG of jobs...
@@ -306,8 +323,9 @@ total         2              1              1
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot6" content=e3dot6%}
 
 The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`), with a minimum of 2 threads (min threads 2) and a maximum of 2 threads (`max threads 2`)
 
@@ -319,12 +337,15 @@ We can also visualise our workflow by creating a [directed acyclic graph](https:
 snakemake --dag | dot -Tpng > dag_1.png
 ```
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot7 %}
 
 ![DAG_1](./images/dag_1.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot7" content=e3dot7%}
 
 Our diagram has a node for each job which are connected by edges representing dependencies
 
@@ -338,7 +359,9 @@ Let's do a full run of our workflow (by removing the `--dryrun` flag). We will a
 snakemake --cores 2
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot8 %}
 
 ```bash
 Building DAG of jobs...
@@ -421,8 +444,9 @@ Finished job 0.
 Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030341.513736.snakemake.log
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot8" content=e3dot8%}
 
 It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
 
@@ -430,7 +454,9 @@ It worked! Now in our results directory we have our output files from fastqc. Le
 ls -lh ../results/fastqc/
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot9 %}
 
 ```bash
 total 3.5M
@@ -440,8 +466,9 @@ total 3.5M
 -rw-rw-r-- 1 lkemp lkemp 479K Sep  1 16:39 NA24631_2_fastqc.zip
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot9" content=e3dot9%}
 
 ## 3.08 Lazy evaluation
 
@@ -451,21 +478,26 @@ What happens if we try a dryrun or full run now?
 snakemake --dryrun --cores 2
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot10 %}
 
 ```bash
 Building DAG of jobs...
 Nothing to be done.
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot10" content=e3dot10%}
 
 ```bash
 snakemake --cores 2
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot11 %}
 
 ```bash
 Building DAG of jobs...
@@ -473,8 +505,9 @@ Nothing to be done.
 Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030445.098954.snakemake.log
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot11" content=e3dot11%}
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
 
@@ -484,12 +517,15 @@ Also, what happens if we create another directed acyclic graph (DAG) after the w
 snakemake --dag | dot -Tpng > dag.png
 ```
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot12 %}
 
 ![DAG](./images/dag.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot12" content=e3dot12%}
 
 Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
 
@@ -536,7 +572,9 @@ rm -r ../results/*
 + snakemake --dryrun --cores 2 --use-envmodules
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot13 %}
 
 ```bash
 Building DAG of jobs...
@@ -574,8 +612,9 @@ total         2              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot13" content=e3dot13%}
 
 Let's do a full run
 
@@ -584,7 +623,9 @@ Let's do a full run
 + snakemake --cores 2 --use-envmodules
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot14 %}
 
 ```bash
 Building DAG of jobs...
@@ -671,8 +712,9 @@ Finished job 0.
 Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030734.543325.snakemake.log
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot14" content=e3dot14%}
 
 Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
 
@@ -747,7 +789,9 @@ snakemake --dryrun --cores 2 --use-envmodules
 snakemake --cores 2 --use-envmodules
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot15 %}
 
 ```bash
 Building DAG of jobs...
@@ -790,8 +834,9 @@ Finished job 0.
 Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T031415.725355.snakemake.log
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot15" content=e3dot15%}
 
 We now have a log file, lets have a look at the first 10 lines of our log with:
 
@@ -799,7 +844,9 @@ We now have a log file, lets have a look at the first 10 lines of our log with:
 head ./logs/fastqc/NA24631.log
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot16 %}
 
 ```bash
 Started analysis of NA24631_1.fastq.gz
@@ -814,8 +861,9 @@ Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot16" content=e3dot16%}
 
 <p align="center"><b>We have logs. Tidy logs.</b><br></p>
 
@@ -882,12 +930,15 @@ snakemake --dag | dot -Tpng > dag_2.png
 
 Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) indicated by the dashed lines
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot17 %}
 
 ![DAG_2](./images/dag_2.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot17" content=e3dot17%}
 
 Run workflow again
 
@@ -901,7 +952,9 @@ snakemake --dryrun --cores 2 --use-envmodules
 
 See how it now runs over all three of our samples in the output of the dryrun
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot18 %}
 
 ```bash
 Building DAG of jobs...
@@ -962,8 +1015,9 @@ total         4              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot18" content=e3dot18%}
 
 ```bash
 # full run again
@@ -976,7 +1030,9 @@ All three samples were run through our workflow! And we have a log file for each
 ls -lh ./logs/fastqc
 ```
 
-<details><summary markdown="span">My output (click to expand)</summary>
+My output:
+
+{% capture e3dot19 %}
 
 ```bash
 total 1.5K
@@ -985,8 +1041,9 @@ total 1.5K
 -rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24695.log
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot19" content=e3dot19%}
 
 ## 3.12 Add more rules
 
@@ -1049,7 +1106,9 @@ snakemake --cores 2 --use-envmodules
 
 Didn't work?
 
-<details><summary markdown="span">My error (click to expand)</summary>
+My error:
+
+{% capture e3dot20 %}
 
 ```bash
 Building DAG of jobs...
@@ -1058,8 +1117,9 @@ Wildcards in input files cannot be determined from output files:
 'sample'
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot20" content=e3dot20%}
 
 Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
 
@@ -1114,12 +1174,15 @@ snakemake --dag | dot -Tpng > dag_3.png
 
 Now we have two rules in our workflow (fastqc and multiqc), we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot21 %}
 
 ![DAG_3](./images/dag_3.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot21" content=e3dot21%}
 
 Run again
 
@@ -1198,12 +1261,15 @@ snakemake --dag | dot -Tpng > dag_4.png
 
 Although the workflow ran the same, the DAG actually changed slightly, now there is only one file target and only the output of multiqc goes to `rule all`
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot22 %}
 
 ![DAG_4](./images/dag_4.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot22" content=e3dot22%}
 
 <p align="center"><b>Beware: Snakemake will also NOT run rules that it doesn't need to run in order to get the target files defined in rule: all</b><br></p>
 
@@ -1258,7 +1324,9 @@ Run again
 snakemake --dryrun --cores 2 --use-envmodules
 ```
 
-<details><summary markdown="span">My partial output (click to expand)</summary>
+My partial output:
+
+{% capture e3dot23 %}
 
 ```bash
 Job stats:
@@ -1271,8 +1339,9 @@ total         4              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot23" content=e3dot23%}
 
 Our multiqc rule won't be run/evaluated
 
@@ -1284,12 +1353,15 @@ snakemake --dag | dot -Tpng > dag_5.png
 
 Now we are back to only running fastqc in our workflow, despite having our second rule (multiqc) in our workflow
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot24 %}
 
 ![DAG_5](./images/dag_5.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot24" content=e3dot24%}
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
 
@@ -1367,12 +1439,15 @@ snakemake --dag | dot -Tpng > dag_6.png
 
 Fantastic, we are starting to build a workflow!
 
-<details><summary markdown="span">My DAG (click to expand)</summary>
+My DAG:
+
+{% capture e3dot25 %}
 
 ![DAG_6](./images/dag_6.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot25" content=e3dot25%}
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
@@ -1380,12 +1455,15 @@ However, when analysing many samples, our DAG can become messy and complicated. 
 snakemake --rulegraph | dot -Tpng > rulegraph_1.png
 ```
 
-<details><summary markdown="span">My rulegraph (click to expand)</summary>
+My rulegraph:
+
+{% capture e3dot26 %}
 
 ![rulegraph_1](./images/rulegraph_1.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot26" content=e3dot26%}
 
 An aside: another option that will show all your input and output files at each step:
 
@@ -1393,12 +1471,15 @@ An aside: another option that will show all your input and output files at each 
 snakemake --filegraph | dot -Tpng > filegraph.png
 ```
 
-<details><summary markdown="span">My filegraph (click to expand)</summary>
+My filegraph:
+
+{% capture e3dot27%}
 
 ![filegraph](./images/filegraph.png)
 
-</details>
-<br/>
+{% endcapture %}
+
+{% include exercise.html title="e3dot27" content=e3dot27%}
 
 Run the rest of the workflow
 
