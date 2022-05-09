@@ -48,4 +48,8 @@ If you have any questions or would like more information about this session, ple
 - [Basic demo workflow](https://github.com/nesi/snakemake_workshop/tree/main/basic_demo_workflow)
 - [Leveled up demo workflow](https://github.com/nesi/snakemake_workshop/tree/main/leveled_up_demo_workflow)
 
+**Appendices:**
+
+- [Setup for running on your machine using conda](workshop_material/99_appendix_setup_on_your_machine.md)
+
 <p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction.html">Start the workshop!</a>
