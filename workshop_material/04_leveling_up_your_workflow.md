@@ -67,7 +67,6 @@ rule trim_galore:
     threads: 2
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-
 ```
 
 {% endcapture %}
@@ -173,6 +172,69 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e4dot2 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    resources:
+        cpus=8
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot2" content=e4dot2%}
+<br>
+
 Run the workflow again
 
 ```bash
@@ -188,7 +250,7 @@ If you monitor the progress of your jobs using `squeue`, you will notice that so
 
 My output:
 
-{% capture e4dot2 %}
+{% capture e4dot3 %}
 
 ```
 JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
@@ -202,7 +264,7 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot2" content=e4dot2%}
+{% include exercise.html title="e4dot3" content=e4dot3%}
 <br>
 
 ## 4.2 Pull out parameters
@@ -263,6 +325,71 @@ rule trim_galore:
 -       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 +       "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
+
+Current snakefile:
+
+{% capture e4dot4 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    params:
+        "--paired"
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    resources:
+        cpus=8
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot4" content=e4dot4%}
+<br>
 
 Run a dryrun to check it works
 
@@ -375,6 +502,75 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e4dot5 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    params:
+        fastqc_params = config['PARAMS']['FASTQC']
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    params:
+        multiqc_params = config['PARAMS']['MULTIQC']
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    params:
+        "--paired"
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    resources:
+        cpus=8
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot5" content=e4dot5%}
+<br>
+
 Let's use our configuration file! Run workflow again:
 
 ```bash
@@ -390,7 +586,7 @@ Didn't work?
 
 My error:
 
-{% capture e4dot3 %}
+{% capture e4dot6 %}
 
 ```bash
 KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
@@ -400,7 +596,7 @@ KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Sna
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot3" content=e4dot3%}
+{% include exercise.html title="e4dot6" content=e4dot6%}
 <br>
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is so it can't find our config variables. We can do this by passing the location of our config file to the `--configfile` flag
@@ -480,6 +676,78 @@ rule trim_galore:
     shell:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
+
+Current snakefile:
+
+{% capture e4dot7 %}
+
+```txt
+# define our configuration file
+configfile: "../config/config.yaml"
+
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    params:
+        fastqc_params = config['PARAMS']['FASTQC']
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    params:
+        multiqc_params = config['PARAMS']['MULTIQC']
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    params:
+        "--paired"
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    resources:
+        cpus=8
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot7" content=e4dot7%}
+<br>
 
 Then we don't need to specify where the configuration file is on the command line
 
@@ -571,6 +839,84 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e4dot8 %}
+
+```txt
+# define our configuration file
+configfile: "../config/config.yaml"
+
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    params:
+        fastqc_params = config['PARAMS']['FASTQC']
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    message:
+        "Undertaking quality control checks {input}"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    params:
+        multiqc_params = config['PARAMS']['MULTIQC']
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    message:
+        "Compiling a HTML report for quality control checks. Writing to {output}."
+    shell:
+        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    params:
+        "--paired"
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    resources:
+        cpus=8
+    message:
+        "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot8" content=e4dot8%}
+<br>
+
 ```diff
 # remove output of last run
 rm -r ../results/*
@@ -584,7 +930,7 @@ Now our messages are printed to the screen as our workflow runs
 
 My output:
 
-{% capture e4dot4 %}
+{% capture e4dot9 %}
 
 ```bash
 Building DAG of jobs...
@@ -649,7 +995,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot4" content=e4dot4%}
+{% include exercise.html title="e4dot9" content=e4dot9%}
 <br>
 
 ## 4.5 Create temporary files
@@ -664,7 +1010,7 @@ ls -lh ../results/fastqc/
 
 My output:
 
-{% capture e4dot5 %}
+{% capture e4dot10 %}
 
 ```bash
 total 7.5M
@@ -684,7 +1030,7 @@ total 7.5M
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot5" content=e4dot5%}
+{% include exercise.html title="e4dot10" content=e4dot10%}
 <br>
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
@@ -758,6 +1104,83 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e4dot11 %}
+
+```txt
+# define our configuration file
+configfile: "../config/config.yaml"
+
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+
+    params:
+        fastqc_params = config['PARAMS']['FASTQC']
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    message:
+        "Undertaking quality control checks {input}"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    params:
+        multiqc_params = config['PARAMS']['MULTIQC']
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    message:
+        "Compiling a HTML report for quality control checks. Writing to {output}."
+    shell:
+        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    params:
+        "--paired"
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    message:
+        "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot11" content=e4dot11%}
+<br>
+
 ```diff
 # remove output of last run
 rm -r ../results/*
@@ -777,7 +1200,7 @@ These html files have been removed once Snakemake no longer needs the files for 
 
 My output:
 
-{% capture e4dot6 %}
+{% capture e4dot12 %}
 
 ```bash
 total 3.0M
@@ -791,7 +1214,7 @@ total 3.0M
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot6" content=e4dot6%}
+{% include exercise.html title="e4dot12" content=e4dot12%}
 <br>
 
 *This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.*
@@ -815,13 +1238,13 @@ In our report:
 
 My report:
 
-{% capture e4dot7 %}
+{% capture e4dot13 %}
 
 ![snakemake_report](./images/snakemake_report.gif)
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot7" content=e4dot7%}
+{% include exercise.html title="e4dot13" content=e4dot13%}
 <br>
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
@@ -838,7 +1261,7 @@ snakemake --lint
 
 My output:
 
-{% capture e3dot8 %}
+{% capture e4dot14 %}
 
 ```bash
 Congratulations, your workflow is in a good condition!
@@ -846,7 +1269,7 @@ Congratulations, your workflow is in a good condition!
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot8" content=e3dot8%}
+{% include exercise.html title="e4dot14" content=e4dot14%}
 <br>
 
 Woohoo we have a best practice workflow!
