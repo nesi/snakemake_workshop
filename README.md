@@ -29,7 +29,8 @@ This Workshop is intended for anyone who has several steps in their data analysi
 ## Attribution notice :
 
 * Material used in this workshop is based on the following repository
-    *   https://leahkemp.github.io/RezBaz2020_snakemake_workshop/ by Leah Kemp (ESR)
+    * Author     : Leah Kemp (ESR)
+    * Repository : https://leahkemp.github.io/RezBaz2020_snakemake_workshop/
 
 ## Setup
 
