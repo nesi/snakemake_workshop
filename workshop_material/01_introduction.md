@@ -60,6 +60,8 @@ Throughout this workshop, I'll be indicating the code to remove and the code to 
 
 *However, the actual `+` and `-` symbols should not be included in your own code*
 
+At each section of the workshop you can find a drop down box under "Current snakefile:" that will contain the main Snakefile that comprises the pipeline as a plain text file to copy and paste from if you need to catch up.
+
 - - - 
 
 <p style="text-align:left;">
