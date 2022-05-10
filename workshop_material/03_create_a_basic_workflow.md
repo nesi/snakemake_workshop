@@ -556,14 +556,14 @@ Nothing happens, all the target files in `rule all` have already been created so
 Also, what happens if we create another directed acyclic graph (DAG) after the workflow has been run?
 
 ```bash
-snakemake --dag | dot -Tpng > dag.png
+snakemake --dag | dot -Tpng > dag_2.png
 ```
 
 My DAG:
 
 {% capture e3dot13 %}
 
-![DAG](./images/dag.png)
+![DAG_2](./images/dag_2.png)
 
 {% endcapture %}
 
@@ -1078,7 +1078,7 @@ rule fastqc:
 Visualise workflow
 
 ```bash
-snakemake --dag | dot -Tpng > dag_2.png
+snakemake --dag | dot -Tpng > dag_3.png
 ```
 
 Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) indicated by the dashed lines
@@ -1087,7 +1087,7 @@ My DAG:
 
 {% capture e3dot21 %}
 
-![DAG_2](./images/dag_2.png)
+![DAG_3](./images/dag_3.png)
 
 {% endcapture %}
 
@@ -1428,7 +1428,7 @@ rule multiqc:
 Visualise workflow
 
 ```bash
-snakemake --dag | dot -Tpng > dag_3.png
+snakemake --dag | dot -Tpng > dag_4.png
 ```
 
 Now we have two rules in our workflow (fastqc and multiqc), we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
@@ -1437,7 +1437,7 @@ My DAG:
 
 {% capture e3dot27 %}
 
-![DAG_3](./images/dag_3.png)
+![DAG_4](./images/dag_4.png)
 
 {% endcapture %}
 
@@ -1563,7 +1563,7 @@ It still works because it is the last file in the workflow sequence, Snakemake w
 Visualise workflow
 
 ```bash
-snakemake --dag | dot -Tpng > dag_4.png
+snakemake --dag | dot -Tpng > dag_5.png
 ```
 
 Although the workflow ran the same, the DAG actually changed slightly, now there is only one file target and only the output of multiqc goes to `rule all`
@@ -1572,7 +1572,7 @@ My DAG:
 
 {% capture e3dot29 %}
 
-![DAG_4](./images/dag_4.png)
+![DAG_5](./images/dag_5.png)
 
 {% endcapture %}
 
@@ -1707,7 +1707,7 @@ Our multiqc rule won't be run/evaluated
 Visualise workflow
 
 ```bash
-snakemake --dag | dot -Tpng > dag_5.png
+snakemake --dag | dot -Tpng > dag_6.png
 ```
 
 Now we are back to only running fastqc in our workflow, despite having our second rule (multiqc) in our workflow
@@ -1716,7 +1716,7 @@ My DAG:
 
 {% capture e3dot32 %}
 
-![DAG_5](./images/dag_5.png)
+![DAG_6](./images/dag_6.png)
 
 {% endcapture %}
 
@@ -1855,7 +1855,7 @@ rule trim_galore:
 Visualise workflow
 
 ```bash
-snakemake --dag | dot -Tpng > dag_6.png
+snakemake --dag | dot -Tpng > dag_7.png
 ```
 
 Fantastic, we are starting to build a workflow!
@@ -1864,7 +1864,7 @@ My DAG:
 
 {% capture e3dot34 %}
 
-![DAG_6](./images/dag_6.png)
+![DAG_7](./images/dag_7.png)
 
 {% endcapture %}
 
