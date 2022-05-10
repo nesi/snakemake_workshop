@@ -364,7 +364,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 {% include exercise.html title="e3dot7" content=e3dot7%}
 <br>
 
-The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`), with a minimum of 2 threads (min threads 2) and a maximum of 2 threads (`max threads 2`)
+The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`)
 
 ## 3.06 Create a DAG
 
