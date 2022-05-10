@@ -69,4 +69,4 @@ Throughout this workshop, I'll be indicating the code to remove and the code to 
   </span>
 </p>
 
-
+<p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
