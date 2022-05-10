@@ -90,7 +90,7 @@ touch slurm/config.yaml
 
 # write the following to config.yaml
 jobs: 20
-cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991"
+cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991"
 ```
 
 Then run the snakemake workflow using the `slurm` profile
@@ -109,20 +109,26 @@ We tell snakemake how to cancel Slurm jobs using `scancel` via the `--cluster-ca
 
 ```diff
 jobs: 20
-- cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
-+ cluster: "sbatch --parsable --time 00:10:00 --mem=512MB --cpus-per-task 8"
+- cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8"
++ cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
 + cluster-cancel: scancel
 ```
 
 You can specify different resources (memory, cpus, gpus, etc.) for each target in the workflow and refer to them in the `cluster` option using placeholders.
 Default resources for all rules can also be set using the `default-resources` option.
 
-Update the profile `slurm/config.yaml` file as follows
+Update the profile `slurm/config.yaml` file as follows (using a multiline option to improve readability)
 
 ```diff
 jobs: 20
-- cluster: "sbatch --parsable --time 00:10:00 --mem=512MB --cpus-per-task 8"
-+ cluster: "sbatch --parsable --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus} --account nesi99991"
+- cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
++ cluster:
++     sbatch
++         --parsable
++         --time {resources.time_min}
++         --mem {resources.mem_mb}
++         --cpus-per-task {resources.cpus}
++         --account nesi99991
 + default-resources: [cpus=2, mem_mb=512, time_min=10]
 cluster-cancel: scancel
 ```
@@ -215,6 +221,73 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 
 {% include exercise.html title="e4dot2" content=e4dot2%}
 <br>
+
+Now looking at the content of our workflow folder, it is getting cluttered with Slurm log files:
+
+```bash
+ls -lh
+```
+
+My output:
+
+{% capture e4dot2.1 %}
+
+```
+total 13K
+drwxrwx---+ 5 riom riom 4.0K May  4 05:41 logs
+drwxrwx---+ 3 riom riom 4.0K May 10 01:08 slurm
+-rw-rw----+ 1 riom riom 1.7K May  8 10:49 Snakefile
+-rw-rw----+ 1 riom riom 3.8K May  4 05:32 dag_1.png
+-rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744707.out
+-rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744708.out
+-rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744709.out
+-rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744710.out
+-rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744711.out
+-rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744712.out
+-rw-rw----+ 1 riom riom  885 May 10 00:57 slurm-26744713.out
+-rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744793.out
+-rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744794.out
+-rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744795.out
+-rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744796.out
+-rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744797.out
+-rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744798.out
+-rw-rw----+ 1 riom riom  865 May 10 01:07 slurm-26744800.out
+-rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744839.out
+-rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744840.out
+-rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744841.out
+-rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744842.out
+-rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744843.out
+-rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744844.out
+-rw-rw----+ 1 riom riom  885 May 10 01:11 slurm-26744855.out
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot2.1" content=e4dot2.1%}
+<br>
+
+Let's move them to a dedicated folder `logs/slurm`:
+
+```bash
+mkdir logs/slurm
+mv slurm-* logs/slurm/
+```
+
+and instruct Slurm to save its log files in it, in the profile `slurm/config.yaml` file
+
+```diff
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
++       --output logs/slurm/slurm-%j-{rule}.out
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
+```
 
 ## 4.2 Pull out parameters
 
