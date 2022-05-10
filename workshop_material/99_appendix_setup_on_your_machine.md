@@ -5,7 +5,7 @@
 
 ## Install Miniconda
 
-For this workshop, will analyse our data using various software. However, the only software we will need to manually install is [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
+For this workshop, we will analyse our data using various software. However, the only software we will need to manually install is [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
 ### Check your OS
 
