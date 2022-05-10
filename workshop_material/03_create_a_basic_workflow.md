@@ -253,23 +253,54 @@ The use of the word `input` in `rule all` can be confusing, but in this context,
 # target OUTPUT files for the whole workflow
 rule all:
     input:
-+         "../results/fastqc/NA24631_1_fastqc.html",
-+         "../results/fastqc/NA24631_2_fastqc.html",
-+         "../results/fastqc/NA24631_1_fastqc.zip",
-+         "../results/fastqc/NA24631_2_fastqc.zip"
++       "../results/fastqc/NA24631_1_fastqc.html",
++       "../results/fastqc/NA24631_2_fastqc.html",
++       "../results/fastqc/NA24631_1_fastqc.zip",
++       "../results/fastqc/NA24631_2_fastqc.zip"
 
 # workflow
-+ rule fastqc:
-      input:
-+         R1 = "../../data/NA24631_1.fastq.gz",
-+         R2 = "../../data/NA24631_2.fastq.gz"
-      output:
-+         html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-+         zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-+     threads: 2
-      shell:
-+         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+rule fastqc:
+    input:
++       R1 = "../../data/NA24631_1.fastq.gz",
++       R2 = "../../data/NA24631_2.fastq.gz"
+    output:
++       html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
++       zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
++   threads: 2
+    shell:
++       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
+
+Current snakefile:
+
+{% capture e3dot6 %}
+
+```txt
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/fastqc/NA24631_1_fastqc.html",
+        "../results/fastqc/NA24631_2_fastqc.html",
+        "../results/fastqc/NA24631_1_fastqc.zip",
+        "../results/fastqc/NA24631_2_fastqc.zip"
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/NA24631_1.fastq.gz",
+        R2 = "../../data/NA24631_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+    threads: 2
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot6" content=e3dot6%}
+<br>
 
 When you have multiple input and output files:
 
@@ -292,7 +323,7 @@ snakemake --dryrun
 
 My output:
 
-{% capture e3dot6 %}
+{% capture e3dot7 %}
 
 ```bash
 Building DAG of jobs...
@@ -330,7 +361,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot6" content=e3dot6%}
+{% include exercise.html title="e3dot7" content=e3dot7%}
 <br>
 
 The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`), with a minimum of 2 threads (min threads 2) and a maximum of 2 threads (`max threads 2`)
@@ -345,13 +376,13 @@ snakemake --dag | dot -Tpng > dag_1.png
 
 My DAG:
 
-{% capture e3dot7 %}
+{% capture e3dot8 %}
 
 ![DAG_1](./images/dag_1.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot7" content=e3dot7%}
+{% include exercise.html title="e3dot8" content=e3dot8%}
 <br>
 
 Our diagram has a node for each job which are connected by edges representing dependencies
@@ -368,7 +399,7 @@ snakemake --cores 2
 
 My output:
 
-{% capture e3dot8 %}
+{% capture e3dot9 %}
 
 ```bash
 Building DAG of jobs...
@@ -453,7 +484,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot8" content=e3dot8%}
+{% include exercise.html title="e3dot9" content=e3dot9%}
 <br>
 
 It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
@@ -464,7 +495,7 @@ ls -lh ../results/fastqc/
 
 My output:
 
-{% capture e3dot9 %}
+{% capture e3dot10 %}
 
 ```bash
 total 3.5M
@@ -476,7 +507,7 @@ total 3.5M
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot9" content=e3dot9%}
+{% include exercise.html title="e3dot10" content=e3dot10%}
 <br>
 
 ## 3.08 Lazy evaluation
@@ -489,7 +520,7 @@ snakemake --dryrun --cores 2
 
 My output:
 
-{% capture e3dot10 %}
+{% capture e3dot11 %}
 
 ```bash
 Building DAG of jobs...
@@ -498,7 +529,7 @@ Nothing to be done.
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot10" content=e3dot10%}
+{% include exercise.html title="e3dot11" content=e3dot11%}
 <br>
 
 ```bash
@@ -507,7 +538,7 @@ snakemake --cores 2
 
 My output:
 
-{% capture e3dot11 %}
+{% capture e3dot12 %}
 
 ```bash
 Building DAG of jobs...
@@ -517,7 +548,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot11" content=e3dot11%}
+{% include exercise.html title="e3dot12" content=e3dot12%}
 <br>
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
@@ -530,13 +561,13 @@ snakemake --dag | dot -Tpng > dag.png
 
 My DAG:
 
-{% capture e3dot12 %}
+{% capture e3dot13 %}
 
 ![DAG](./images/dag.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot12" content=e3dot12%}
+{% include exercise.html title="e3dot13" content=e3dot13%}
 <br>
 
 Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
@@ -573,6 +604,39 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
+Current snakefile:
+
+{% capture e3dot14 %}
+
+```txt
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/fastqc/NA24631_1_fastqc.html",
+        "../results/fastqc/NA24631_2_fastqc.html",
+        "../results/fastqc/NA24631_1_fastqc.zip",
+        "../results/fastqc/NA24631_2_fastqc.zip"
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/NA24631_1.fastq.gz",
+        R2 = "../../data/NA24631_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot14" content=e3dot14%}
+<br>
+
 Run again, now telling Snakemake to use [environment modules](https://nesi.github.io/hpc-intro/14-modules/index.html) to automatically load our software by using the `--use-envmodules` flag
 
 ```diff
@@ -586,7 +650,7 @@ rm -r ../results/*
 
 My output:
 
-{% capture e3dot13 %}
+{% capture e3dot15 %}
 
 ```bash
 Building DAG of jobs...
@@ -626,7 +690,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot13" content=e3dot13%}
+{% include exercise.html title="e3dot15" content=e3dot15%}
 <br>
 
 Let's do a full run
@@ -638,7 +702,7 @@ Let's do a full run
 
 My output:
 
-{% capture e3dot14 %}
+{% capture e3dot16 %}
 
 ```bash
 Building DAG of jobs...
@@ -727,7 +791,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot14" content=e3dot14%}
+{% include exercise.html title="e3dot16" content=e3dot16%}
 <br>
 
 Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
@@ -771,6 +835,41 @@ rule fastqc:
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e3dot17 %}
+
+```txt
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/fastqc/NA24631_1_fastqc.html",
+        "../results/fastqc/NA24631_2_fastqc.html",
+        "../results/fastqc/NA24631_1_fastqc.zip",
+        "../results/fastqc/NA24631_2_fastqc.zip"
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/NA24631_1.fastq.gz",
+        R2 = "../../data/NA24631_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+    log:
+        "logs/fastqc/NA24631.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot17" content=e3dot17%}
+<br>
+
 ---
 
 A tangent about [standard streams](https://en.wikipedia.org/wiki/Standard_streams)
@@ -805,7 +904,7 @@ snakemake --cores 2 --use-envmodules
 
 My output:
 
-{% capture e3dot15 %}
+{% capture e3dot18 %}
 
 ```bash
 Building DAG of jobs...
@@ -850,7 +949,7 @@ Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot15" content=e3dot15%}
+{% include exercise.html title="e3dot18" content=e3dot18%}
 <br>
 
 We now have a log file, lets have a look at the first 10 lines of our log with:
@@ -861,7 +960,7 @@ head ./logs/fastqc/NA24631.log
 
 My output:
 
-{% capture e3dot16 %}
+{% capture e3dot19 %}
 
 ```bash
 Started analysis of NA24631_1.fastq.gz
@@ -878,7 +977,7 @@ Approx 45% complete for NA24631_1.fastq.gz
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot16" content=e3dot16%}
+{% include exercise.html title="e3dot19" content=e3dot19%}
 <br>
 
 <p align="center"><b>We have logs. Tidy logs.</b><br></p>
@@ -938,6 +1037,44 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e3dot20 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot20" content=e3dot20%}
+<br>
+
 Visualise workflow
 
 ```bash
@@ -948,13 +1085,13 @@ Now we have three samples running though our workflow, one of which has already 
 
 My DAG:
 
-{% capture e3dot17 %}
+{% capture e3dot21 %}
 
 ![DAG_2](./images/dag_2.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot17" content=e3dot17%}
+{% include exercise.html title="e3dot21" content=e3dot21%}
 <br>
 
 Run workflow again
@@ -971,7 +1108,7 @@ See how it now runs over all three of our samples in the output of the dryrun
 
 My output:
 
-{% capture e3dot18 %}
+{% capture e3dot22 %}
 
 ```bash
 Building DAG of jobs...
@@ -1034,7 +1171,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot18" content=e3dot18%}
+{% include exercise.html title="e3dot22" content=e3dot22%}
 <br>
 
 ```bash
@@ -1050,7 +1187,7 @@ ls -lh ./logs/fastqc
 
 My output:
 
-{% capture e3dot19 %}
+{% capture e3dot23 %}
 
 ```bash
 total 1.5K
@@ -1061,7 +1198,7 @@ total 1.5K
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot19" content=e3dot19%}
+{% include exercise.html title="e3dot23" content=e3dot23%}
 <br>
 
 ## 3.12 Add more rules
@@ -1100,17 +1237,68 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
   
 + rule multiqc:
-+     input:
-+         ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-+     output:
-+         "../results/multiqc_report.html"
-+     log:
-+         "logs/multiqc/multiqc.log"
-+     envmodules:
-+         "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-+     shell:
-+         "multiqc {input} -o ../results/ &> {log}"
++   input:
++       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++   output:
++       "../results/multiqc_report.html"
++   log:
++       "logs/multiqc/multiqc.log"
++   envmodules:
++       "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
++   shell:
++       "multiqc {input} -o ../results/ &> {log}"
 ```
+
+Current snakefile:
+
+{% capture e3dot24 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+        "../results/multiqc_report.html"
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot24" content=e3dot24%}
+<br>
 
 Run workflow again
 
@@ -1127,7 +1315,7 @@ Didn't work?
 
 My error:
 
-{% capture e3dot20 %}
+{% capture e3dot25 %}
 
 ```bash
 Building DAG of jobs...
@@ -1138,7 +1326,7 @@ Wildcards in input files cannot be determined from output files:
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot20" content=e3dot20%}
+{% include exercise.html title="e3dot25" content=e3dot25%}
 <br>
 
 Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
@@ -1186,6 +1374,57 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e3dot26 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+        "../results/multiqc_report.html"
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot26" content=e3dot26%}
+<br>
+
 Visualise workflow
 
 ```bash
@@ -1196,13 +1435,13 @@ Now we have two rules in our workflow (fastqc and multiqc), we can also see that
 
 My DAG:
 
-{% capture e3dot21 %}
+{% capture e3dot27 %}
 
 ![DAG_3](./images/dag_3.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot21" content=e3dot21%}
+{% include exercise.html title="e3dot27" content=e3dot27%}
 <br>
 
 Run again
@@ -1262,6 +1501,53 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e3dot28 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html"
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot28" content=e3dot28%}
+<br>
+
 Run workflow again
 
 ```bash
@@ -1284,13 +1570,13 @@ Although the workflow ran the same, the DAG actually changed slightly, now there
 
 My DAG:
 
-{% capture e3dot22 %}
+{% capture e3dot29 %}
 
 ![DAG_4](./images/dag_4.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot22" content=e3dot22%}
+{% include exercise.html title="e3dot29" content=e3dot29%}
 <br>
 
 <p align="center"><b>Beware: Snakemake will also NOT run rules that it doesn't need to run in order to get the target files defined in rule: all</b><br></p>
@@ -1339,6 +1625,56 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
+Current snakefile:
+
+{% capture e3dot30 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot30" content=e3dot30%}
+<br>
+
 Run again
 
 ```bash
@@ -1348,7 +1684,7 @@ snakemake --dryrun --cores 2 --use-envmodules
 
 My partial output:
 
-{% capture e3dot23 %}
+{% capture e3dot31 %}
 
 ```bash
 Job stats:
@@ -1363,7 +1699,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot23" content=e3dot23%}
+{% include exercise.html title="e3dot31" content=e3dot31%}
 <br>
 
 Our multiqc rule won't be run/evaluated
@@ -1378,13 +1714,13 @@ Now we are back to only running fastqc in our workflow, despite having our secon
 
 My DAG:
 
-{% capture e3dot24 %}
+{% capture e3dot32 %}
 
 ![DAG_5](./images/dag_5.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot24" content=e3dot24%}
+{% include exercise.html title="e3dot32" content=e3dot32%}
 <br>
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
@@ -1442,18 +1778,79 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 
 + rule trim_galore:
-+    input:
-+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-+    output:
-+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-+    log:
-+        "logs/trim_galore/{sample}.log"
-+    envmodules:
++   input:
++       ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
++   output:
++       ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
++   log:
++       "logs/trim_galore/{sample}.log"
++   envmodules:
 +       "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-+    threads: 2
-+    shell:
-+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
++   threads: 2
++   shell:
++       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
+
+Current snakefile:
+
+{% capture e3dot33 %}
+
+```txt
+# define samples from data directory using wildcards
+SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+
+# target OUTPUT files for the whole workflow
+rule all:
+    input:
+        "../results/multiqc_report.html",
+        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+
+# workflow
+rule fastqc:
+    input:
+        R1 = "../../data/{sample}_1.fastq.gz",
+        R2 = "../../data/{sample}_2.fastq.gz"
+    output:
+        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+    log:
+        "logs/fastqc/{sample}.log"
+    threads: 2
+    envmodules:
+        "FastQC/0.11.9"
+    shell:
+        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+  
+rule multiqc:
+    input:
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    output:
+        "../results/multiqc_report.html"
+    log:
+        "logs/multiqc/multiqc.log"
+    envmodules:
+        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    shell:
+        "multiqc {input} -o ../results/ &> {log}"
+
+rule trim_galore:
+    input:
+        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    output:
+        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    log:
+        "logs/trim_galore/{sample}.log"
+    envmodules:
+        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    threads: 2
+    shell:
+        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot33" content=e3dot33%}
+<br>
 
 Visualise workflow
 
@@ -1465,13 +1862,13 @@ Fantastic, we are starting to build a workflow!
 
 My DAG:
 
-{% capture e3dot25 %}
+{% capture e3dot34 %}
 
 ![DAG_6](./images/dag_6.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot25" content=e3dot25%}
+{% include exercise.html title="e3dot34" content=e3dot34%}
 <br>
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
@@ -1482,13 +1879,13 @@ snakemake --rulegraph | dot -Tpng > rulegraph_1.png
 
 My rulegraph:
 
-{% capture e3dot26 %}
+{% capture e3dot35 %}
 
 ![rulegraph_1](./images/rulegraph_1.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot26" content=e3dot26%}
+{% include exercise.html title="e3dot35" content=e3dot35%}
 <br>
 
 An aside: another option that will show all your input and output files at each step:
@@ -1499,13 +1896,13 @@ snakemake --filegraph | dot -Tpng > filegraph.png
 
 My filegraph:
 
-{% capture e3dot27%}
+{% capture e3dot36%}
 
 ![filegraph](./images/filegraph.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot27" content=e3dot27%}
+{% include exercise.html title="e3dot36" content=e3dot36%}
 <br>
 
 Run the rest of the workflow
