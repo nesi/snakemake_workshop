@@ -3,7 +3,7 @@
 <p style="text-align:left;">
   <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html" style="background: var(--bs-green);font-weight:bold">&laquo; 2 - Setup</a></b> 
   <span style="float:right;">
-    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html" style="background: var(--bs-green);font-weight:bold">4 - Leveling up your work &raquo;</a></b>
+    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html" style="background: var(--bs-green);font-weight:bold">4 - Leveling up your WF &raquo;</a></b>
   </span>
 </p>
 
