@@ -55,7 +55,7 @@ module spider snakemake
 which shows we have many versions of snakemake installed. Now load a specific version of snakemake into your environment:
 
 ```
-module load snakemake/7.0.1-gimkl-2020a-Python-3.9.9
+module load snakemake/7.6.2-gimkl-2020a-Python-3.9.9
 ```
 
 Test that the snakemake command is now available by running the following command:
@@ -64,7 +64,7 @@ Test that the snakemake command is now available by running the following comman
 snakemake --version
 ```
 
-It should print out the version of snakemake, i.e. "7.0.1".
+It should print out the version of snakemake, i.e. "7.6.2".
 
 ## Clone this repo
 
