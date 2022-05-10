@@ -344,6 +344,10 @@ Once all of this is in place, we can:
 - keep all slurm jobs log files in a dedicated folder,
 - and make sure Snakemake reports Slurm jobs failures.
 
+> **Exercise:**
+>
+> Run the snakemake workflow with Slurm jobs then use `scancel JOBID` to cancel some Slurm. See how Snakemake reacts with and without the `status.py` script.
+
 
 ## 4.2 Pull out parameters
 
