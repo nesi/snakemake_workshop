@@ -189,6 +189,27 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
+Current slurm profile:
+
+{% capture e4dot1.2 %}
+
+```
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot1.2" content=e4dot1.2%}
+<br>
+
 Current snakefile:
 
 {% capture e4dot2 %}
@@ -401,6 +422,28 @@ default-resources: [cpus=2, mem_mb=512, time_min=10]
 cluster-cancel: scancel
 + cluster-status: ./status.py
 ```
+
+{% capture e4dot2.2 %}
+
+```
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
+        --output logs/slurm/slurm-%j-{rule}.out
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
+cluster-status: ./status.py
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot2.2" content=e4dot2.2%}
+<br>
 
 Once all of this is in place, we can:
 
