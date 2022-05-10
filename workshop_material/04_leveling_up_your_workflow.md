@@ -289,6 +289,62 @@ default-resources: [cpus=2, mem_mb=512, time_min=10]
 cluster-cancel: scancel
 ```
 
+Note that `logs/slurm/slurm-%j-{rule}.out` contains a placeholder `{rule}`, which will be replaced by the name of the rule during the execution of the workflow.
+
+Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
+The `–cluster-status` option is used to tell Snakemake which script to use.
+
+Create the following `status.py` file
+
+```
+#!/usr/bin/env python
+import subprocess
+import sys
+
+jobid = sys.argv[1]
+
+output = str(subprocess.check_output("sacct -j %s --format State --noheader | head -1 | awk '{print $1}'" % jobid, shell=True).strip())
+
+running_status=["PENDING", "CONFIGURING", "COMPLETING", "RUNNING", "SUSPENDED"]
+if "COMPLETED" in output:
+    print("success")
+elif any(r in output for r in running_status):
+    print("running")
+else:
+    print("failed")
+```
+
+make it executable
+
+```bash
+chmod +x status.py
+```
+
+and modify the profile `slurm/config.yaml` file
+
+```diff
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
+        --output logs/slurm/slurm-%j-{rule}.out
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
++ cluster-status: ./status.py
+```
+
+Once all of this is in place, we can:
+
+- submit Slurm jobs with the right resources per Snakemake rule,
+- cancel the workflow and Slurms jobs using CTRL-C,
+- keep all slurm jobs log files in a dedicated folder,
+- and make sure Snakemake reports Slurm jobs failures.
+
+
 ## 4.2 Pull out parameters
 
 ```diff
