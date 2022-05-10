@@ -357,7 +357,7 @@ cluster-cancel: scancel
 Note that `logs/slurm/%j-{rule}.out` contains a placeholder `{rule}`, which will be replaced by the name of the rule during the execution of the workflow.
 
 Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
-The `–cluster-status` option is used to tell Snakemake which script to use.
+The `--cluster-status` option is used to tell Snakemake which script to use.
 
 Create the following `status.py` file
 
