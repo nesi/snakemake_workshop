@@ -32,11 +32,14 @@ First, we need to specify a conda environment for fastqc.
 Make a conda environment file for fastqc
 
 ```bash
+# create a folder for conda environments
+mkdir envs
+
 # create the file
 touch ./envs/fastqc.yaml
 
-# see what versions of fastqc are available
-conda search fastqc
+# see what versions of fastqc are available in the bioconda channel
+conda search fastqc -c bioconda
 
 # write the following to fastqc.yaml
 channels:
@@ -77,7 +80,7 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
-Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/latest/) to automatically install our software by using the `--use-conda` flag
+Run again, now telling Snakemake to use to use [Conda](https://docs.conda.io/en/latest/) to automatically install our software by using the `--use-conda` and `--conda-frontend conda` flags
 
 ```diff
 # first remove output of last run
@@ -85,7 +88,7 @@ rm -r ../results/*
 
 # Run dryrun again
 - snakemake --dryrun --cores 2
-+ snakemake --dryrun --cores 2 --use-conda
++ snakemake --dryrun --cores 2 --use-conda --conda-frontend conda
 ```
 
 My output:
@@ -132,7 +135,7 @@ Let's do a full run
 
 ```diff
 - snakemake --cores 2
-+ snakemake --cores 2 --use-conda
++ snakemake --cores 2 --use-conda --conda-frontend conda
 ```
 
 My output:
