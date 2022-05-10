@@ -89,7 +89,7 @@ touch slurm/config.yaml
 
 # write the following to config.yaml
 jobs: 20
-cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991"
+cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991"
 ```
 
 Then run the snakemake workflow using the `slurm` profile
@@ -103,16 +103,33 @@ snakemake --dryrun --profile slurm --use-envmodules
 snakemake --profile slurm --use-envmodules
 ```
 
-You can specify different resources (memory, cpus, gpus, etc.) for each target in the workflow and refer to them in the `cluster` option using placeholders.
-Default resources for all rules can also be set using the `default-resources` option.
-
-Update the profile `slurm/config.yaml` file as follows
+If you interrupt the execution of a snakemake workflow using CTRL-C, already submitted Slurm jobs won't be cancelled.
+We tell snakemake how to cancel Slurm jobs using `scancel` via the `--cluster-cancel` option and adding `--parsable` to the `sbatch` command, to make it return the job ID.
 
 ```diff
 jobs: 20
-- cluster: "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8"
-+ cluster: "sbatch --time {resources.time_min} --mem={resources.mem_mb} --cpus-per-task {resources.cpus} --account nesi99991"
+- cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8"
++ cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
++ cluster-cancel: scancel
+```
+
+You can specify different resources (memory, cpus, gpus, etc.) for each target in the workflow and refer to them in the `cluster` option using placeholders.
+Default resources for all rules can also be set using the `default-resources` option.
+
+Update the profile `slurm/config.yaml` file as follows (using a multiline option to improve readability)
+
+```diff
+jobs: 20
+- cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
++ cluster:
++     sbatch
++         --parsable
++         --time {resources.time_min}
++         --mem {resources.mem_mb}
++         --cpus-per-task {resources.cpus}
++         --account nesi99991
 + default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
 ```
 
 and add resources definitions in the workflow.
@@ -171,6 +188,27 @@ rule trim_galore:
     shell:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
+
+Current slurm profile:
+
+{% capture e4dot1.2 %}
+
+```
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot1.2" content=e4dot1.2%}
+<br>
 
 Current snakefile:
 
@@ -266,6 +304,160 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 
 {% include exercise.html title="e4dot3" content=e4dot3%}
 <br>
+
+Now looking at the content of our workflow folder, it is getting cluttered with Slurm log files:
+
+```bash
+ls -lh
+```
+
+My output:
+
+{% capture e4dot2.1 %}
+
+```
+total 13K
+drwxrwx---+ 5 riom riom 4.0K May  4 05:41 logs
+drwxrwx---+ 3 riom riom 4.0K May 10 01:08 slurm
+-rw-rw----+ 1 riom riom 1.7K May  8 10:49 Snakefile
+-rw-rw----+ 1 riom riom 3.8K May  4 05:32 dag_1.png
+-rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744707.out
+-rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744708.out
+-rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744709.out
+-rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744710.out
+-rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744711.out
+-rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744712.out
+-rw-rw----+ 1 riom riom  885 May 10 00:57 slurm-26744713.out
+-rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744793.out
+-rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744794.out
+-rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744795.out
+-rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744796.out
+-rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744797.out
+-rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744798.out
+-rw-rw----+ 1 riom riom  865 May 10 01:07 slurm-26744800.out
+-rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744839.out
+-rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744840.out
+-rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744841.out
+-rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744842.out
+-rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744843.out
+-rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744844.out
+-rw-rw----+ 1 riom riom  885 May 10 01:11 slurm-26744855.out
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot2.1" content=e4dot2.1%}
+<br>
+
+Let's clean this and create a dedicated folder `logs/slurm` for future log files:
+
+```bash
+# remove slurm log files
+rm *.out
+
+# create a new folder for Slurm log files
+mkdir logs/slurm
+```
+
+then instruct Slurm to save its log files in it, in the profile `slurm/config.yaml` file
+
+```diff
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
++       --output logs/slurm/slurm-%j-{rule}.out
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
+```
+
+Note that `logs/slurm/slurm-%j-{rule}.out` contains a placeholder `{rule}`, which will be replaced by the name of the rule during the execution of the workflow.
+
+Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
+The `--cluster-status` option is used to tell Snakemake which script to use.
+
+Create the following `status.py` file
+
+```
+#!/usr/bin/env python
+import subprocess
+import sys
+
+jobid = sys.argv[1]
+
+output = str(subprocess.check_output("sacct -j %s --format State --noheader | head -1 | awk '{print $1}'" % jobid, shell=True).strip())
+
+running_status=["PENDING", "CONFIGURING", "COMPLETING", "RUNNING", "SUSPENDED"]
+if "COMPLETED" in output:
+    print("success")
+elif any(r in output for r in running_status):
+    print("running")
+else:
+    print("failed")
+```
+
+make it executable
+
+```bash
+chmod +x status.py
+```
+
+and modify the profile `slurm/config.yaml` file
+
+```diff
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
+        --output logs/slurm/slurm-%j-{rule}.out
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
++ cluster-status: ./status.py
+```
+
+Current slurm profile:
+
+{% capture e4dot2.2 %}
+
+```
+jobs: 20
+cluster:
+    sbatch
+        --parsable
+        --time {resources.time_min}
+        --mem {resources.mem_mb}
+        --cpus-per-task {resources.cpus}
+        --output logs/slurm/slurm-%j-{rule}.out
+        --account nesi99991
+default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
+cluster-status: ./status.py
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e4dot2.2" content=e4dot2.2%}
+<br>
+
+Once all of this is in place, we can:
+
+- submit Slurm jobs with the right resources per Snakemake rule,
+- cancel the workflow and Slurms jobs using CTRL-C,
+- keep all slurm jobs log files in a dedicated folder,
+- and make sure Snakemake reports Slurm jobs failures.
+
+> **Exercise:**
+>
+> Run the snakemake workflow with Slurm jobs then use `scancel JOBID` to cancel some Slurm. See how Snakemake reacts with and without the `status.py` script.
+
 
 ## 4.2 Pull out parameters
 
@@ -577,9 +769,6 @@ Let's use our configuration file! Run workflow again:
 # remove output of last run
 rm -r ../results/*
 
-# remove slurm log files
-rm *.out
-
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
 snakemake --profile slurm --cores 2 --use-envmodules
@@ -607,9 +796,6 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 ```diff
 # remove output of last run
 rm -r ../results/
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 - snakemake --dryrun --profile slurm --cores 2 --use-envmodules
@@ -760,9 +946,6 @@ Then we don't need to specify where the configuration file is on the command lin
 ```diff
 # remove output of last run
 rm -r ../results/*
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 - snakemake --dryrun --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
@@ -929,9 +1112,6 @@ rule trim_galore:
 ```diff
 # remove output of last run
 rm -r ../results/*
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
@@ -1198,9 +1378,6 @@ rule trim_galore:
 ```diff
 # remove output of last run
 rm -r ../results/*
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules

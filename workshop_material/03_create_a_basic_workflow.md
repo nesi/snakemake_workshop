@@ -1835,7 +1835,7 @@ In addition, you need to specify a maximum number of concurrent jobs using `--jo
 rm -r ../results/*
 
 # run again on the cluster
-snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-envmodules
+snakemake --cluster "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-envmodules
 ```
 
 If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
