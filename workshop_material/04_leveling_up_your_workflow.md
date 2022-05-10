@@ -423,6 +423,8 @@ cluster-cancel: scancel
 + cluster-status: ./status.py
 ```
 
+Current slurm profile:
+
 {% capture e4dot2.2 %}
 
 ```
