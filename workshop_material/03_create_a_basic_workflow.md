@@ -1238,7 +1238,7 @@ rule fastqc:
   
 + rule multiqc:
 +   input:
-+       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
++       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
 +   output:
 +       "../results/multiqc_report.html"
 +   log:
@@ -1284,7 +1284,7 @@ rule fastqc:
   
 rule multiqc:
     input:
-        ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
     output:
         "../results/multiqc_report.html"
     log:
@@ -1311,120 +1311,6 @@ snakemake --dryrun --cores 2 --use-envmodules
 snakemake --cores 2 --use-envmodules
 ```
 
-Didn't work?
-
-My error:
-
-{% capture e3dot25 %}
-
-```bash
-Building DAG of jobs...
-WildcardError in line 29 of /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
-Wildcards in input files cannot be determined from output files:
-'sample'
-```
-
-{% endcapture %}
-
-{% include exercise.html title="e3dot25" content=e3dot25%}
-<br>
-
-Since we haven't defined `{sample}` in `rule all:` for multiqc, we need to define it somewhere! Let do so in the multiqc rule
-
-```diff
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-        "../results/multiqc_report.html"
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
--       ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-+       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-```
-
-Current snakefile:
-
-{% capture e3dot26 %}
-
-```txt
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-        "../results/multiqc_report.html"
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-```
-
-{% endcapture %}
-
-{% include exercise.html title="e3dot26" content=e3dot26%}
-<br>
-
 Visualise workflow
 
 ```bash
@@ -1435,13 +1321,13 @@ Now we have two rules in our workflow (fastqc and multiqc), we can also see that
 
 My DAG:
 
-{% capture e3dot27 %}
+{% capture e3dot25 %}
 
 ![DAG_4](./images/dag_4.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot27" content=e3dot27%}
+{% include exercise.html title="e3dot25" content=e3dot25%}
 <br>
 
 Run again
@@ -1503,7 +1389,7 @@ rule multiqc:
 
 Current snakefile:
 
-{% capture e3dot28 %}
+{% capture e3dot26 %}
 
 ```txt
 # define samples from data directory using wildcards
@@ -1545,7 +1431,7 @@ rule multiqc:
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot28" content=e3dot28%}
+{% include exercise.html title="e3dot26" content=e3dot26%}
 <br>
 
 Run workflow again
@@ -1570,13 +1456,13 @@ Although the workflow ran the same, the DAG actually changed slightly, now there
 
 My DAG:
 
-{% capture e3dot29 %}
+{% capture e3dot27 %}
 
 ![DAG_5](./images/dag_5.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot29" content=e3dot29%}
+{% include exercise.html title="e3dot27" content=e3dot27%}
 <br>
 
 <p align="center"><b>Beware: Snakemake will also NOT run rules that it doesn't need to run in order to get the target files defined in rule: all</b><br></p>
@@ -1627,7 +1513,7 @@ rule multiqc:
 
 Current snakefile:
 
-{% capture e3dot30 %}
+{% capture e3dot28 %}
 
 ```txt
 # define samples from data directory using wildcards
@@ -1672,7 +1558,7 @@ rule multiqc:
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot30" content=e3dot30%}
+{% include exercise.html title="e3dot28" content=e3dot28%}
 <br>
 
 Run again
@@ -1684,7 +1570,7 @@ snakemake --dryrun --cores 2 --use-envmodules
 
 My partial output:
 
-{% capture e3dot31 %}
+{% capture e3dot29 %}
 
 ```bash
 Job stats:
@@ -1699,7 +1585,7 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot31" content=e3dot31%}
+{% include exercise.html title="e3dot29" content=e3dot29%}
 <br>
 
 Our multiqc rule won't be run/evaluated
@@ -1714,13 +1600,13 @@ Now we are back to only running fastqc in our workflow, despite having our secon
 
 My DAG:
 
-{% capture e3dot32 %}
+{% capture e3dot30 %}
 
 ![DAG_6](./images/dag_6.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot32" content=e3dot32%}
+{% include exercise.html title="e3dot30" content=e3dot30%}
 <br>
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
@@ -1793,7 +1679,7 @@ rule multiqc:
 
 Current snakefile:
 
-{% capture e3dot33 %}
+{% capture e3dot31 %}
 
 ```txt
 # define samples from data directory using wildcards
@@ -1849,7 +1735,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot33" content=e3dot33%}
+{% include exercise.html title="e3dot31" content=e3dot31%}
 <br>
 
 Visualise workflow
@@ -1862,13 +1748,13 @@ Fantastic, we are starting to build a workflow!
 
 My DAG:
 
-{% capture e3dot34 %}
+{% capture e3dot32 %}
 
 ![DAG_7](./images/dag_7.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot34" content=e3dot34%}
+{% include exercise.html title="e3dot32" content=e3dot32%}
 <br>
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
@@ -1879,13 +1765,13 @@ snakemake --rulegraph | dot -Tpng > rulegraph_1.png
 
 My rulegraph:
 
-{% capture e3dot35 %}
+{% capture e3dot33 %}
 
 ![rulegraph_1](./images/rulegraph_1.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot35" content=e3dot35%}
+{% include exercise.html title="e3dot33" content=e3dot33%}
 <br>
 
 An aside: another option that will show all your input and output files at each step:
@@ -1896,13 +1782,13 @@ snakemake --filegraph | dot -Tpng > filegraph.png
 
 My filegraph:
 
-{% capture e3dot36%}
+{% capture e3dot34%}
 
 ![filegraph](./images/filegraph.png)
 
 {% endcapture %}
 
-{% include exercise.html title="e3dot36" content=e3dot36%}
+{% include exercise.html title="e3dot34" content=e3dot34%}
 <br>
 
 Run the rest of the workflow
