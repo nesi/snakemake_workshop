@@ -1097,6 +1097,8 @@ rule trim_galore:
     envmodules:
         "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
+    resources:
+        cpus=8
     message:
         "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
@@ -1168,6 +1170,8 @@ rule trim_galore:
     envmodules:
         "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
     threads: 2
+    resources:
+        cpus=8
     message:
         "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
     shell:
