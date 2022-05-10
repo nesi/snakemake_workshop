@@ -577,6 +577,9 @@ Let's use our configuration file! Run workflow again:
 # remove output of last run
 rm -r ../results/*
 
+# remove slurm log files
+rm *.out
+
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
 snakemake --profile slurm --cores 2 --use-envmodules
@@ -603,7 +606,10 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 
 ```diff
 # remove output of last run
-rm -r ../results/*
+rm -r ../results/
+
+# remove slurm log files
+rm *.out
 
 # run dryrun/run again
 - snakemake --dryrun --profile slurm --cores 2 --use-envmodules
@@ -754,6 +760,9 @@ Then we don't need to specify where the configuration file is on the command lin
 ```diff
 # remove output of last run
 rm -r ../results/*
+
+# remove slurm log files
+rm *.out
 
 # run dryrun/run again
 - snakemake --dryrun --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
@@ -920,6 +929,9 @@ rule trim_galore:
 ```diff
 # remove output of last run
 rm -r ../results/*
+
+# remove slurm log files
+rm *.out
 
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
@@ -1186,6 +1198,9 @@ rule trim_galore:
 ```diff
 # remove output of last run
 rm -r ../results/*
+
+# remove slurm log files
+rm *.out
 
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
