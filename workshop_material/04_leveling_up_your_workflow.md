@@ -328,14 +328,17 @@ drwxrwx---+ 3 riom riom 4.0K May 10 01:08 slurm
 {% include exercise.html title="e4dot2.1" content=e4dot2.1%}
 <br>
 
-Let's move them to a dedicated folder `logs/slurm`:
+Let's clean this and create a dedicated folder `logs/slurm` for future log files:
 
 ```bash
+# remove slurm log files
+rm *.out
+
+# create a new folder for Slurm log files
 mkdir logs/slurm
-mv slurm-* logs/slurm/
 ```
 
-and instruct Slurm to save its log files in it, in the profile `slurm/config.yaml` file
+then instruct Slurm to save its log files in it, in the profile `slurm/config.yaml` file
 
 ```diff
 jobs: 20
@@ -345,13 +348,13 @@ cluster:
         --time {resources.time_min}
         --mem {resources.mem_mb}
         --cpus-per-task {resources.cpus}
-+       --output logs/slurm/slurm-%j-{rule}.out
++       --output logs/slurm/%j-{rule}.out
         --account nesi99991
 default-resources: [cpus=2, mem_mb=512, time_min=10]
 cluster-cancel: scancel
 ```
 
-Note that `logs/slurm/slurm-%j-{rule}.out` contains a placeholder `{rule}`, which will be replaced by the name of the rule during the execution of the workflow.
+Note that `logs/slurm/%j-{rule}.out` contains a placeholder `{rule}`, which will be replaced by the name of the rule during the execution of the workflow.
 
 Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
 The `–cluster-status` option is used to tell Snakemake which script to use.
@@ -721,9 +724,6 @@ Let's use our configuration file! Run workflow again:
 # remove output of last run
 rm -r ../results/*
 
-# remove slurm log files
-rm *.out
-
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
 snakemake --profile slurm --cores 2 --use-envmodules
@@ -751,9 +751,6 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 ```diff
 # remove output of last run
 rm -r ../results/
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 - snakemake --dryrun --profile slurm --cores 2 --use-envmodules
@@ -904,9 +901,6 @@ Then we don't need to specify where the configuration file is on the command lin
 ```diff
 # remove output of last run
 rm -r ../results/*
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 - snakemake --dryrun --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
@@ -1073,9 +1067,6 @@ rule trim_galore:
 ```diff
 # remove output of last run
 rm -r ../results/*
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
@@ -1342,9 +1333,6 @@ rule trim_galore:
 ```diff
 # remove output of last run
 rm -r ../results/*
-
-# remove slurm log files
-rm *.out
 
 # run dryrun/run again
 snakemake --dryrun --profile slurm --cores 2 --use-envmodules
