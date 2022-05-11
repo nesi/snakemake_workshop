@@ -395,7 +395,17 @@ Note that `logs/slurm/slurm-%j-{rule}.out` contains a placeholder `{rule}`, whic
 Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
 The `--cluster-status` option is used to tell Snakemake which script to use.
 
-Create the following `status.py` file
+Create an executable `status.py` file
+
+```bash
+# create an empty file
+touch status.py
+
+# make it executable
+chmod +x status.py
+```
+
+and copy the following content in it
 
 ```
 #!/usr/bin/env python
@@ -415,13 +425,7 @@ else:
     print("failed")
 ```
 
-make it executable
-
-```bash
-chmod +x status.py
-```
-
-and modify the profile `slurm/config.yaml` file
+Then modify the profile `slurm/config.yaml` file
 
 ```diff
 jobs: 20
