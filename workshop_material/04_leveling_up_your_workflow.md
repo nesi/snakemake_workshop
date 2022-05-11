@@ -203,6 +203,7 @@ cluster:
         --cpus-per-task {resources.cpus}
         --account nesi99991
 default-resources: [cpus=2, mem_mb=512, time_min=10]
+cluster-cancel: scancel
 ```
 
 {% endcapture %}
