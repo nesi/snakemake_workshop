@@ -1336,17 +1336,6 @@ My DAG:
 {% include exercise.html title="e3dot25" content=e3dot25%}
 <br>
 
-Run again
-
-```bash
-# remove output of last run
-rm -r ../results/*
-
-# run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
-```
-
 ## 3.13 More about Snakemake's lazy behaviour
 
 What happens if we only have the final target file (`../results/multiqc_report.html`) in `rule all:`
