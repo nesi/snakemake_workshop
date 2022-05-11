@@ -395,7 +395,17 @@ Note that `logs/slurm/slurm-%j-{rule}.out` contains a placeholder `{rule}`, whic
 Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
 The `--cluster-status` option is used to tell Snakemake which script to use.
 
-Create the following `status.py` file
+Create an executable `status.py` file
+
+```bash
+# create an empty file
+touch status.py
+
+# make it executable
+chmod +x status.py
+```
+
+and copy the following content in it
 
 ```
 #!/usr/bin/env python
@@ -415,13 +425,7 @@ else:
     print("failed")
 ```
 
-make it executable
-
-```bash
-chmod +x status.py
-```
-
-and modify the profile `slurm/config.yaml` file
+Then modify the profile `slurm/config.yaml` file
 
 ```diff
 jobs: 20
@@ -605,7 +609,7 @@ Run a dryrun to check it works
 rm -r ../results/*
 
 # run dryrun again
-snakemake --dryrun --profile slurm --cores 2 --use-envmodules
+snakemake --dryrun --profile slurm --use-envmodules
 ```
 
 ## 4.3 Pull out user configurable options
@@ -620,8 +624,10 @@ File structure:
 demo_workflow/
       |_______results/
       |_______workflow/
-      |          |_______envs/
+      |          |_______logs/
+      |          |_______slurm/
       |          |_______Snakefile
+      |          |_______status.py
       |_______config
                  |_______config.yaml
 ```
@@ -785,8 +791,8 @@ Let's use our configuration file! Run workflow again:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --cores 2 --use-envmodules
-snakemake --profile slurm --cores 2 --use-envmodules
+snakemake --dryrun --profile slurm --use-envmodules
+snakemake --profile slurm --use-envmodules
 ```
 
 Didn't work?
@@ -813,10 +819,10 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 rm -r ../results/
 
 # run dryrun/run again
-- snakemake --dryrun --profile slurm --cores 2 --use-envmodules
-- snakemake --profile slurm --cores 2 --use-envmodules
-+ snakemake --dryrun --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
-+ snakemake --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
+- snakemake --dryrun --profile slurm --use-envmodules
+- snakemake --profile slurm --use-envmodules
++ snakemake --dryrun --profile slurm --use-envmodules --configfile ../config/config.yaml
++ snakemake --profile slurm --use-envmodules --configfile ../config/config.yaml
 ```
 
 Alternatively, we can define our config file in our Snakefile in a situation where the configuration file is likely to always be named the same and be in the exact same location `../config/config.yaml` and you don't need the flexibility for the user to specify their own configuration files:
@@ -963,10 +969,10 @@ Then we don't need to specify where the configuration file is on the command lin
 rm -r ../results/*
 
 # run dryrun/run again
-- snakemake --dryrun --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
-- snakemake --profile slurm --cores 2 --use-envmodules --configfile ../config/config.yaml
-+ snakemake --dryrun --profile slurm --cores 2 --use-envmodules
-+ snakemake --profile slurm --cores 2 --use-envmodules
+- snakemake --dryrun --profile slurm --use-envmodules --configfile ../config/config.yaml
+- snakemake --profile slurm --use-envmodules --configfile ../config/config.yaml
++ snakemake --dryrun --profile slurm --use-envmodules
++ snakemake --profile slurm --use-envmodules
 ```
 
 ## 4.4 Leave messages for the user
@@ -1129,8 +1135,8 @@ rule trim_galore:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --cores 2 --use-envmodules
-snakemake --profile slurm --cores 2 --use-envmodules
+snakemake --dryrun --profile slurm --use-envmodules
+snakemake --profile slurm --use-envmodules
 ```
 
 Now our messages are printed to the screen as our workflow runs
@@ -1419,8 +1425,8 @@ rule trim_galore:
 rm -r ../results/*
 
 # run dryrun/run again
-snakemake --dryrun --profile slurm --cores 2 --use-envmodules
-snakemake --profile slurm --cores 2 --use-envmodules
+snakemake --dryrun --profile slurm --use-envmodules
+snakemake --profile slurm --use-envmodules
 ```
 
 Now when we have a look at the `../results/fastqc/` directory with:

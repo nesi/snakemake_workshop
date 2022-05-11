@@ -259,7 +259,8 @@ rule all:
 +       "../results/fastqc/NA24631_2_fastqc.zip"
 
 # workflow
-rule fastqc:
+- rule my_rule:
++ rule fastqc:
     input:
 +       R1 = "../../data/NA24631_1.fastq.gz",
 +       R2 = "../../data/NA24631_2.fastq.gz"
@@ -2015,10 +2016,8 @@ Complete log: .snakemake/log/2022-05-11T122639.019945.snakemake.log
 If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
 
 ```bash
-squeue -u your_nesi_login
+squeue --me
 ```
-
-where `your_nesi_login` needs to be replace with your actual NeSI login.
 
 My output:
 
@@ -2044,7 +2043,7 @@ An additional trick is to use the `watch` command to repeatedly call any command
 Here we will use it to see your jobs gets queued and executed in real time:
 
 ```bash
-watch squeue -u your_nesi_login
+watch squeue --me
 ```
 
 You can exit the view create by `watch` by pressing CTRL+C.
