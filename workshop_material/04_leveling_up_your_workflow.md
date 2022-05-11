@@ -292,12 +292,13 @@ My output:
 
 ```
 JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
-22278374      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn018
-22278375      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
-22278376      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
-22278377      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
-22278378      riom     nesi99999 snakejob.tri   8    512M large   Sep 12 22:44        9:50 RUNNING  wbn140
-22278379      riom     nesi99999 snakejob.fas   2    512M large   Sep 12 22:44        9:50 RUNNING  wbn135
+26763281      lkemp    nesi99991 spawner-jupy   4      4G interac 2022-05-11T1     7:21:18 RUNNING  wbn003
+26763492      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn144
+26763493      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn212
+26763494      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn145
+26763495      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn146
+26763496      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn217
+26763497      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn229
 ```
 
 {% endcapture %}
@@ -316,32 +317,46 @@ My output:
 {% capture e4dot2.1 %}
 
 ```
-total 13K
-drwxrwx---+ 5 riom riom 4.0K May  4 05:41 logs
-drwxrwx---+ 3 riom riom 4.0K May 10 01:08 slurm
--rw-rw----+ 1 riom riom 1.7K May  8 10:49 Snakefile
--rw-rw----+ 1 riom riom 3.8K May  4 05:32 dag_1.png
--rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744707.out
--rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744708.out
--rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744709.out
--rw-rw----+ 1 riom riom  857 May 10 00:56 slurm-26744710.out
--rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744711.out
--rw-rw----+ 1 riom riom  829 May 10 00:56 slurm-26744712.out
--rw-rw----+ 1 riom riom  885 May 10 00:57 slurm-26744713.out
--rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744793.out
--rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744794.out
--rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744795.out
--rw-rw----+ 1 riom riom  837 May 10 01:05 slurm-26744796.out
--rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744797.out
--rw-rw----+ 1 riom riom  809 May 10 01:05 slurm-26744798.out
--rw-rw----+ 1 riom riom  865 May 10 01:07 slurm-26744800.out
--rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744839.out
--rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744840.out
--rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744841.out
--rw-rw----+ 1 riom riom  857 May 10 01:09 slurm-26744842.out
--rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744843.out
--rw-rw----+ 1 riom riom  829 May 10 01:09 slurm-26744844.out
--rw-rw----+ 1 riom riom  885 May 10 01:11 slurm-26744855.out
+total 1.8M
+-rw-rw----+ 1 lkemp nesi99991 4.2K May 11 12:10 dag_1.png
+-rw-rw----+ 1 lkemp nesi99991 3.8K May 11 12:13 dag_2.png
+-rw-rw----+ 1 lkemp nesi99991  12K May 11 12:16 dag_3.png
+-rw-rw----+ 1 lkemp nesi99991  20K May 11 12:19 dag_4.png
+-rw-rw----+ 1 lkemp nesi99991  15K May 11 12:21 dag_5.png
+-rw-rw----+ 1 lkemp nesi99991  12K May 11 12:23 dag_6.png
+-rw-rw----+ 1 lkemp nesi99991  26K May 11 12:24 dag_7.png
+drwxrws---+ 5 lkemp nesi99991 4.0K May 11 12:25 logs
+-rw-rw----+ 1 lkemp nesi99991  11K May 11 12:24 rulegraph_1.png
+drwxrws---+ 3 lkemp nesi99991 4.0K May 11 12:34 slurm
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763403.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763404.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763405.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763406.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763407.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763408.out
+-rw-rw----+ 1 lkemp nesi99991  865 May 11 12:29 slurm-26763409.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763418.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763419.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763420.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763421.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763422.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763423.out
+-rw-rw----+ 1 lkemp nesi99991  865 May 11 12:32 slurm-26763431.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:33 slurm-26763435.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763436.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:33 slurm-26763437.out
+-rw-rw----+ 1 lkemp nesi99991  837 May 11 12:34 slurm-26763438.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763439.out
+-rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763440.out
+-rw-rw----+ 1 lkemp nesi99991  865 May 11 12:35 slurm-26763444.out
+-rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763447.out
+-rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763448.out
+-rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763449.out
+-rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763450.out
+-rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763451.out
+-rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763452.out
+-rw-rw----+ 1 lkemp nesi99991  885 May 11 12:37 slurm-26763454.out
+-rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:34 Snakefile
 ```
 
 {% endcapture %}
@@ -781,9 +796,9 @@ My error:
 {% capture e4dot6 %}
 
 ```bash
-KeyError in line 19 of /home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
+KeyError in line 19 of /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
 'PARAMS'
-  File "/home/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile", line 19, in <module>
+  File "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile", line 19, in <module>
 ```
 
 {% endcapture %}
@@ -1126,9 +1141,8 @@ My output:
 
 ```bash
 Building DAG of jobs...
-Conda environment envs/trim_galore.yaml will be created.
-Conda environment envs/fastqc.yaml will be created.
-Conda environment envs/multiqc.yaml will be created.
+Using shell: /usr/bin/bash
+Provided cluster nodes: 20
 Job stats:
 job            count    min threads    max threads
 -----------  -------  -------------  -------------
@@ -1138,51 +1152,76 @@ multiqc            1              1              1
 trim_galore        3              2              2
 total              8              1              2
 
+Select jobs to execute...
 
-[Mon Sep 13 04:30:13 2021]
-Job 2: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
-
-
-[Mon Sep 13 04:30:13 2021]
+[Wed May 11 13:20:52 2022]
 Job 4: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
 
+Submitted job 4 with external jobid '26763840'.
 
-[Mon Sep 13 04:30:13 2021]
+[Wed May 11 13:20:52 2022]
 Job 6: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24695.log. Using 2 threads.
 
+Submitted job 6 with external jobid '26763841'.
 
-[Mon Sep 13 04:30:13 2021]
-Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
+[Wed May 11 13:20:52 2022]
+Job 2: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
 
+Submitted job 2 with external jobid '26763842'.
 
-[Mon Sep 13 04:30:13 2021]
-Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
-
-
-[Mon Sep 13 04:30:13 2021]
+[Wed May 11 13:20:52 2022]
 Job 3: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
 
+Submitted job 3 with external jobid '26763843'.
 
-[Mon Sep 13 04:30:13 2021]
+[Wed May 11 13:20:52 2022]
+Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
+
+Submitted job 5 with external jobid '26763844'.
+
+[Wed May 11 13:20:52 2022]
+Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
+
+Submitted job 7 with external jobid '26763845'.
+[Wed May 11 13:22:08 2022]
+Finished job 4.
+1 of 8 steps (12%) done
+[Wed May 11 13:22:08 2022]
+Finished job 6.
+2 of 8 steps (25%) done
+[Wed May 11 13:22:08 2022]
+Finished job 2.
+3 of 8 steps (38%) done
+[Wed May 11 13:22:08 2022]
+Finished job 3.
+4 of 8 steps (50%) done
+Select jobs to execute...
+
+[Wed May 11 13:22:09 2022]
 Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
 
+Submitted job 1 with external jobid '26763848'.
+[Wed May 11 13:22:09 2022]
+Finished job 5.
+5 of 8 steps (62%) done
+[Wed May 11 13:22:09 2022]
+Finished job 7.
+6 of 8 steps (75%) done
+[Wed May 11 13:24:21 2022]
+Finished job 1.
+7 of 8 steps (88%) done
+Select jobs to execute...
 
-[Mon Sep 13 04:30:13 2021]
+[Wed May 11 13:24:21 2022]
 localrule all:
     input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: mem_mb=512, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281, cpus=2, time_min=10
 
-Job stats:
-job            count    min threads    max threads
------------  -------  -------------  -------------
-all                1              1              1
-fastqc             3              2              2
-multiqc            1              1              1
-trim_galore        3              2              2
-total              8              1              2
-
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+[Wed May 11 13:24:21 2022]
+Finished job 0.
+8 of 8 steps (100%) done
+Complete log: .snakemake/log/2022-05-11T132052.454902.snakemake.log
 ```
 
 {% endcapture %}
@@ -1205,19 +1244,19 @@ My output:
 {% capture e4dot10 %}
 
 ```bash
-total 7.5M
--rw-rw----+ 1 lkemp nesi99991 718K Sep 13 04:36 NA24631_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 475K Sep 13 04:36 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 726K Sep 13 04:36 NA24631_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 479K Sep 13 04:36 NA24631_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 746K Sep 13 04:36 NA24694_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 482K Sep 13 04:36 NA24694_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 728K Sep 13 04:36 NA24694_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 480K Sep 13 04:36 NA24694_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 721K Sep 13 04:35 NA24695_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 476K Sep 13 04:35 NA24695_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 732K Sep 13 04:35 NA24695_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:35 NA24695_2_fastqc.zip
+total 4.5M
+-rw-rw----+ 1 lkemp nesi99991 250K May 11 13:22 NA24631_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 327K May 11 13:22 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 249K May 11 13:22 NA24631_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 327K May 11 13:22 NA24631_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 254K May 11 13:22 NA24694_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 334K May 11 13:22 NA24694_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 250K May 11 13:22 NA24694_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 328K May 11 13:22 NA24694_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 252K May 11 13:22 NA24695_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 328K May 11 13:22 NA24695_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 253K May 11 13:22 NA24695_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 330K May 11 13:22 NA24695_2_fastqc.zip
 ```
 
 {% endcapture %}
@@ -1390,7 +1429,7 @@ Now when we have a look at the `../results/fastqc/` directory with:
 ls -lh ../results/fastqc/
 ```
 
-These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 7.5 megabytes to 3 megabytes in this directory).
+These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 4.5 megabytes to 3 megabytes in this directory).
 
 My output:
 
@@ -1398,12 +1437,12 @@ My output:
 
 ```bash
 total 3.0M
--rw-rw----+ 1 lkemp nesi99991 475K Sep 13 04:38 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 479K Sep 13 04:38 NA24631_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 482K Sep 13 04:38 NA24694_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 480K Sep 13 04:38 NA24694_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 476K Sep 13 04:37 NA24695_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 484K Sep 13 04:37 NA24695_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 327K May 11 13:26 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 327K May 11 13:26 NA24631_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 334K May 11 13:26 NA24694_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 328K May 11 13:26 NA24694_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 328K May 11 13:26 NA24695_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 330K May 11 13:26 NA24695_2_fastqc.zip
 ```
 
 {% endcapture %}
@@ -1418,7 +1457,7 @@ total 3.0M
 With Snakemake, we can automatically generate detailed self-contained HTML reports after we run our workflow with the following command:
 
 ```bash
-snakemake --report ../results/report.html
+snakemake --report ../results/snakemake_report.html
 ```
 
 *Note. you won't be able to view a rendered version of this html while it is on the remote server, however after you transfer it to your local computer you should be able to view it in your web browser*
@@ -1428,7 +1467,6 @@ In our report:
 - We get an interactive version of our directed acyclic graph (DAG).
 - When you click on a node in the DAG, the input and output files are fully outlined, the exact software used and the exact shell command that was run.
 - You are also provided with runtime information under the `Statistics` tab outlining how long each rule/sample ran for, and the date/time each file was created.
-- Under the `Configuration` tab, all of our user configuration is explicitly outlined
 
 My report:
 
@@ -1458,7 +1496,32 @@ My output:
 {% capture e4dot14 %}
 
 ```bash
-Congratulations, your workflow is in a good condition!
+Lints for rule fastqc (line 21, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
+    * Additionally specify a conda environment or container for each rule, environment modules are not enough:
+      While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
+      other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
+      complemented with equivalent conda environments.
+      Also see:
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+
+Lints for rule multiqc (line 61, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
+    * Additionally specify a conda environment or container for each rule, environment modules are not enough:
+      While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
+      other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
+      complemented with equivalent conda environments.
+      Also see:
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+
+Lints for rule trim_galore (line 96, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
+    * Additionally specify a conda environment or container for each rule, environment modules are not enough:
+      While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
+      other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
+      complemented with equivalent conda environments.
+      Also see:
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
 ```
 
 {% endcapture %}
@@ -1466,7 +1529,7 @@ Congratulations, your workflow is in a good condition!
 {% include exercise.html title="e4dot14" content=e4dot14%}
 <br>
 
-Woohoo we have a best practice workflow!
+We have a few things we could improve in our workflow!
 
 Writing a best practice workflow is more important than having Marie Kondo level tidiness, it increases the chance your workflow will continue to be used and maintained by others (and ourselves), making the code we write useful (it's exciting seeing someone else using your code!). If your workflow was used in scientific research, it makes your workflow accessible for people to reproduce your research findings; it isn't going to be a nightmare for them to run and they are more likely to try and have success doing so.
 
@@ -1523,7 +1586,7 @@ temp(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_
 Create a basic interactive Snakemake report after running your workflow with:
 
 ```bash
-snakemake --report ../results/report.html
+snakemake --report ../results/snakemake_report.html
 ```
 
 # Our final snakemake workflow!
