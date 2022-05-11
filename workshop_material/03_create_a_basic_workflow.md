@@ -259,7 +259,8 @@ rule all:
 +       "../results/fastqc/NA24631_2_fastqc.zip"
 
 # workflow
-rule fastqc:
+- rule my_rule:
++ rule fastqc:
     input:
 +       R1 = "../../data/NA24631_1.fastq.gz",
 +       R2 = "../../data/NA24631_2.fastq.gz"
