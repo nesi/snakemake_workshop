@@ -191,7 +191,7 @@ rule trim_galore:
 
 Current slurm profile:
 
-{% capture e4dot1.2 %}
+{% capture e4dot2 %}
 
 ```
 jobs: 20
@@ -207,12 +207,12 @@ default-resources: [cpus=2, mem_mb=512, time_min=10]
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot1.2" content=e4dot1.2%}
+{% include exercise.html title="e4dot2" content=e4dot2%}
 <br>
 
 Current snakefile:
 
-{% capture e4dot2 %}
+{% capture e4dot3 %}
 
 ```txt
 # define samples from data directory using wildcards
@@ -270,7 +270,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot2" content=e4dot2%}
+{% include exercise.html title="e4dot3" content=e4dot3%}
 <br>
 
 Run the workflow again
@@ -288,7 +288,7 @@ If you monitor the progress of your jobs using `squeue`, you will notice that so
 
 My output:
 
-{% capture e4dot3 %}
+{% capture e4dot4 %}
 
 ```
 JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
@@ -303,7 +303,7 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot3" content=e4dot3%}
+{% include exercise.html title="e4dot4" content=e4dot4%}
 <br>
 
 Now looking at the content of our workflow folder, it is getting cluttered with Slurm log files:
@@ -314,7 +314,7 @@ ls -lh
 
 My output:
 
-{% capture e4dot2.1 %}
+{% capture e4dot5 %}
 
 ```
 total 1.8M
@@ -361,7 +361,7 @@ drwxrws---+ 3 lkemp nesi99991 4.0K May 11 12:34 slurm
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot2.1" content=e4dot2.1%}
+{% include exercise.html title="e4dot5" content=e4dot5%}
 <br>
 
 Let's clean this and create a dedicated folder `logs/slurm` for future log files:
@@ -440,7 +440,7 @@ cluster-cancel: scancel
 
 Current slurm profile:
 
-{% capture e4dot2.2 %}
+{% capture e4dot6 %}
 
 ```
 jobs: 20
@@ -459,7 +459,7 @@ cluster-status: ./status.py
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot2.2" content=e4dot2.2%}
+{% include exercise.html title="e4dot6" content=e4dot6%}
 <br>
 
 Once all of this is in place, we can:
@@ -535,7 +535,7 @@ rule trim_galore:
 
 Current snakefile:
 
-{% capture e4dot4 %}
+{% capture e4dot7 %}
 
 ```txt
 # define samples from data directory using wildcards
@@ -595,7 +595,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot4" content=e4dot4%}
+{% include exercise.html title="e4dot7" content=e4dot7%}
 <br>
 
 Run a dryrun to check it works
@@ -711,7 +711,7 @@ rule trim_galore:
 
 Current snakefile:
 
-{% capture e4dot5 %}
+{% capture e4dot8 %}
 
 ```txt
 # define samples from data directory using wildcards
@@ -775,7 +775,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot5" content=e4dot5%}
+{% include exercise.html title="e4dot8" content=e4dot8%}
 <br>
 
 Let's use our configuration file! Run workflow again:
@@ -793,7 +793,7 @@ Didn't work?
 
 My error:
 
-{% capture e4dot6 %}
+{% capture e4dot9 %}
 
 ```bash
 KeyError in line 19 of /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile:
@@ -803,7 +803,7 @@ KeyError in line 19 of /scale_wlg_persistent/filesets/project/nesi99991/snakemak
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot6" content=e4dot6%}
+{% include exercise.html title="e4dot9" content=e4dot9%}
 <br>
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is so it can't find our config variables. We can do this by passing the location of our config file to the `--configfile` flag
@@ -886,7 +886,7 @@ rule trim_galore:
 
 Current snakefile:
 
-{% capture e4dot7 %}
+{% capture e4dot10 %}
 
 ```txt
 # define our configuration file
@@ -953,7 +953,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot7" content=e4dot7%}
+{% include exercise.html title="e4dot10" content=e4dot10%}
 <br>
 
 Then we don't need to specify where the configuration file is on the command line
@@ -1048,7 +1048,7 @@ rule trim_galore:
 
 Current snakefile:
 
-{% capture e4dot8 %}
+{% capture e4dot11 %}
 
 ```txt
 # define our configuration file
@@ -1121,7 +1121,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot8" content=e4dot8%}
+{% include exercise.html title="e4dot11" content=e4dot11%}
 <br>
 
 ```diff
@@ -1137,7 +1137,7 @@ Now our messages are printed to the screen as our workflow runs
 
 My output:
 
-{% capture e4dot9 %}
+{% capture e4dot12 %}
 
 ```bash
 Building DAG of jobs...
@@ -1226,7 +1226,7 @@ Complete log: .snakemake/log/2022-05-11T132052.454902.snakemake.log
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot9" content=e4dot9%}
+{% include exercise.html title="e4dot12" content=e4dot12%}
 <br>
 
 ## 4.5 Create temporary files
@@ -1241,7 +1241,7 @@ ls -lh ../results/fastqc/
 
 My output:
 
-{% capture e4dot10 %}
+{% capture e4dot13 %}
 
 ```bash
 total 4.5M
@@ -1261,7 +1261,7 @@ total 4.5M
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot10" content=e4dot10%}
+{% include exercise.html title="e4dot13" content=e4dot13%}
 <br>
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
@@ -1338,7 +1338,7 @@ rule trim_galore:
 
 Current snakefile:
 
-{% capture e4dot11 %}
+{% capture e4dot14 %}
 
 ```txt
 # define our configuration file
@@ -1411,7 +1411,7 @@ rule trim_galore:
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot11" content=e4dot11%}
+{% include exercise.html title="e4dot14" content=e4dot14%}
 <br>
 
 ```diff
@@ -1433,7 +1433,7 @@ These html files have been removed once Snakemake no longer needs the files for 
 
 My output:
 
-{% capture e4dot12 %}
+{% capture e4dot15 %}
 
 ```bash
 total 3.0M
@@ -1447,7 +1447,7 @@ total 3.0M
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot12" content=e4dot12%}
+{% include exercise.html title="e4dot15" content=e4dot15%}
 <br>
 
 *This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.*
@@ -1470,13 +1470,13 @@ In our report:
 
 My report:
 
-{% capture e4dot13 %}
+{% capture e4dot16 %}
 
 ![snakemake_report](./images/snakemake_report.gif)
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot13" content=e4dot13%}
+{% include exercise.html title="e4dot16" content=e4dot16%}
 <br>
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
@@ -1493,7 +1493,7 @@ snakemake --lint
 
 My output:
 
-{% capture e4dot14 %}
+{% capture e4dot17 %}
 
 ```bash
 Lints for rule fastqc (line 21, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
@@ -1526,7 +1526,7 @@ Lints for rule trim_galore (line 96, /scale_wlg_persistent/filesets/project/nesi
 
 {% endcapture %}
 
-{% include exercise.html title="e4dot14" content=e4dot14%}
+{% include exercise.html title="e4dot17" content=e4dot17%}
 <br>
 
 We have a few things we could improve in our workflow!
