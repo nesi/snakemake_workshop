@@ -46,6 +46,13 @@ You can also navigate to the above directory in the JupyterLab file browser, whi
 
 We use "environment modules" on NeSI to manage installed software. This allows you to pick and choose which software is available in your environment. 
 More details about environment modules can be found on the NeSI support [page](https://support.nesi.org.nz/hc/en-gb/articles/360000360576-Finding-Software).
+
+The JupyterLab terminal comes with some modules preloaded and it can often be nicer to start with a clean environment:
+
+```
+module purge
+```
+
 We can search for available Snakemake modules using the `module spider` command:
 
 ```
@@ -65,6 +72,8 @@ snakemake --version
 ```
 
 It should print out the version of snakemake, i.e. "7.6.2".
+
+You can also run `module list` to see the list of modules that are currently loaded.
 
 ## Clone this repo
 
