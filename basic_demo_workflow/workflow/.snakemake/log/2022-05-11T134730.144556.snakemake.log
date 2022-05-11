@@ -1,0 +1,129 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 10
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+all                1              1              1
+fastqc             3              2              2
+multiqc            1              1              1
+trim_galore        3              2              2
+total              8              1              2
+
+Select jobs to execute...
+
+[Wed May 11 13:47:30 2022]
+rule fastqc:
+    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    log: logs/fastqc/NA24694.log
+    jobid: 4
+    wildcards: sample=NA24694
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 4 with external jobid 'Submitted batch job 26764723'.
+
+[Wed May 11 13:47:30 2022]
+rule trim_galore:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz
+    log: logs/trim_galore/NA24695.log
+    jobid: 6
+    wildcards: sample=NA24695
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 6 with external jobid 'Submitted batch job 26764724'.
+
+[Wed May 11 13:47:30 2022]
+rule fastqc:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    log: logs/fastqc/NA24631.log
+    jobid: 2
+    wildcards: sample=NA24631
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 2 with external jobid 'Submitted batch job 26764725'.
+
+[Wed May 11 13:47:30 2022]
+rule fastqc:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    log: logs/fastqc/NA24695.log
+    jobid: 3
+    wildcards: sample=NA24695
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 3 with external jobid 'Submitted batch job 26764726'.
+
+[Wed May 11 13:47:30 2022]
+rule trim_galore:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz
+    log: logs/trim_galore/NA24631.log
+    jobid: 5
+    wildcards: sample=NA24631
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 5 with external jobid 'Submitted batch job 26764727'.
+
+[Wed May 11 13:47:30 2022]
+rule trim_galore:
+    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+    output: ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+    log: logs/trim_galore/NA24694.log
+    jobid: 7
+    wildcards: sample=NA24694
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 7 with external jobid 'Submitted batch job 26764728'.
+[Wed May 11 13:48:00 2022]
+Finished job 4.
+1 of 8 steps (12%) done
+[Wed May 11 13:48:00 2022]
+Finished job 6.
+2 of 8 steps (25%) done
+[Wed May 11 13:48:00 2022]
+Finished job 2.
+3 of 8 steps (38%) done
+[Wed May 11 13:48:00 2022]
+Finished job 3.
+4 of 8 steps (50%) done
+Select jobs to execute...
+
+[Wed May 11 13:48:00 2022]
+rule multiqc:
+    input: ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    output: ../results/multiqc_report.html
+    log: logs/multiqc/multiqc.log
+    jobid: 1
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+Submitted job 1 with external jobid 'Submitted batch job 26764733'.
+[Wed May 11 13:48:00 2022]
+Finished job 5.
+5 of 8 steps (62%) done
+[Wed May 11 13:48:00 2022]
+Finished job 7.
+6 of 8 steps (75%) done
+[Wed May 11 13:49:10 2022]
+Finished job 1.
+7 of 8 steps (88%) done
+Select jobs to execute...
+
+[Wed May 11 13:49:10 2022]
+localrule all:
+    input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+    jobid: 0
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281
+
+[Wed May 11 13:49:10 2022]
+Finished job 0.
+8 of 8 steps (100%) done
+Complete log: .snakemake/log/2022-05-11T134730.144556.snakemake.log

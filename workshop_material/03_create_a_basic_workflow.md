@@ -33,12 +33,12 @@ My output:
 
 ```bash
 total 13M
--rw-rw----+ 1 lkemp nesi99991 2.1M Sep 10 04:32 NA24631_1.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 2.3M Sep 10 04:32 NA24631_2.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 2.1M Sep 10 04:32 NA24694_1.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 2.3M Sep 10 04:32 NA24694_2.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 1.8M Sep 10 04:32 NA24695_1.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 1.9M Sep 10 04:32 NA24695_2.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24631_1.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24631_2.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24694_1.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24694_2.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 1.8M May 11 12:06 NA24695_1.fastq.gz
+-rw-rw----+ 1 lkemp nesi99991 1.9M May 11 12:06 NA24695_2.fastq.gz
 ```
 
 {% endcapture %}
@@ -80,8 +80,8 @@ My output:
 
 ```bash
 total 1.0K
-drwxrws---+ 2 lkemp nesi99991 4.0K Sep 13 02:57 results
-drwxrws---+ 3 lkemp nesi99991 4.0K Sep 13 02:57 workflow
+drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
+drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
 ```
 
 {% endcapture %}
@@ -98,8 +98,8 @@ My output:
 {% capture e3dot3 %}
 
 ```bash
-total 512
--rw-rw----+ 1 lkemp nesi99991    0 Sep 13 02:57 Snakefile
+total 0
+-rw-rw----+ 1 lkemp nesi99991 0 May 11 12:07 Snakefile
 ```
 
 {% endcapture %}
@@ -154,24 +154,24 @@ Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 Approx 50% complete for NA24631_1.fastq.gz
 Approx 55% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
 Approx 60% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
+Started analysis of NA24631_2.fastq.gz
 Approx 65% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
 Approx 70% complete for NA24631_1.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
 Approx 75% complete for NA24631_1.fastq.gz
 Approx 15% complete for NA24631_2.fastq.gz
 Approx 80% complete for NA24631_1.fastq.gz
 Approx 20% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_1.fastq.gz
 Approx 25% complete for NA24631_2.fastq.gz
+Approx 85% complete for NA24631_1.fastq.gz
 Approx 90% complete for NA24631_1.fastq.gz
 Approx 30% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_1.fastq.gz
 Approx 35% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_1.fastq.gz
+Approx 95% complete for NA24631_1.fastq.gz
 Approx 40% complete for NA24631_2.fastq.gz
+Analysis complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_2.fastq.gz
 Approx 50% complete for NA24631_2.fastq.gz
 Approx 55% complete for NA24631_2.fastq.gz
@@ -203,10 +203,10 @@ My output:
 
 ```bash
 total 2.5M
--rw-rw----+ 1 lkemp nesi99991 718K Sep 10 04:38 NA24631_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 475K Sep 10 04:38 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 726K Sep 10 04:38 NA24631_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 479K Sep 10 04:38 NA24631_2_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 718K May 11 12:08 NA24631_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 475K May 11 12:08 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 726K May 11 12:08 NA24631_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 479K May 11 12:08 NA24631_2_fastqc.zip
 ```
 
 {% endcapture %}
@@ -335,19 +335,19 @@ fastqc        1              1              1
 total         2              1              1
 
 
-[Mon Sep 13 03:03:00 2021]
+[Wed May 11 12:09:56 2022]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 
-[Mon Sep 13 03:03:00 2021]
+[Wed May 11 12:09:56 2022]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 Job stats:
 job       count    min threads    max threads
@@ -415,13 +415,13 @@ total         2              1              2
 
 Select jobs to execute...
 
-[Mon Sep 13 03:03:42 2021]
+[Wed May 11 12:10:44 2022]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
     threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 Started analysis of NA24631_1.fastq.gz
 Approx 5% complete for NA24631_1.fastq.gz
@@ -434,26 +434,26 @@ Approx 35% complete for NA24631_1.fastq.gz
 Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 Approx 50% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
 Approx 55% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
 Approx 60% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
 Approx 65% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_2.fastq.gz
+Started analysis of NA24631_2.fastq.gz
 Approx 70% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_2.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
 Approx 75% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_2.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
 Approx 80% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_2.fastq.gz
+Approx 15% complete for NA24631_2.fastq.gz
 Approx 85% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_2.fastq.gz
+Approx 20% complete for NA24631_2.fastq.gz
 Approx 90% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_2.fastq.gz
+Approx 25% complete for NA24631_2.fastq.gz
 Approx 95% complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_2.fastq.gz
+Approx 30% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_1.fastq.gz
+Approx 35% complete for NA24631_2.fastq.gz
+Approx 40% complete for NA24631_2.fastq.gz
+Approx 45% complete for NA24631_2.fastq.gz
 Approx 50% complete for NA24631_2.fastq.gz
 Approx 55% complete for NA24631_2.fastq.gz
 Approx 60% complete for NA24631_2.fastq.gz
@@ -465,21 +465,21 @@ Approx 85% complete for NA24631_2.fastq.gz
 Approx 90% complete for NA24631_2.fastq.gz
 Approx 95% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_2.fastq.gz
-[Mon Sep 13 03:03:46 2021]
+[Wed May 11 12:10:48 2022]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Mon Sep 13 03:03:46 2021]
+[Wed May 11 12:10:48 2022]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
-[Mon Sep 13 03:03:46 2021]
+[Wed May 11 12:10:48 2022]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030341.513736.snakemake.log
+Complete log: .snakemake/log/2022-05-11T121044.745212.snakemake.log
 ```
 
 {% endcapture %}
@@ -498,11 +498,11 @@ My output:
 {% capture e3dot10 %}
 
 ```bash
-total 3.5M
--rw-rw-r-- 1 lkemp lkemp 718K Sep  1 16:39 NA24631_1_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 475K Sep  1 16:39 NA24631_1_fastqc.zip
--rw-rw-r-- 1 lkemp lkemp 726K Sep  1 16:39 NA24631_2_fastqc.html
--rw-rw-r-- 1 lkemp lkemp 479K Sep  1 16:39 NA24631_2_fastqc.zip
+total 2.5M
+-rw-rw----+ 1 lkemp nesi99991 718K May 11 12:10 NA24631_1_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 475K May 11 12:10 NA24631_1_fastqc.zip
+-rw-rw----+ 1 lkemp nesi99991 726K May 11 12:10 NA24631_2_fastqc.html
+-rw-rw----+ 1 lkemp nesi99991 479K May 11 12:10 NA24631_2_fastqc.zip
 ```
 
 {% endcapture %}
@@ -524,7 +524,7 @@ My output:
 
 ```bash
 Building DAG of jobs...
-Nothing to be done.
+Nothing to be done (all requested files are present and up to date).
 ```
 
 {% endcapture %}
@@ -542,8 +542,8 @@ My output:
 
 ```bash
 Building DAG of jobs...
-Nothing to be done.
-Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030445.098954.snakemake.log
+Nothing to be done (all requested files are present and up to date).
+Complete log: .snakemake/log/2022-05-11T121300.251492.snakemake.log
 ```
 
 {% endcapture %}
@@ -654,7 +654,6 @@ My output:
 
 ```bash
 Building DAG of jobs...
-Conda environment envs/fastqc.yaml will be created.
 Job stats:
 job       count    min threads    max threads
 ------  -------  -------------  -------------
@@ -663,20 +662,20 @@ fastqc        1              2              2
 total         2              1              2
 
 
-[Mon Sep 13 03:06:45 2021]
+[Wed May 11 12:13:52 2022]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
     threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 
-[Mon Sep 13 03:06:45 2021]
+[Wed May 11 12:13:52 2022]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 Job stats:
 job       count    min threads    max threads
@@ -706,9 +705,6 @@ My output:
 
 ```bash
 Building DAG of jobs...
-Creating conda environment envs/fastqc.yaml...
-Downloading and installing remote packages.
-Environment for envs/fastqc.yaml created (location: .snakemake/conda/67c1376bae89b8de73037e703ea4b6f5)
 Using shell: /usr/bin/bash
 Provided cores: 2
 Rules claiming more threads will be scaled down.
@@ -721,15 +717,20 @@ total         2              1              2
 
 Select jobs to execute...
 
-[Mon Sep 13 03:10:27 2021]
+[Wed May 11 12:14:22 2022]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 1
     threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
-Activating conda environment: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/67c1376bae89b8de73037e703ea4b6f5
+Activating environment modules: FastQC/0.11.9
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
 Started analysis of NA24631_1.fastq.gz
 Approx 5% complete for NA24631_1.fastq.gz
 Approx 10% complete for NA24631_1.fastq.gz
@@ -743,22 +744,22 @@ Approx 45% complete for NA24631_1.fastq.gz
 Approx 50% complete for NA24631_1.fastq.gz
 Approx 55% complete for NA24631_1.fastq.gz
 Approx 60% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
 Approx 65% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
 Approx 70% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
 Approx 75% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_2.fastq.gz
+Started analysis of NA24631_2.fastq.gz
+Approx 5% complete for NA24631_2.fastq.gz
 Approx 80% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_2.fastq.gz
+Approx 10% complete for NA24631_2.fastq.gz
 Approx 85% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_2.fastq.gz
+Approx 15% complete for NA24631_2.fastq.gz
 Approx 90% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_2.fastq.gz
+Approx 20% complete for NA24631_2.fastq.gz
 Approx 95% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_2.fastq.gz
+Approx 25% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_1.fastq.gz
+Approx 30% complete for NA24631_2.fastq.gz
+Approx 35% complete for NA24631_2.fastq.gz
 Approx 40% complete for NA24631_2.fastq.gz
 Approx 45% complete for NA24631_2.fastq.gz
 Approx 50% complete for NA24631_2.fastq.gz
@@ -772,21 +773,21 @@ Approx 85% complete for NA24631_2.fastq.gz
 Approx 90% complete for NA24631_2.fastq.gz
 Approx 95% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_2.fastq.gz
-[Mon Sep 13 03:10:33 2021]
+[Wed May 11 12:14:26 2022]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Mon Sep 13 03:10:33 2021]
+[Wed May 11 12:14:26 2022]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
-[Mon Sep 13 03:10:33 2021]
+[Wed May 11 12:14:26 2022]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030734.543325.snakemake.log
+Complete log: .snakemake/log/2022-05-11T121422.744466.snakemake.log
 ```
 
 {% endcapture %}
@@ -920,31 +921,36 @@ total         2              1              2
 
 Select jobs to execute...
 
-[Mon Sep 13 03:14:19 2021]
+[Wed May 11 12:15:16 2022]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     log: logs/fastqc/NA24631.log
     jobid: 1
     threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
-Activating conda environment: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/67c1376bae89b8de73037e703ea4b6f5
-[Mon Sep 13 03:14:24 2021]
+Activating environment modules: FastQC/0.11.9
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:15:20 2022]
 Finished job 1.
 1 of 2 steps (50%) done
 Select jobs to execute...
 
-[Mon Sep 13 03:14:24 2021]
+[Wed May 11 12:15:20 2022]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
-[Mon Sep 13 03:14:24 2021]
+[Wed May 11 12:15:20 2022]
 Finished job 0.
 2 of 2 steps (100%) done
-Complete log: /scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T031415.725355.snakemake.log
+Complete log: .snakemake/log/2022-05-11T121516.368334.snakemake.log
 ```
 
 {% endcapture %}
@@ -1120,18 +1126,7 @@ fastqc        3              2              2
 total         4              1              2
 
 
-[Mon Sep 13 03:23:58 2021]
-rule fastqc:
-    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
-    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
-    log: logs/fastqc/NA24694.log
-    jobid: 3
-    wildcards: sample=NA24694
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
-
-
-[Mon Sep 13 03:23:58 2021]
+[Wed May 11 12:16:46 2022]
 rule fastqc:
     input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
     output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
@@ -1139,10 +1134,10 @@ rule fastqc:
     jobid: 2
     wildcards: sample=NA24695
     threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 
-[Mon Sep 13 03:23:58 2021]
+[Wed May 11 12:16:46 2022]
 rule fastqc:
     input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
     output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
@@ -1150,14 +1145,25 @@ rule fastqc:
     jobid: 1
     wildcards: sample=NA24631
     threads: 2
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 
-[Mon Sep 13 03:23:58 2021]
+[Wed May 11 12:16:46 2022]
+rule fastqc:
+    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    log: logs/fastqc/NA24694.log
+    jobid: 3
+    wildcards: sample=NA24694
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+
+[Wed May 11 12:16:46 2022]
 localrule all:
     input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
     jobid: 0
-    resources: tmpdir=/dev/shm/jobs/22281190
+    resources: tmpdir=/dev/shm/jobs/26763281
 
 Job stats:
 job       count    min threads    max threads
@@ -1191,9 +1197,9 @@ My output:
 
 ```bash
 total 1.5K
--rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24631.log
--rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24694.log
--rw-rw----+ 1 lkemp nesi99991 1.8K Sep 13 03:24 NA24695.log
+-rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24631.log
+-rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24694.log
+-rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24695.log
 ```
 
 {% endcapture %}
@@ -1329,17 +1335,6 @@ My DAG:
 
 {% include exercise.html title="e3dot25" content=e3dot25%}
 <br>
-
-Run again
-
-```bash
-# remove output of last run
-rm -r ../results/*
-
-# run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
-```
 
 ## 3.13 More about Snakemake's lazy behaviour
 
@@ -1579,8 +1574,6 @@ job       count    min threads    max threads
 all           1              1              1
 fastqc        3              2              2
 total         4              1              2
-
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
 {% endcapture %}
@@ -1838,6 +1831,187 @@ rm -r ../results/*
 snakemake --cluster "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-envmodules
 ```
 
+My output:
+
+{% capture e3dot35 %}
+
+```bash
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count    min threads    max threads
+-----------  -------  -------------  -------------
+all                1              1              1
+fastqc             3              2              2
+multiqc            1              1              1
+trim_galore        3              2              2
+total              8              1              2
+
+Select jobs to execute...
+
+[Wed May 11 12:26:39 2022]
+rule fastqc:
+    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    log: logs/fastqc/NA24694.log
+    jobid: 4
+    wildcards: sample=NA24694
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: FastQC/0.11.9
+
+[Wed May 11 12:26:39 2022]
+rule trim_galore:
+    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+    output: ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+    log: logs/trim_galore/NA24694.log
+    jobid: 7
+    wildcards: sample=NA24694
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:26:44 2022]
+Finished job 4.
+1 of 8 steps (12%) done
+Select jobs to execute...
+
+[Wed May 11 12:26:44 2022]
+rule fastqc:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+    log: logs/fastqc/NA24631.log
+    jobid: 2
+    wildcards: sample=NA24631
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: FastQC/0.11.9
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:26:47 2022]
+Finished job 7.
+2 of 8 steps (25%) done
+Select jobs to execute...
+
+[Wed May 11 12:26:47 2022]
+rule trim_galore:
+    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+    output: ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz
+    log: logs/trim_galore/NA24631.log
+    jobid: 5
+    wildcards: sample=NA24631
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:26:50 2022]
+Finished job 2.
+3 of 8 steps (38%) done
+Select jobs to execute...
+
+[Wed May 11 12:26:50 2022]
+rule fastqc:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    log: logs/fastqc/NA24695.log
+    jobid: 3
+    wildcards: sample=NA24695
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: FastQC/0.11.9
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:26:54 2022]
+Finished job 3.
+4 of 8 steps (50%) done
+Select jobs to execute...
+
+[Wed May 11 12:26:54 2022]
+rule trim_galore:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz
+    log: logs/trim_galore/NA24695.log
+    jobid: 6
+    wildcards: sample=NA24695
+    threads: 2
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:26:56 2022]
+Finished job 5.
+5 of 8 steps (62%) done
+Select jobs to execute...
+
+[Wed May 11 12:26:56 2022]
+rule multiqc:
+    input: ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    output: ../results/multiqc_report.html
+    log: logs/multiqc/multiqc.log
+    jobid: 1
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+Activating environment modules: MultiQC/1.9-gimkl-2020a-Python-3.8.2
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 12:27:01 2022]
+Finished job 6.
+6 of 8 steps (75%) done
+[Wed May 11 12:27:03 2022]
+Finished job 1.
+7 of 8 steps (88%) done
+Select jobs to execute...
+
+[Wed May 11 12:27:03 2022]
+localrule all:
+    input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+    jobid: 0
+    resources: tmpdir=/dev/shm/jobs/26763281
+
+[Wed May 11 12:27:03 2022]
+Finished job 0.
+8 of 8 steps (100%) done
+Complete log: .snakemake/log/2022-05-11T122639.019945.snakemake.log
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot35" content=e3dot35%}
+<br>
+
 If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
 
 ```bash
@@ -1845,6 +2019,26 @@ squeue -u your_nesi_login
 ```
 
 where `your_nesi_login` needs to be replace with your actual NeSI login.
+
+My output:
+
+{% capture e3dot36 %}
+
+```bash
+JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)    
+26763281      lkemp    nesi99991 spawner-jupy   4      4G interac 2022-05-11T1     7:30:33 RUNNING  wbn003              
+26763418      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn096              
+26763419      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn096              
+26763420      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn110              
+26763421      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn069              
+26763422      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn070              
+26763423      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn090  
+```
+
+{% endcapture %}
+
+{% include exercise.html title="e3dot36" content=e3dot36%}
+<br>
 
 An additional trick is to use the `watch` command to repeatedly call any command in the terminal, giving you a lightweight monitoring tool ;-).
 Here we will use it to see your jobs gets queued and executed in real time:

@@ -2,12 +2,12 @@
     "report_data_sources": {
         "FastQC": {
             "all_sections": {
-                "NA24631_1": "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip",
-                "NA24694_1": "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip",
-                "NA24695_1": "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip",
-                "NA24631_2": "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip",
-                "NA24694_2": "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip",
-                "NA24695_2": "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip"
+                "NA24631_1": "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip",
+                "NA24695_1": "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip",
+                "NA24694_1": "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip",
+                "NA24631_2": "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip",
+                "NA24695_2": "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip",
+                "NA24694_2": "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip"
             }
         }
     },
@@ -20,18 +20,18 @@
                 "percent_duplicates": 0.5301117922827245,
                 "percent_fails": 0.0
             },
-            "NA24694_1": {
-                "percent_gc": 47.0,
-                "avg_sequence_length": 114.66027811802003,
-                "total_sequences": 27758.0,
-                "percent_duplicates": 0.3746667627350604,
-                "percent_fails": 0.0
-            },
             "NA24695_1": {
                 "percent_gc": 47.0,
                 "avg_sequence_length": 115.98399730480924,
                 "total_sequences": 23746.0,
                 "percent_duplicates": 0.4716583845700342,
+                "percent_fails": 0.0
+            },
+            "NA24694_1": {
+                "percent_gc": 47.0,
+                "avg_sequence_length": 114.66027811802003,
+                "total_sequences": 27758.0,
+                "percent_duplicates": 0.3746667627350604,
                 "percent_fails": 0.0
             },
             "NA24631_2": {
@@ -41,18 +41,18 @@
                 "percent_duplicates": 0.526505589614132,
                 "percent_fails": 0.0
             },
-            "NA24694_2": {
-                "percent_gc": 47.0,
-                "avg_sequence_length": 116.02388500612436,
-                "total_sequences": 27758.0,
-                "percent_duplicates": 0.38547445781395595,
-                "percent_fails": 0.0
-            },
             "NA24695_2": {
                 "percent_gc": 47.0,
                 "avg_sequence_length": 116.24656784300514,
                 "total_sequences": 23746.0,
                 "percent_duplicates": 0.5011370336056586,
+                "percent_fails": 0.0
+            },
+            "NA24694_2": {
+                "percent_gc": 47.0,
+                "avg_sequence_length": 116.02388500612436,
+                "total_sequences": 27758.0,
+                "percent_duplicates": 0.38547445781395595,
                 "percent_fails": 0.0
             }
         }
@@ -165,7 +165,7 @@
             }
         }
     ],
-    "report_multiqc_command": "/home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/23b79dd03a8f819ece68cdeb62e20782/bin/multiqc ../results/fastqc/NA24631_1_fastqc.zip ../results/fastqc/NA24694_1_fastqc.zip ../results/fastqc/NA24695_1_fastqc.zip ../results/fastqc/NA24631_2_fastqc.zip ../results/fastqc/NA24694_2_fastqc.zip ../results/fastqc/NA24695_2_fastqc.zip -o ../results/ --flat",
+    "report_multiqc_command": "/opt/nesi/CS400_centos7_bdw/MultiQC/1.9-gimkl-2020a-Python-3.8.2/bin/multiqc ../results/fastqc/NA24631_1_fastqc.zip ../results/fastqc/NA24695_1_fastqc.zip ../results/fastqc/NA24694_1_fastqc.zip ../results/fastqc/NA24631_2_fastqc.zip ../results/fastqc/NA24695_2_fastqc.zip ../results/fastqc/NA24694_2_fastqc.zip -o ../results/ --flat",
     "report_plot_data": {
         "fastqc-status-check-heatmap": {
             "plot_type": "heatmap",
@@ -579,16 +579,16 @@
                 "overrepresented_sequences": "pass",
                 "adapter_content": "pass"
             },
-            "NA24694_1": {
-                "Filename": "NA24694_1.fastq.gz",
+            "NA24695_1": {
+                "Filename": "NA24695_1.fastq.gz",
                 "File type": "Conventional base calls",
                 "Encoding": "Sanger / Illumina 1.9",
-                "Total Sequences": 27758.0,
+                "Total Sequences": 23746.0,
                 "Sequences flagged as poor quality": 0.0,
-                "Sequence length": "26-125",
+                "Sequence length": "22-125",
                 "%GC": 47.0,
-                "total_deduplicated_percentage": 99.62533323726494,
-                "avg_sequence_length": 114.66027811802003,
+                "total_deduplicated_percentage": 99.52834161542997,
+                "avg_sequence_length": 115.98399730480924,
                 "basic_statistics": "pass",
                 "per_base_sequence_quality": "pass",
                 "per_tile_sequence_quality": "warn",
@@ -601,16 +601,16 @@
                 "overrepresented_sequences": "pass",
                 "adapter_content": "pass"
             },
-            "NA24695_1": {
-                "Filename": "NA24695_1.fastq.gz",
+            "NA24694_1": {
+                "Filename": "NA24694_1.fastq.gz",
                 "File type": "Conventional base calls",
                 "Encoding": "Sanger / Illumina 1.9",
-                "Total Sequences": 23746.0,
+                "Total Sequences": 27758.0,
                 "Sequences flagged as poor quality": 0.0,
-                "Sequence length": "22-125",
+                "Sequence length": "26-125",
                 "%GC": 47.0,
-                "total_deduplicated_percentage": 99.52834161542997,
-                "avg_sequence_length": 115.98399730480924,
+                "total_deduplicated_percentage": 99.62533323726494,
+                "avg_sequence_length": 114.66027811802003,
                 "basic_statistics": "pass",
                 "per_base_sequence_quality": "pass",
                 "per_tile_sequence_quality": "warn",
@@ -645,28 +645,6 @@
                 "overrepresented_sequences": "pass",
                 "adapter_content": "pass"
             },
-            "NA24694_2": {
-                "Filename": "NA24694_2.fastq.gz",
-                "File type": "Conventional base calls",
-                "Encoding": "Sanger / Illumina 1.9",
-                "Total Sequences": 27758.0,
-                "Sequences flagged as poor quality": 0.0,
-                "Sequence length": "21-125",
-                "%GC": 47.0,
-                "total_deduplicated_percentage": 99.61452554218604,
-                "avg_sequence_length": 116.02388500612436,
-                "basic_statistics": "pass",
-                "per_base_sequence_quality": "pass",
-                "per_tile_sequence_quality": "warn",
-                "per_sequence_quality_scores": "pass",
-                "per_base_sequence_content": "pass",
-                "per_sequence_gc_content": "pass",
-                "per_base_n_content": "pass",
-                "sequence_length_distribution": "warn",
-                "sequence_duplication_levels": "pass",
-                "overrepresented_sequences": "pass",
-                "adapter_content": "pass"
-            },
             "NA24695_2": {
                 "Filename": "NA24695_2.fastq.gz",
                 "File type": "Conventional base calls",
@@ -688,6 +666,28 @@
                 "sequence_duplication_levels": "pass",
                 "overrepresented_sequences": "pass",
                 "adapter_content": "pass"
+            },
+            "NA24694_2": {
+                "Filename": "NA24694_2.fastq.gz",
+                "File type": "Conventional base calls",
+                "Encoding": "Sanger / Illumina 1.9",
+                "Total Sequences": 27758.0,
+                "Sequences flagged as poor quality": 0.0,
+                "Sequence length": "21-125",
+                "%GC": 47.0,
+                "total_deduplicated_percentage": 99.61452554218604,
+                "avg_sequence_length": 116.02388500612436,
+                "basic_statistics": "pass",
+                "per_base_sequence_quality": "pass",
+                "per_tile_sequence_quality": "warn",
+                "per_sequence_quality_scores": "pass",
+                "per_base_sequence_content": "pass",
+                "per_sequence_gc_content": "pass",
+                "per_base_n_content": "pass",
+                "sequence_length_distribution": "warn",
+                "sequence_duplication_levels": "pass",
+                "overrepresented_sequences": "pass",
+                "adapter_content": "pass"
             }
         },
         "multiqc_general_stats": {
@@ -698,19 +698,19 @@
                 "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
                 "FastQC_mqc-generalstats-fastqc-total_sequences": 27730.0
             },
-            "NA24694_1": {
-                "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.3746667627350604,
-                "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
-                "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 114.66027811802003,
-                "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
-                "FastQC_mqc-generalstats-fastqc-total_sequences": 27758.0
-            },
             "NA24695_1": {
                 "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.4716583845700342,
                 "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
                 "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 115.98399730480924,
                 "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
                 "FastQC_mqc-generalstats-fastqc-total_sequences": 23746.0
+            },
+            "NA24694_1": {
+                "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.3746667627350604,
+                "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
+                "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 114.66027811802003,
+                "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
+                "FastQC_mqc-generalstats-fastqc-total_sequences": 27758.0
             },
             "NA24631_2": {
                 "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.526505589614132,
@@ -719,46 +719,46 @@
                 "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
                 "FastQC_mqc-generalstats-fastqc-total_sequences": 27730.0
             },
-            "NA24694_2": {
-                "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.38547445781395595,
-                "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
-                "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 116.02388500612436,
-                "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
-                "FastQC_mqc-generalstats-fastqc-total_sequences": 27758.0
-            },
             "NA24695_2": {
                 "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.5011370336056586,
                 "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
                 "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 116.24656784300514,
                 "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
                 "FastQC_mqc-generalstats-fastqc-total_sequences": 23746.0
+            },
+            "NA24694_2": {
+                "FastQC_mqc-generalstats-fastqc-percent_duplicates": 0.38547445781395595,
+                "FastQC_mqc-generalstats-fastqc-percent_gc": 47.0,
+                "FastQC_mqc-generalstats-fastqc-avg_sequence_length": 116.02388500612436,
+                "FastQC_mqc-generalstats-fastqc-percent_fails": 0.0,
+                "FastQC_mqc-generalstats-fastqc-total_sequences": 27758.0
             }
         }
     },
     "config_analysis_dir_abs": [
-        "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip",
-        "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip",
-        "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip",
-        "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip",
-        "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip",
-        "/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip"
+        "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip",
+        "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip",
+        "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip",
+        "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip",
+        "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip",
+        "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip"
     ],
     "config_analysis_dir": [
         "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24694_1_fastqc.zip",
         "../results/fastqc/NA24695_1_fastqc.zip",
+        "../results/fastqc/NA24694_1_fastqc.zip",
         "../results/fastqc/NA24631_2_fastqc.zip",
-        "../results/fastqc/NA24694_2_fastqc.zip",
-        "../results/fastqc/NA24695_2_fastqc.zip"
+        "../results/fastqc/NA24695_2_fastqc.zip",
+        "../results/fastqc/NA24694_2_fastqc.zip"
     ],
-    "config_creation_date": "2021-09-03, 15:50",
-    "config_git_hash": "90e6ce05deff558b11c856ad88db370339dd4d37",
+    "config_creation_date": "2022-05-11, 14:20",
+    "config_git_hash": null,
     "config_intro_text": null,
     "config_report_comment": null,
     "config_report_header_info": null,
-    "config_script_path": "/home/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/23b79dd03a8f819ece68cdeb62e20782/lib/python3.6/site-packages/multiqc/utils",
-    "config_short_version": "1.11",
+    "config_script_path": "/scale_wlg_persistent/filesets/opt_nesi/CS400_centos7_bdw/MultiQC/1.9-gimkl-2020a-Python-3.8.2/lib/python3.8/site-packages/multiqc/utils",
+    "config_short_version": "1.9",
     "config_subtitle": null,
     "config_title": null,
-    "config_version": "1.11 (90e6ce0)"
+    "config_version": "1.9"
 }

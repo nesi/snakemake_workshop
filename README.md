@@ -26,11 +26,11 @@ In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you th
 
 This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
 
-## Attribution notice :
+## Attribution notice
 
 * Material used in this workshop is based on the following repository
     * Author     : Leah Kemp (ESR)
-    * Repository : https://leahkemp.github.io/RezBaz2020_snakemake_workshop/
+    * Repository : [https://leahkemp.github.io/RezBaz2020_snakemake_workshop/](https://leahkemp.github.io/RezBaz2020_snakemake_workshop/)
 
 ## Setup
 

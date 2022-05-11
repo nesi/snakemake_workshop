@@ -1,0 +1,23 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+
+[Wed May 11 13:48:43 2022]
+rule multiqc:
+    input: ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+    output: ../results/multiqc_report.html
+    log: logs/multiqc/multiqc.log
+    jobid: 0
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26764733
+
+Activating environment modules: MultiQC/1.9-gimkl-2020a-Python-3.8.2
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 13:49:02 2022]
+Finished job 0.
+1 of 1 steps (100%) done

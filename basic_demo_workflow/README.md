@@ -6,4 +6,11 @@ It also includes all the **outputs** that are produced by running the workflow:
 
 - `./results/`
 - `./workflow/logs/`
+- `./workflow/slurm-*.out`
 - `./workflow/.snakemake/log/`
+
+And the DAG's, filegraphs and rulegraphs we created during this workshop section:
+
+- `./workflow/dag_*.png`
+- `./workflow/rulegraph_1.png`
+- `./workflow/filegraph_1.png`

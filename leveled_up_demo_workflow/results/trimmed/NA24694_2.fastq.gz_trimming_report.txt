@@ -4,8 +4,8 @@ SUMMARISING RUN PARAMETERS
 Input filename: ../../data/NA24694_2.fastq.gz
 Trimming mode: paired-end
 Trim Galore version: 0.6.7
-Cutadapt version: 3.4
-Python version: could not detect
+Cutadapt version: 3.5
+Python version: 3.8.2
 Number of cores used for trimming: 2
 Quality Phred score cutoff: 20
 Quality encoding type selected: ASCII+33
@@ -17,10 +17,10 @@ Minimum required sequence length for both reads before a sequence pair gets remo
 Output file will be GZIP compressed
 
 
-This is cutadapt 3.4 with Python 3.9.6
+This is cutadapt 3.5 with Python 3.8.2
 Command line parameters: -j 2 -e 0.1 -q 20 -O 1 -a AGATCGGAAGAGC ../../data/NA24694_2.fastq.gz
 Processing reads on 2 cores in single-end mode ...
-Finished in 0.79 s (29 µs/read; 2.10 M reads/minute).
+Finished in 0.69 s (25 µs/read; 2.41 M reads/minute).
 
 === Summary ===
 
@@ -36,15 +36,16 @@ Total written (filtered):      3,159,712 bp (98.1%)
 
 Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 8516 times
 
+Minimum overlap: 1
 No. of allowed errors:
 1-9 bp: 0; 10-13 bp: 1
 
 Bases preceding removed adapters:
   A: 33.2%
-  C: 27.8%
+  C: 27.7%
   G: 20.5%
   T: 18.4%
-  none/other: 0.1%
+  none/other: 0.2%
 
 Overview of removed sequences
 length	count	expect	max.err	error counts
