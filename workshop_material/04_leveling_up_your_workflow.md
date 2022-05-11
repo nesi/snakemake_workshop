@@ -620,8 +620,10 @@ File structure:
 demo_workflow/
       |_______results/
       |_______workflow/
-      |          |_______envs/
+      |          |_______logs/
+      |          |_______slurm/
       |          |_______Snakefile
+      |          |_______status.py
       |_______config
                  |_______config.yaml
 ```
