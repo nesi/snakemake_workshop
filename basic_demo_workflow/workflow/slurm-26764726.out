@@ -1,0 +1,25 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+
+[Wed May 11 13:47:45 2022]
+rule fastqc:
+    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+    log: logs/fastqc/NA24695.log
+    jobid: 0
+    wildcards: sample=NA24695
+    threads: 2
+    resources: mem_mb=1000, disk_mb=1000, tmpdir=/dev/shm/jobs/26764726
+
+Activating environment modules: FastQC/0.11.9
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 13:47:50 2022]
+Finished job 0.
+1 of 1 steps (100%) done

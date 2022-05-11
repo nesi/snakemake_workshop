@@ -1,0 +1,18 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 2
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+
+[Wed May 11 14:19:31 2022]
+Job 0: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
+
+Activating environment modules: FastQC/0.11.9
+
+The following modules were not unloaded:
+   (Use "module --force purge" to unload all):
+
+  1) XALT/minimal   2) slurm   3) NeSI
+[Wed May 11 14:19:40 2022]
+Finished job 0.
+1 of 1 steps (100%) done

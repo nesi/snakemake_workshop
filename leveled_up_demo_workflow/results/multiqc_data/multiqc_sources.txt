@@ -1,7 +1,7 @@
 Module	Section	Sample Name	Source
-FastQC	all_sections	NA24631_1	/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip
-FastQC	all_sections	NA24694_1	/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip
-FastQC	all_sections	NA24695_1	/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip
-FastQC	all_sections	NA24631_2	/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip
-FastQC	all_sections	NA24694_2	/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip
-FastQC	all_sections	NA24695_2	/home/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip
+FastQC	all_sections	NA24631_1	/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_1_fastqc.zip
+FastQC	all_sections	NA24695_1	/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_1_fastqc.zip
+FastQC	all_sections	NA24694_1	/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_1_fastqc.zip
+FastQC	all_sections	NA24631_2	/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24631_2_fastqc.zip
+FastQC	all_sections	NA24695_2	/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24695_2_fastqc.zip
+FastQC	all_sections	NA24694_2	/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/results/fastqc/NA24694_2_fastqc.zip
