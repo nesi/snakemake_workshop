@@ -455,27 +455,23 @@ Let's do a full run of our workflow (by removing the `--dryrun` flag). We will a
         ```
 
 
-
-{% include exercise.html title="e3dot9" content=e3dot9%}
 <br>
 
 It worked! Now in our results directory we have our output files from fastqc. Let's have a look:
 
-```bash
-ls -lh ../results/fastqc/
-```
+!!! terminal "code"
+    ```bash
+    ls -lh ../results/fastqc/
+    ```
 
-My output:
-
-{% capture e3dot10 %}
-
-```bash
-total 2.5M
--rw-rw----+ 1 lkemp nesi99991 718K May 11 12:10 NA24631_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 475K May 11 12:10 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 726K May 11 12:10 NA24631_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 479K May 11 12:10 NA24631_2_fastqc.zip
-```
+    ??? success "output"
+        ```bash
+        total 2.5M
+        -rw-rw----+ 1 lkemp nesi99991 718K May 11 12:10 NA24631_1_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 475K May 11 12:10 NA24631_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 726K May 11 12:10 NA24631_2_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 479K May 11 12:10 NA24631_2_fastqc.zip
+        ```
 
 
 
@@ -486,37 +482,35 @@ total 2.5M
 
 What happens if we try a dryrun or full run now?
 
-```bash
-snakemake --dryrun --cores 2
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    snakemake --dryrun --cores 2
+    ```
 
-{% capture e3dot11 %}
+    !!! success "output"
+    
+        ```bash
+        Building DAG of jobs...
+        Nothing to be done (all requested files are present and up to date).
+        ```
 
-```bash
-Building DAG of jobs...
-Nothing to be done (all requested files are present and up to date).
-```
 
-
-
-{% include exercise.html title="e3dot11" content=e3dot11%}
 <br>
 
-```bash
-snakemake --cores 2
-```
+!!! terminal "code"
 
-My output:
-
-{% capture e3dot12 %}
-
-```bash
-Building DAG of jobs...
-Nothing to be done (all requested files are present and up to date).
-Complete log: .snakemake/log/2022-05-11T121300.251492.snakemake.log
-```
+    ```bash
+    snakemake --cores 2
+    ```
+    
+    ??? success "output"
+    
+        ```bash
+        Building DAG of jobs...
+        Nothing to be done (all requested files are present and up to date).
+        Complete log: .snakemake/log/2022-05-11T121300.251492.snakemake.log
+        ```
 
 
 
