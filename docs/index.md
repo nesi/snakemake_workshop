@@ -1,4 +1,8 @@
-# Online workflow code-along: Introduction to Snakemake
+<center>
+# Introduction to Snakemake
+</center>
+
+<center>![image](./theme_images/sm_logo)</center>
 
 ## Automate Your Workflow With Snakemake
 
