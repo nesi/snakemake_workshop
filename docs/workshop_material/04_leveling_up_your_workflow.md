@@ -1595,11 +1595,6 @@ snakemake --report ../results/snakemake_report.html
 See [leveled_up_demo_workflow](https://github.com/nesi/snakemake_workshop/tree/main/leveled_up_demo_workflow) for the final Snakemake workflow we've created up to this point
 
 - - - 
-<p style="text-align:left;">
-  <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html" style="background: var(--bs-green);font-weight:bold">&laquo; 3 - Creating a Basic WF</a></b> 
-  <span style="float:right;">
-    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/05_we_want_more.html" style="background: var(--bs-green);font-weight:bold">5 - More &raquo;</a></b>
-  </span>
-</p>
+
 
 <p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
