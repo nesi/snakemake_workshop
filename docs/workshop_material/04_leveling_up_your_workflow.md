@@ -1495,8 +1495,6 @@ Snakemake has a built in linter to support you building best practice workflows,
         ```
 
 
-
-{% include exercise.html title="e4dot17" content=e4dot17%}
 <br>
 
 We have a few things we could improve in our workflow!
@@ -1508,56 +1506,59 @@ Read more about the [best practices for Snakemake](https://snakemake.readthedocs
 # Takeaways
 
 ---
+!!! quote ""
 
-- Pull out your parameters and put them in `params:` directive
-- Pulling the user configurable options away from the core workflow will support reproducibility by reducing the chance of changes to the core workflow
-- Leaving messages for the user of your workflow will help them understand what is happening at each stage and follow the workflows progress
-- Mark files you won't need once the workflow completes to reduce the memory usage - *particularly* when dealing with big data
-- Generate a snakemake report to get a summary of the workflow run - these are highly configurable
-- Lint your workflow and check it complies with best practices - this supports reproducibility and portability
-- There is so much more to explore, such as creating [modular workflows](https://snakemake.readthedocs.io/en/stable/snakefiles/modularization.html), automatically grabbing [remote files](https://snakemake.readthedocs.io/en/stable/snakefiles/remote_files.html) from places like Google Cloud Storage and Dropbox, [run various types of scripts](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#external-scripts) such as [python scripts](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#python), [R and RMarkdown scripts](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#r-and-r-markdown) and [Jupyter Notebooks](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#jupyter-notebook-integration)
-
+    - Pull out your parameters and put them in `params:` directive
+    - Pulling the user configurable options away from the core workflow will support reproducibility by reducing the chance of changes to the core workflow
+    - Leaving messages for the user of your workflow will help them understand what is happening at each stage and follow the workflows progress
+    - Mark files you won't need once the workflow completes to reduce the memory usage - *particularly* when dealing with big data
+    - Generate a snakemake report to get a summary of the workflow run - these are highly configurable
+    - Lint your workflow and check it complies with best practices - this supports reproducibility and portability
+    - There is so much more to explore, such as creating [modular workflows](https://snakemake.readthedocs.io/en/stable/snakefiles/modularization.html), automatically grabbing [remote files](https://snakemake.readthedocs.io/en/stable/snakefiles/remote_files.html) from places like Google Cloud Storage and Dropbox, [run various types of scripts](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#external-scripts) such as [python scripts](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#python), [R and RMarkdown scripts](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#r-and-r-markdown) and [Jupyter Notebooks](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#jupyter-notebook-integration)
+    
 ---
 
 # Summary commands
 
-Use the parameter directive (`params`) to keep the parameters and flags of your programs separate from your shell command, for example:
+!!! terminal ""
 
-```bash
-params:
-    "--paired"
-```
-
-Run your snakemake workflow (using environment modules to load your software AND with a configuration file) with:
-
-```bash
-snakemake --cores 2 --use-envmodules --configfile ../config/config.yaml
-```
-
-Alternatively, define your config file in the Snakefile:
-
-```bash
-configfile: "../config/config.yaml"
-```
-
-Use the `message` directive to provide information to the user on what is happening real time, for example:
-
-```bash
-message:
-    "Undertaking quality control checks {input}"
-```
-
-Mark temporary files to remove (once they are no longer needed by the workflow) with `temp()`, for example:
-
-```bash
-temp(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"])
-```
-
-Create a basic interactive Snakemake report after running your workflow with:
-
-```bash
-snakemake --report ../results/snakemake_report.html
-```
+    - Use the parameter directive (`params`) to keep the parameters and flags of your programs separate from your shell command, for example:
+    
+    ```bash
+    params:
+        "--paired"
+    ```
+    
+    - Run your snakemake workflow (using environment modules to load your software AND with a configuration file) with:
+    
+    ```bash
+    snakemake --cores 2 --use-envmodules --configfile ../config/config.yaml
+    ```
+    
+    - Alternatively, define your config file in the Snakefile:
+    
+    ```bash
+    configfile: "../config/config.yaml"
+    ```
+    
+    - Use the `message` directive to provide information to the user on what is happening real time, for example:
+    
+    ```bash
+    message:
+        "Undertaking quality control checks {input}"
+    ```
+    
+    - Mark temporary files to remove (once they are no longer needed by the workflow) with `temp()`, for example:
+    
+    ```bash
+    temp(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"])
+    ```
+    
+    - Create a basic interactive Snakemake report after running your workflow with:
+    
+    ```bash
+    snakemake --report ../results/snakemake_report.html
+    ```
 
 # Our final snakemake workflow!
 
