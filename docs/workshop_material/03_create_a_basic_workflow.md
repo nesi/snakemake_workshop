@@ -518,15 +518,15 @@ Nothing happens, all the target files in `rule all` have already been created so
 
 Also, what happens if we create another directed acyclic graph (DAG) after the workflow has been run?
 
-```bash
-snakemake --dag | dot -Tpng > dag_2.png
-```
+!!! terminal "code"
 
-My DAG:
+    ```bash
+    snakemake --dag | dot -Tpng > dag_2.png
+    ```
 
-{% capture e3dot13 %}
-
-![DAG_2](./images/dag_2.png)
+    !!! image "DAG"
+    
+        ![DAG_2](./images/dag_2.png)
 
 
 
