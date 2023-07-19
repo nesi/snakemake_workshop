@@ -23,17 +23,17 @@ We have paired end sequencing data for three samples `NA24631` to process in the
     ls -lh ./data/
     ```
 
-??? success "My output:"
-
-    ```bash
-    total 13M
-    -rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24631_1.fastq.gz
-    -rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24631_2.fastq.gz
-    -rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24694_1.fastq.gz
-    -rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24694_2.fastq.gz
-    -rw-rw----+ 1 lkemp nesi99991 1.8M May 11 12:06 NA24695_1.fastq.gz
-    -rw-rw----+ 1 lkemp nesi99991 1.9M May 11 12:06 NA24695_2.fastq.gz
-    ```
+    ??? success "output"
+    
+        ```bash
+        total 13M
+        -rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24631_1.fastq.gz
+        -rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24631_2.fastq.gz
+        -rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24694_1.fastq.gz
+        -rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24694_2.fastq.gz
+        -rw-rw----+ 1 lkemp nesi99991 1.8M May 11 12:06 NA24695_1.fastq.gz
+        -rw-rw----+ 1 lkemp nesi99991 1.9M May 11 12:06 NA24695_2.fastq.gz
+        ```
 
 <br>
 
@@ -71,32 +71,28 @@ Now you should have the very beginnings of your Snakemake workflow in a `demo_wo
     ls -lh demo_workflow/
     ```
 
-??? success "My output:"
-
+    ??? success "output"
+    
+    
+        ```bash
+        total 1.0K
+        drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
+        drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
+        ```
+<br>
+!!! terminal "code"
 
     ```bash
-    total 1.0K
-    drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
-    drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
+    ls -lh demo_workflow/workflow/
     ```
-<br>
 
-```bash
-ls -lh demo_workflow/workflow/
-```
+    ??? success "output"
+    
+        ```bash
+        total 0
+        -rw-rw----+ 1 lkemp nesi99991 0 May 11 12:07 Snakefile
+        ```
 
-My output:
-
-{% capture e3dot3 %}
-
-```bash
-total 0
--rw-rw----+ 1 lkemp nesi99991 0 May 11 12:07 Snakefile
-```
-
-
-
-{% include exercise.html title="e3dot3" content=e3dot3%}
 <br>
 
 Within the `workflow` directory (where we will create and run our workflow), we have a `Snakefile` file that will be the backbone of our workflow.
@@ -105,105 +101,92 @@ Within the `workflow` directory (where we will create and run our workflow), we 
 
 First lets run the first step in our workflow ([fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)) directly on the command line to get the syntax of the command right and check what outputs files we expect to get. Knowing what files the software will output is important for Snakemake since it is a lazy "pull" based system where software/rules will only run if you tell it to create the output file. We will talk more about this later!
 
-First make sure to have [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) available. On NeSI, load the corresponding module
+!!! terminal "code"
 
-```bash
-module load FastQC/0.11.9
-```
+    - First make sure to have [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) available. On NeSI, load the corresponding module
+    ```bash
+    module load FastQC/0.11.9
+    ```
+    
+    - See what parameters are available so we know how we want to run this software before we put it in a Snakemake workflow
+    ```bash
+    fastqc --help
+    ```
+    
+    - Create a test directory to put the output files
+    ```bash
+    mkdir fastqc_test
+    ```
+    
+    Run fastqc directly on the command line on one of the samples
+    ```bash
+    fastqc ./data/NA24631_1.fastq.gz ./data/NA24631_2.fastq.gz -o ./fastqc_test -t 2
+    ```
+    
+    ??? success "output"
+    
+        ```bash
+        Started analysis of NA24631_1.fastq.gz
+        Approx 5% complete for NA24631_1.fastq.gz
+        Approx 10% complete for NA24631_1.fastq.gz
+        Approx 15% complete for NA24631_1.fastq.gz
+        Approx 20% complete for NA24631_1.fastq.gz
+        Approx 25% complete for NA24631_1.fastq.gz
+        Approx 30% complete for NA24631_1.fastq.gz
+        Approx 35% complete for NA24631_1.fastq.gz
+        Approx 40% complete for NA24631_1.fastq.gz
+        Approx 45% complete for NA24631_1.fastq.gz
+        Approx 50% complete for NA24631_1.fastq.gz
+        Approx 55% complete for NA24631_1.fastq.gz
+        Approx 60% complete for NA24631_1.fastq.gz
+        Started analysis of NA24631_2.fastq.gz
+        Approx 65% complete for NA24631_1.fastq.gz
+        Approx 5% complete for NA24631_2.fastq.gz
+        Approx 70% complete for NA24631_1.fastq.gz
+        Approx 10% complete for NA24631_2.fastq.gz
+        Approx 75% complete for NA24631_1.fastq.gz
+        Approx 15% complete for NA24631_2.fastq.gz
+        Approx 80% complete for NA24631_1.fastq.gz
+        Approx 20% complete for NA24631_2.fastq.gz
+        Approx 25% complete for NA24631_2.fastq.gz
+        Approx 85% complete for NA24631_1.fastq.gz
+        Approx 90% complete for NA24631_1.fastq.gz
+        Approx 30% complete for NA24631_2.fastq.gz
+        Approx 35% complete for NA24631_2.fastq.gz
+        Approx 95% complete for NA24631_1.fastq.gz
+        Approx 40% complete for NA24631_2.fastq.gz
+        Analysis complete for NA24631_1.fastq.gz
+        Approx 45% complete for NA24631_2.fastq.gz
+        Approx 50% complete for NA24631_2.fastq.gz
+        Approx 55% complete for NA24631_2.fastq.gz
+        Approx 60% complete for NA24631_2.fastq.gz
+        Approx 65% complete for NA24631_2.fastq.gz
+        Approx 70% complete for NA24631_2.fastq.gz
+        Approx 75% complete for NA24631_2.fastq.gz
+        Approx 80% complete for NA24631_2.fastq.gz
+        Approx 85% complete for NA24631_2.fastq.gz
+        Approx 90% complete for NA24631_2.fastq.gz
+        Approx 95% complete for NA24631_2.fastq.gz
+        Analysis complete for NA24631_2.fastq.gz
+        ```
+    
+    <br>
+    
+    - What are the output files of fastqc? Find out with:
+    ```bash
+    ls -lh ./fastqc_test
+    ```
+    
+    ??? success "output"
 
-See what parameters are available so we know how we want to run this software before we put it in a Snakemake workflow
-
-```bash
-fastqc --help
-```
-
-Create a test directory to put the output files
-
-```bash
-mkdir fastqc_test
-```
-
-Run fastqc directly on the command line on one of the samples
-
-```bash
-fastqc ./data/NA24631_1.fastq.gz ./data/NA24631_2.fastq.gz -o ./fastqc_test -t 2
-```
-
-My output:
-
-{% capture e3dot4 %}
-
-```bash
-Started analysis of NA24631_1.fastq.gz
-Approx 5% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_1.fastq.gz
-Approx 50% complete for NA24631_1.fastq.gz
-Approx 55% complete for NA24631_1.fastq.gz
-Approx 60% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
-Approx 65% complete for NA24631_1.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
-Approx 75% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_2.fastq.gz
-Approx 25% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_1.fastq.gz
-Approx 90% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_2.fastq.gz
-Approx 35% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_2.fastq.gz
-Approx 50% complete for NA24631_2.fastq.gz
-Approx 55% complete for NA24631_2.fastq.gz
-Approx 60% complete for NA24631_2.fastq.gz
-Approx 65% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_2.fastq.gz
-Approx 75% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_2.fastq.gz
-Approx 90% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_2.fastq.gz
-```
-
-
-
-{% include exercise.html title="e3dot4" content=e3dot4%}
-<br>
-
-What are the output files of fastqc? Find out with:
-
-```bash
-ls -lh ./fastqc_test
-```
-
-My output:
-
-{% capture e3dot5 %}
-
-```bash
-total 2.5M
--rw-rw----+ 1 lkemp nesi99991 718K May 11 12:08 NA24631_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 475K May 11 12:08 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 726K May 11 12:08 NA24631_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 479K May 11 12:08 NA24631_2_fastqc.zip
-```
-
-
-
-{% include exercise.html title="e3dot5" content=e3dot5%}
+        ```bash
+        total 2.5M
+        -rw-rw----+ 1 lkemp nesi99991 718K May 11 12:08 NA24631_1_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 475K May 11 12:08 NA24631_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 726K May 11 12:08 NA24631_2_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 479K May 11 12:08 NA24631_2_fastqc.zip
+        ```
+    
 <br>
 
 ## 3.04 Create the first rule in your workflow
