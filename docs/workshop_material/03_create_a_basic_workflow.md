@@ -512,9 +512,6 @@ What happens if we try a dryrun or full run now?
         Complete log: .snakemake/log/2022-05-11T121300.251492.snakemake.log
         ```
 
-
-
-{% include exercise.html title="e3dot12" content=e3dot12%}
 <br>
 
 Nothing happens, all the target files in `rule all` have already been created so Snakemake does nothing
