@@ -1417,22 +1417,24 @@ Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping
         -rw-rw----+ 1 lkemp nesi99991 330K May 11 13:26 NA24695_2_fastqc.zip
         ```
 
-
-
-{% include exercise.html title="e4dot15" content=e4dot15%}
 <br>
 
-*This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.*
+!!! note ""
+
+    This becomes particularly important when our data become big data, since we don't want to keep any massive intermediate output files that we don't need. Otherwise this can start to clog up the memory on our computer. It ensures our workflow is scalable when our data becomes big data.
 
 ## 4.6 Generating a snakemake report
 
 With Snakemake, we can automatically generate detailed self-contained HTML reports after we run our workflow with the following command:
 
-```bash
-snakemake --report ../results/snakemake_report.html
-```
+!!! terminal "code"
 
-*Note. you won't be able to view a rendered version of this html while it is on the remote server, however after you transfer it to your local computer you should be able to view it in your web browser*
+    ```bash
+    snakemake --report ../results/snakemake_report.html
+    ```
+
+!!! note "Note"
+    you won't be able to view a rendered version of this html while it is on the remote server, however after you transfer it to your local computer you should be able to view it in your web browser*
 
 In our report:
 
