@@ -345,19 +345,16 @@ The last table in the output confirms that the workflow will run one sample (`co
 
 We can also visualise our workflow by creating a [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAG). We can tell snakemake to create a DAG with the `--dag` flag, then pipe this output to the [dot software](https://graphviz.org/) and write the output to the file, `dag_1.png`
 
-```bash
-snakemake --dag | dot -Tpng > dag_1.png
-```
+!!! terminal "code"
 
-My DAG:
+    ```bash
+    snakemake --dag | dot -Tpng > dag_1.png
+    ```
 
-{% capture e3dot8 %}
+    ??? success "DAG:"
 
-![DAG_1](./images/dag_1.png)
+        <center>![DAG_1](./images/dag_1.png)</center>
 
-
-
-{% include exercise.html title="e3dot8" content=e3dot8%}
 <br>
 
 Our diagram has a node for each job which are connected by edges representing dependencies
