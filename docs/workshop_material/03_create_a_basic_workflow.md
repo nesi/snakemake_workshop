@@ -815,9 +815,6 @@ rule fastqc:
             "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
     ```
 
-
-
-{% include exercise.html title="e3dot17" content=e3dot17%}
 <br>
 
 ---
