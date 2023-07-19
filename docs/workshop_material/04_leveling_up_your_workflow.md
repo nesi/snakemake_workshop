@@ -578,15 +578,16 @@ Once all of this is in place, we can:
 
 <br>
 
-Run a dryrun to check it works
+!!! terminal-2 "Run a dryrun to check it works"
 
-```bash
-# remove output of last run
-rm -r ../results/*
-
-# run dryrun again
-snakemake --dryrun --profile slurm --use-envmodules
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```
+    # run dryrun again
+    snakemake --dryrun --profile slurm --use-envmodules
+    ```
 
 ## 4.3 Pull out user configurable options
 
