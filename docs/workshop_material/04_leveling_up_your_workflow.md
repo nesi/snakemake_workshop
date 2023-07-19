@@ -271,26 +271,21 @@ Here we give more CPU resources to `trim_galore` to make it run faster.
     snakemake --profile slurm --use-envmodules
     ```
 
-If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
+    - If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
 
-My output:
+    ??? success "output"
 
-{% capture e4dot4 %}
-
-```
-JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
-26763281      lkemp    nesi99991 spawner-jupy   4      4G interac 2022-05-11T1     7:21:18 RUNNING  wbn003
-26763492      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn144
-26763493      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn212
-26763494      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn145
-26763495      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn146
-26763496      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn217
-26763497      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn229
-```
-
-
-
-{% include exercise.html title="e4dot4" content=e4dot4%}
+        ```
+        JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)
+        26763281      lkemp    nesi99991 spawner-jupy   4      4G interac 2022-05-11T1     7:21:18 RUNNING  wbn003
+        26763492      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn144
+        26763493      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn212
+        26763494      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn145
+        26763495      lkemp    nesi99991 snakejob.fas   2    512M large   2022-05-11T1        9:59 RUNNING  wbn146
+        26763496      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn217
+        26763497      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn229
+        ```
+    
 <br>
 
 Now looking at the content of our workflow folder, it is getting cluttered with Slurm log files:
