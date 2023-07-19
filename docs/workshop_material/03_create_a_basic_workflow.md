@@ -648,107 +648,102 @@ Run again, now telling Snakemake to use [environment modules](https://nesi.githu
 
 <br>
 
-Let's do a full run
+!!! terminal-2 "Let's do a full run"
+    ```diff
+    - snakemake --cores 2
+    + snakemake --cores 2 --use-envmodules
+    ```
 
-```diff
-- snakemake --cores 2
-+ snakemake --cores 2 --use-envmodules
-```
+    ??? success "output"
 
-My output:
-
-{% capture e3dot16 %}
-
-```bash
-Building DAG of jobs...
-Using shell: /usr/bin/bash
-Provided cores: 2
-Rules claiming more threads will be scaled down.
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        1              2              2
-total         2              1              2
-
-Select jobs to execute...
-
-[Wed May 11 12:14:22 2022]
-rule fastqc:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 1
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: FastQC/0.11.9
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-Started analysis of NA24631_1.fastq.gz
-Approx 5% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_1.fastq.gz
-Approx 50% complete for NA24631_1.fastq.gz
-Approx 55% complete for NA24631_1.fastq.gz
-Approx 60% complete for NA24631_1.fastq.gz
-Approx 65% complete for NA24631_1.fastq.gz
-Approx 70% complete for NA24631_1.fastq.gz
-Approx 75% complete for NA24631_1.fastq.gz
-Started analysis of NA24631_2.fastq.gz
-Approx 5% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_2.fastq.gz
-Approx 90% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_2.fastq.gz
-Approx 35% complete for NA24631_2.fastq.gz
-Approx 40% complete for NA24631_2.fastq.gz
-Approx 45% complete for NA24631_2.fastq.gz
-Approx 50% complete for NA24631_2.fastq.gz
-Approx 55% complete for NA24631_2.fastq.gz
-Approx 60% complete for NA24631_2.fastq.gz
-Approx 65% complete for NA24631_2.fastq.gz
-Approx 70% complete for NA24631_2.fastq.gz
-Approx 75% complete for NA24631_2.fastq.gz
-Approx 80% complete for NA24631_2.fastq.gz
-Approx 85% complete for NA24631_2.fastq.gz
-Approx 90% complete for NA24631_2.fastq.gz
-Approx 95% complete for NA24631_2.fastq.gz
-Analysis complete for NA24631_2.fastq.gz
-[Wed May 11 12:14:26 2022]
-Finished job 1.
-1 of 2 steps (50%) done
-Select jobs to execute...
-
-[Wed May 11 12:14:26 2022]
-localrule all:
-    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 0
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-[Wed May 11 12:14:26 2022]
-Finished job 0.
-2 of 2 steps (100%) done
-Complete log: .snakemake/log/2022-05-11T121422.744466.snakemake.log
-```
+        ```bash
+        Building DAG of jobs...
+        Using shell: /usr/bin/bash
+        Provided cores: 2
+        Rules claiming more threads will be scaled down.
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        1              2              2
+        total         2              1              2
+        
+        Select jobs to execute...
+        
+        [Wed May 11 12:14:22 2022]
+        rule fastqc:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 1
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: FastQC/0.11.9
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        Started analysis of NA24631_1.fastq.gz
+        Approx 5% complete for NA24631_1.fastq.gz
+        Approx 10% complete for NA24631_1.fastq.gz
+        Approx 15% complete for NA24631_1.fastq.gz
+        Approx 20% complete for NA24631_1.fastq.gz
+        Approx 25% complete for NA24631_1.fastq.gz
+        Approx 30% complete for NA24631_1.fastq.gz
+        Approx 35% complete for NA24631_1.fastq.gz
+        Approx 40% complete for NA24631_1.fastq.gz
+        Approx 45% complete for NA24631_1.fastq.gz
+        Approx 50% complete for NA24631_1.fastq.gz
+        Approx 55% complete for NA24631_1.fastq.gz
+        Approx 60% complete for NA24631_1.fastq.gz
+        Approx 65% complete for NA24631_1.fastq.gz
+        Approx 70% complete for NA24631_1.fastq.gz
+        Approx 75% complete for NA24631_1.fastq.gz
+        Started analysis of NA24631_2.fastq.gz
+        Approx 5% complete for NA24631_2.fastq.gz
+        Approx 80% complete for NA24631_1.fastq.gz
+        Approx 10% complete for NA24631_2.fastq.gz
+        Approx 85% complete for NA24631_1.fastq.gz
+        Approx 15% complete for NA24631_2.fastq.gz
+        Approx 90% complete for NA24631_1.fastq.gz
+        Approx 20% complete for NA24631_2.fastq.gz
+        Approx 95% complete for NA24631_1.fastq.gz
+        Approx 25% complete for NA24631_2.fastq.gz
+        Analysis complete for NA24631_1.fastq.gz
+        Approx 30% complete for NA24631_2.fastq.gz
+        Approx 35% complete for NA24631_2.fastq.gz
+        Approx 40% complete for NA24631_2.fastq.gz
+        Approx 45% complete for NA24631_2.fastq.gz
+        Approx 50% complete for NA24631_2.fastq.gz
+        Approx 55% complete for NA24631_2.fastq.gz
+        Approx 60% complete for NA24631_2.fastq.gz
+        Approx 65% complete for NA24631_2.fastq.gz
+        Approx 70% complete for NA24631_2.fastq.gz
+        Approx 75% complete for NA24631_2.fastq.gz
+        Approx 80% complete for NA24631_2.fastq.gz
+        Approx 85% complete for NA24631_2.fastq.gz
+        Approx 90% complete for NA24631_2.fastq.gz
+        Approx 95% complete for NA24631_2.fastq.gz
+        Analysis complete for NA24631_2.fastq.gz
+        [Wed May 11 12:14:26 2022]
+        Finished job 1.
+        1 of 2 steps (50%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:14:26 2022]
+        localrule all:
+            input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 0
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        [Wed May 11 12:14:26 2022]
+        Finished job 0.
+        2 of 2 steps (100%) done
+        Complete log: .snakemake/log/2022-05-11T121422.744466.snakemake.log
+        ```
 
 
-
-{% include exercise.html title="e3dot16" content=e3dot16%}
 <br>
 
 Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the software our workflow uses will be automatically loaded!
