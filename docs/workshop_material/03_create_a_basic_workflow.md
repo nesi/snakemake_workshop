@@ -1616,48 +1616,37 @@ rule multiqc:
             "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
     ```
 
-
-
-{% include exercise.html title="e3dot31" content=e3dot31%}
 <br>
 
-Visualise workflow
+!!! terminal-2 "Visualise workflow"
 
-```bash
-snakemake --dag | dot -Tpng > dag_7.png
-```
+    ```bash
+    snakemake --dag | dot -Tpng > dag_7.png
+    ```
+    
+    Fantastic, we are starting to build a workflow!
 
-Fantastic, we are starting to build a workflow!
+    ??? image "DAG:"
+    
+        ![DAG_7](./images/dag_7.png)
 
-My DAG:
-
-{% capture e3dot32 %}
-
-![DAG_7](./images/dag_7.png)
-
-
-
-{% include exercise.html title="e3dot32" content=e3dot32%}
 <br>
 
 However, when analysing many samples, our DAG can become messy and complicated. Instead, we can create a rulegraph that will let us visualise our workflow without showing every single sample that will run through it
 
-```bash
-snakemake --rulegraph | dot -Tpng > rulegraph_1.png
-```
+!!! terminal "code"
 
-My rulegraph:
+    ```bash
+    snakemake --rulegraph | dot -Tpng > rulegraph_1.png
+    ```
 
-{% capture e3dot33 %}
+    !!! image "My rulegraph:"
+    
+        ![rulegraph_1](./images/rulegraph_1.png)
 
-![rulegraph_1](./images/rulegraph_1.png)
-
-
-
-{% include exercise.html title="e3dot33" content=e3dot33%}
 <br>
 
-An aside: another option that will show all your input and output files at each step:
+!!! terminal-2 "An aside: another option that will show all your input and output files at each step:"
 
 ```bash
 snakemake --filegraph | dot -Tpng > filegraph.png
