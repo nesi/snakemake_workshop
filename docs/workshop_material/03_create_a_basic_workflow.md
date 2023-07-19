@@ -283,9 +283,11 @@ When you have multiple input and output files:
 
 Let's test the workflow! First we need to be in the `workflow` directory, where the Snakefile is
 
-```bash
-cd demo_workflow/workflow/
-```
+!!! terminal "code"
+
+    ```bash
+    cd demo_workflow/workflow/
+    ```
 
 ## 3.05 Dryrun
 
