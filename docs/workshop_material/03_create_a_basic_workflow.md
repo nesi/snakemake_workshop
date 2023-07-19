@@ -1479,25 +1479,19 @@ rule multiqc:
         ```
 <br>
 
-Our multiqc rule won't be run/evaluated
-
-Visualise workflow
-
-```bash
-snakemake --dag | dot -Tpng > dag_6.png
-```
-
-Now we are back to only running fastqc in our workflow, despite having our second rule (multiqc) in our workflow
-
-My DAG:
-
-{% capture e3dot30 %}
-
-![DAG_6](./images/dag_6.png)
+!!! terminal-2 "Our multiqc rule won't be run/evaluated : Visualise workflow"
 
 
+    ```bash
+    snakemake --dag | dot -Tpng > dag_6.png
+    ```
 
-{% include exercise.html title="e3dot30" content=e3dot30%}
+    - Now we are back to only running fastqc in our workflow, despite having our second rule (multiqc) in our workflow
+
+    ??? image "DAG:"
+
+        ![DAG_6](./images/dag_6.png)
+
 <br>
 
 <p align="center"><b>Snakemake is lazy.</b><br></p>
