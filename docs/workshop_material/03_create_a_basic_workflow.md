@@ -752,14 +752,14 @@ Notice it now says that "Activating environment modules: FastQC/0.11.9". Now the
 
 So far our logs (for fastqc) have been simply printed to our screen. As you can imagine, if you had a large automated workflow (that you might not be sitting at the computer watching run) you'll want to capture all that information. Therefore, any information the software spits out (including error messages!) will be kept and can be looked at once you return to your machine from your coffee break.
 
-We can get the logs for each rule to be written to a log file via the `log:` directive:
+!!! info "We can get the logs for each rule to be written to a log file via the `log:` directive:"
 
-- It's a good idea to organise the logs by:
-  - Putting the logs in a directory labelled after the rule/software that was run
-  - Labelling the log files with the sample name the software was run on
-
-- Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive in the shell script (eg. `&> {log}`)
-
+    - It's a good idea to organise the logs by:
+      - Putting the logs in a directory labelled after the rule/software that was run
+      - Labelling the log files with the sample name the software was run on
+    
+    - Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive in the shell script (eg. `&> {log}`)
+    
 ```diff
 # target OUTPUT files for the whole workflow
 rule all:
