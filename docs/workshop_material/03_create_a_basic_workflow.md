@@ -1658,31 +1658,35 @@ However, when analysing many samples, our DAG can become messy and complicated. 
 
 
 
-{% include exercise.html title="e3dot34" content=e3dot34%}
 <br>
 
 Run the rest of the workflow
 
-```bash
-# run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
-```
+!!! terminal "code"
 
-Notice it will run only one rule/sample/file at a time...why is that?
+    ```bash
+    # run dryrun/run again
+    snakemake --dryrun --cores 2 --use-envmodules
+    snakemake --cores 2 --use-envmodules
+    ```
+
+!!! question "Notice it will run only one rule/sample/file at a time...why is that?"
 
 ## 3.15 Throw it more cores
 
 Run again allowing Snakemake to use more cores overall `--cores 4` rather than `--cores 2`
 
-```bash
-# remove output of last run
-rm -r ../results/*
+!!! terminal "code"
 
-# run dryrun/run again
-snakemake --dryrun --cores 4 --use-envmodules
-snakemake --cores 4 --use-envmodules
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash
+    # run dryrun/run again
+    snakemake --dryrun --cores 4 --use-envmodules
+    snakemake --cores 4 --use-envmodules
+    ```
 
 Notice the whole workflow ran much faster and several samples/files/rules were running at one time. This is because we set each rule to run with 2 threads. Initially we specified that the *maximum* number of cores to be used by the workflow was 2 with the `--cores 2` flag, meaning only one rule and sample can be run at one time. When we increased the *maximum* number of cores to be used by the workflow to 4 with `--cores 4`, up to 2 samples could be run through at one time.
 
