@@ -11,6 +11,7 @@ repo_url: https://github.com/nesi/snakemake_workshop
 
 theme:
   name: material
+  custom_dir: ./overrides
   logo: theme_images/nesi_logo.png
   favicon: theme_images/nesi_logo.png
    # 404 page
