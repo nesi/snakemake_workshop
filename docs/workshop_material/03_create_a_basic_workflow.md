@@ -54,26 +54,31 @@ We will create and run our workflow from the `workflow` directory send all of ou
 
 Create this file structure and our main Snakefile with:
 
-```bash
-mkdir -p demo_workflow/{results,workflow}
-touch demo_workflow/workflow/Snakefile
-```
+!!! terminal "code"
+
+    ```bash
+    mkdir -p demo_workflow/{results,workflow}
+    ```
+    ```bash
+    touch demo_workflow/workflow/Snakefile
+    ```
 
 Now you should have the very beginnings of your Snakemake workflow in a `demo_workflow` directory. Let's have a look:
 
-```bash
-ls -lh demo_workflow/
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    ls -lh demo_workflow/
+    ```
 
-{% capture e3dot2 %}
+!!! success "My output:"
 
-```bash
-total 1.0K
-drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
-drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
-```
+
+    ```bash
+    total 1.0K
+    drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
+    drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
+    ```
 
 
 
