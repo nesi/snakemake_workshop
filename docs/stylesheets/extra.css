@@ -520,7 +520,7 @@
   }
   .md-typeset .file-code > .admonition-title,
   .md-typeset .file-code > summary {
-    background-color: rgba(252, 207, 9, 0.151);
+    background-color: rgba(252, 207, 9, 0.479);
   }
   .md-typeset .file-code > .admonition-title::before,
   .md-typeset .file-code > summary::before {
