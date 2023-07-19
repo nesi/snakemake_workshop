@@ -1015,134 +1015,120 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
     ```
 
 
-
-{% include exercise.html title="e3dot20" content=e3dot20%}
 <br>
 
-Visualise workflow
 
-```bash
-snakemake --dag | dot -Tpng > dag_3.png
-```
+!!! terminal-2 "Visualise workflow"
 
-Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) indicated by the dashed lines
+    ```bash
+    snakemake --dag | dot -Tpng > dag_3.png
+    ```
 
-My DAG:
+    - Now we have three samples running though our workflow, one of which has already been run in our last run (NA24631) indicated by the dashed lines
 
-{% capture e3dot21 %}
+    ??? image "DAG"
 
-![DAG_3](./images/dag_3.png)
+        <center>![DAG_3](./images/dag_3.png)</center>
 
-
-
-{% include exercise.html title="e3dot21" content=e3dot21%}
 <br>
 
-Run workflow again
+!!! terminal-2 "Run workflow again"
 
-```bash
-# remove output of last run
-rm -r ../results/*
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash
+    # run dryrun again
+    snakemake --dryrun --cores 2 --use-envmodules
+    ```
 
-# run dryrun again
-snakemake --dryrun --cores 2 --use-envmodules
-```
+    - See how it now runs over all three of our samples in the output of the dryrun
 
-See how it now runs over all three of our samples in the output of the dryrun
+    ??? success "output"
 
-My output:
-
-{% capture e3dot22 %}
-
-```bash
-Building DAG of jobs...
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        3              2              2
-total         4              1              2
-
-
-[Wed May 11 12:16:46 2022]
-rule fastqc:
-    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
-    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
-    log: logs/fastqc/NA24695.log
-    jobid: 2
-    wildcards: sample=NA24695
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-
-[Wed May 11 12:16:46 2022]
-rule fastqc:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    log: logs/fastqc/NA24631.log
-    jobid: 1
-    wildcards: sample=NA24631
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-
-[Wed May 11 12:16:46 2022]
-rule fastqc:
-    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
-    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
-    log: logs/fastqc/NA24694.log
-    jobid: 3
-    wildcards: sample=NA24694
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-
-[Wed May 11 12:16:46 2022]
-localrule all:
-    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
-    jobid: 0
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        3              2              2
-total         4              1              2
-
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
-```
-
+        ```bash
+        Building DAG of jobs...
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        3              2              2
+        total         4              1              2
+        
+        
+        [Wed May 11 12:16:46 2022]
+        rule fastqc:
+            input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+            output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+            log: logs/fastqc/NA24695.log
+            jobid: 2
+            wildcards: sample=NA24695
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        
+        [Wed May 11 12:16:46 2022]
+        rule fastqc:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            log: logs/fastqc/NA24631.log
+            jobid: 1
+            wildcards: sample=NA24631
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        
+        [Wed May 11 12:16:46 2022]
+        rule fastqc:
+            input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+            output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+            log: logs/fastqc/NA24694.log
+            jobid: 3
+            wildcards: sample=NA24694
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        
+        [Wed May 11 12:16:46 2022]
+        localrule all:
+            input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+            jobid: 0
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        3              2              2
+        total         4              1              2
+        
+        This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+        ```
 
 
-{% include exercise.html title="e3dot22" content=e3dot22%}
 <br>
 
-```bash
-# full run again
-snakemake --cores 2 --use-envmodules
-```
+!!! terminal "code"
 
-All three samples were run through our workflow! And we have a log file for each sample for the fastqc rule
+    ```bash
+    # full run again
+    snakemake --cores 2 --use-envmodules
+    ```
 
-```bash
-ls -lh ./logs/fastqc
-```
+    - All three samples were run through our workflow! And we have a log file for each sample for the fastqc rule
 
-My output:
+    ```bash
+    ls -lh ./logs/fastqc
+    ```
 
-{% capture e3dot23 %}
-
-```bash
-total 1.5K
--rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24631.log
--rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24694.log
--rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24695.log
-```
-
-
-
-{% include exercise.html title="e3dot23" content=e3dot23%}
+    ??? success "output"
+        ```bash
+        total 1.5K
+        -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24631.log
+        -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24694.log
+        -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24695.log
+        ```
 <br>
 
 ## 3.12 Add more rules
