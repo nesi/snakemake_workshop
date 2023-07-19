@@ -787,35 +787,33 @@ rule fastqc:
 +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
-Current snakefile:
+!!! file-code "Current snakefile"
 
-{% capture e3dot17 %}
-
-```txt
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    log:
-        "logs/fastqc/NA24631.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-```
+    ```txt
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/fastqc/NA24631_1_fastqc.html",
+            "../results/fastqc/NA24631_2_fastqc.html",
+            "../results/fastqc/NA24631_1_fastqc.zip",
+            "../results/fastqc/NA24631_2_fastqc.zip"
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/NA24631_1.fastq.gz",
+            R2 = "../../data/NA24631_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+            zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+        log:
+            "logs/fastqc/NA24631.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+    ```
 
 
 
