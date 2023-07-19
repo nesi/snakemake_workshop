@@ -223,7 +223,7 @@ rule my_rule:
 The use of the word `input` in `rule all` can be confusing, but in this context, it is referring to the final *output* files of the whole workflow
 
 ---
-!!! terminal ""
+??? code-compare "Edit snakefile"
     ```diff
     # target OUTPUT files for the whole workflow
     rule all:
@@ -248,7 +248,7 @@ The use of the word `input` in `rule all` can be confusing, but in this context,
     ```
 
 
-!!! file-code "Current snakefile:"
+??? file-code "Current snakefile:"
 
     ```txt
     # target OUTPUT files for the whole workflow
