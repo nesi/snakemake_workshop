@@ -26,7 +26,7 @@ In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you th
 - How to create a workflow to organize your computations, and
 - How an HPC scheduler (such as Slurm) fits into your workflow
 
-!!! user-group- "Who should attend"
+!!! three-users "Who should attend"
 
     This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
 
