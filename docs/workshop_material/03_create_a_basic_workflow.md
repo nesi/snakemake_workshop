@@ -23,7 +23,7 @@ We have paired end sequencing data for three samples `NA24631` to process in the
     ls -lh ./data/
     ```
 
-!!! success "My output:"
+??? success "My output:"
 
     ```bash
     total 13M
@@ -71,7 +71,7 @@ Now you should have the very beginnings of your Snakemake workflow in a `demo_wo
     ls -lh demo_workflow/
     ```
 
-!!! success "My output:"
+??? success "My output:"
 
 
     ```bash
@@ -79,10 +79,6 @@ Now you should have the very beginnings of your Snakemake workflow in a `demo_wo
     drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
     drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
     ```
-
-
-
-{% include exercise.html title="e3dot2" content=e3dot2%}
 <br>
 
 ```bash
