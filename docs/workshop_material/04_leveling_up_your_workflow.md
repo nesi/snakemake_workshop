@@ -1442,13 +1442,11 @@ In our report:
 - When you click on a node in the DAG, the input and output files are fully outlined, the exact software used and the exact shell command that was run.
 - You are also provided with runtime information under the `Statistics` tab outlining how long each rule/sample ran for, and the date/time each file was created.
 
-My report:
+!!! html5 "My report"
 
-![snakemake_report](./images/snakemake_report.gif)
+    ![snakemake_report](./images/snakemake_report.gif)
 
 
-
-{% include exercise.html title="e4dot16" content=e4dot16%}
 <br>
 
 These reports are highly configurable, have a look at an example of what can be done with a report [here](https://koesterlab.github.io/resources/report.html)
@@ -1459,42 +1457,42 @@ These reports are highly configurable, have a look at an example of what can be 
 
 Snakemake has a built in linter to support you building best practice workflows, let's try it out:
 
-```bash
-snakemake --lint
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    snakemake --lint
+    ```
 
-{% capture e4dot17 %}
+    ??? success "output"
 
-```bash
-Lints for rule fastqc (line 21, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
-    * Additionally specify a conda environment or container for each rule, environment modules are not enough:
-      While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
-      other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
-      complemented with equivalent conda environments.
-      Also see:
-      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
-      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
-
-Lints for rule multiqc (line 61, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
-    * Additionally specify a conda environment or container for each rule, environment modules are not enough:
-      While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
-      other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
-      complemented with equivalent conda environments.
-      Also see:
-      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
-      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
-
-Lints for rule trim_galore (line 96, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
-    * Additionally specify a conda environment or container for each rule, environment modules are not enough:
-      While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
-      other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
-      complemented with equivalent conda environments.
-      Also see:
-      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
-      https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
-```
+        ```bash
+        Lints for rule fastqc (line 21, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
+            * Additionally specify a conda environment or container for each rule, environment modules are not enough:
+              While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
+              other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
+              complemented with equivalent conda environments.
+              Also see:
+              https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+              https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+        
+        Lints for rule multiqc (line 61, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
+            * Additionally specify a conda environment or container for each rule, environment modules are not enough:
+              While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
+              other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
+              complemented with equivalent conda environments.
+              Also see:
+              https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+              https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+        
+        Lints for rule trim_galore (line 96, /scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile):
+            * Additionally specify a conda environment or container for each rule, environment modules are not enough:
+              While environment modules allow to document and deploy the required software on a certain platform, they lock your workflow in there, disabling easy reproducibility on
+              other machines that don't have exactly the same environment modules. Hence env modules (which might be beneficial in certain cluster environments), should allways be
+              complemented with equivalent conda environments.
+              Also see:
+              https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#integrated-package-management
+              https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
+        ```
 
 
 
