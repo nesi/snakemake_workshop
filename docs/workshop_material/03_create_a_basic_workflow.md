@@ -524,13 +524,11 @@ Also, what happens if we create another directed acyclic graph (DAG) after the w
     snakemake --dag | dot -Tpng > dag_2.png
     ```
 
-    !!! image "DAG"
+    ??? image "DAG"
     
-        ![DAG_2](./images/dag_2.png)
+        <center>![DAG_2](./images/dag_2.png)</center>
 
 
-
-{% include exercise.html title="e3dot13" content=e3dot13%}
 <br>
 
 Notice our workflow 'job nodes' are now dashed lines, this indicates that their output is up to date and therefore the rule doesn't need to be run. We already have our target files!
@@ -541,59 +539,59 @@ This can be quite informative if your workflow errors out at a rule. You can vis
 
 fastqc worked because we loaded it in our current shell session. Let's specify the environment module for fastqc so the user of the workflow doesn't need to load it manually.
 
-Update our rule to use it using the `envmodules:` directive
+!!! terminal-2 "Update our rule to use it using the `envmodules:` directive"
 
-```diff
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
+    ```diff
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/fastqc/NA24631_1_fastqc.html",
+            "../results/fastqc/NA24631_2_fastqc.html",
+            "../results/fastqc/NA24631_1_fastqc.zip",
+            "../results/fastqc/NA24631_2_fastqc.zip"
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/NA24631_1.fastq.gz",
+            R2 = "../../data/NA24631_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+            zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+        threads: 2
+    +   envmodules:
+    +       "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+    ```
 
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    threads: 2
-+   envmodules:
-+       "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-```
 
-Current snakefile:
 
-{% capture e3dot14 %}
+!!! file-code "Current snakefile:"
 
-```txt
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-```
+    ```txt
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/fastqc/NA24631_1_fastqc.html",
+            "../results/fastqc/NA24631_2_fastqc.html",
+            "../results/fastqc/NA24631_1_fastqc.zip",
+            "../results/fastqc/NA24631_2_fastqc.zip"
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/NA24631_1.fastq.gz",
+            R2 = "../../data/NA24631_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+            zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+    ```
 
 
 
