@@ -63,7 +63,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot1" content=e4dot1%}
 <br>
@@ -200,7 +200,7 @@ default-resources: [cpus=2, mem_mb=512, time_min=10]
 cluster-cancel: scancel
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot2" content=e4dot2%}
 <br>
@@ -263,7 +263,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot3" content=e4dot3%}
 <br>
@@ -296,7 +296,7 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 26763497      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn229
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot4" content=e4dot4%}
 <br>
@@ -354,7 +354,7 @@ drwxrws---+ 3 lkemp nesi99991 4.0K May 11 12:34 slurm
 -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:34 Snakefile
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot5" content=e4dot5%}
 <br>
@@ -456,7 +456,7 @@ cluster-cancel: scancel
 cluster-status: ./status.py
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot6" content=e4dot6%}
 <br>
@@ -592,7 +592,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot7" content=e4dot7%}
 <br>
@@ -774,7 +774,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot8" content=e4dot8%}
 <br>
@@ -802,7 +802,7 @@ KeyError in line 19 of /scale_wlg_persistent/filesets/project/nesi99991/snakemak
   File "/scale_wlg_persistent/filesets/project/nesi99991/snakemake20220512/lkemp/snakemake_workshop/demo_workflow/workflow/Snakefile", line 19, in <module>
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot9" content=e4dot9%}
 <br>
@@ -952,7 +952,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot10" content=e4dot10%}
 <br>
@@ -1120,7 +1120,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot11" content=e4dot11%}
 <br>
@@ -1225,7 +1225,7 @@ Finished job 0.
 Complete log: .snakemake/log/2022-05-11T132052.454902.snakemake.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot12" content=e4dot12%}
 <br>
@@ -1260,7 +1260,7 @@ total 4.5M
 -rw-rw----+ 1 lkemp nesi99991 330K May 11 13:22 NA24695_2_fastqc.zip
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot13" content=e4dot13%}
 <br>
@@ -1410,7 +1410,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot14" content=e4dot14%}
 <br>
@@ -1446,7 +1446,7 @@ total 3.0M
 -rw-rw----+ 1 lkemp nesi99991 330K May 11 13:26 NA24695_2_fastqc.zip
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot15" content=e4dot15%}
 <br>
@@ -1475,7 +1475,7 @@ My report:
 
 ![snakemake_report](./images/snakemake_report.gif)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot16" content=e4dot16%}
 <br>
@@ -1525,7 +1525,7 @@ Lints for rule trim_galore (line 96, /scale_wlg_persistent/filesets/project/nesi
       https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e4dot17" content=e4dot17%}
 <br>

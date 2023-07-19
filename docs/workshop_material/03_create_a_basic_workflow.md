@@ -33,7 +33,7 @@ total 13M
 -rw-rw----+ 1 lkemp nesi99991 1.9M May 11 12:06 NA24695_2.fastq.gz
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot1" content=e3dot1%}
 <br>
@@ -76,7 +76,7 @@ drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 results
 drwxrws---+ 2 lkemp nesi99991 4.0K May 11 12:07 workflow
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot2" content=e3dot2%}
 <br>
@@ -94,7 +94,7 @@ total 0
 -rw-rw----+ 1 lkemp nesi99991 0 May 11 12:07 Snakefile
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot3" content=e3dot3%}
 <br>
@@ -178,7 +178,7 @@ Approx 95% complete for NA24631_2.fastq.gz
 Analysis complete for NA24631_2.fastq.gz
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot4" content=e3dot4%}
 <br>
@@ -201,7 +201,7 @@ total 2.5M
 -rw-rw----+ 1 lkemp nesi99991 479K May 11 12:08 NA24631_2_fastqc.zip
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot5" content=e3dot5%}
 <br>
@@ -290,7 +290,7 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot6" content=e3dot6%}
 <br>
@@ -352,7 +352,7 @@ total         2              1              1
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot7" content=e3dot7%}
 <br>
@@ -373,7 +373,7 @@ My DAG:
 
 ![DAG_1](./images/dag_1.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot8" content=e3dot8%}
 <br>
@@ -475,7 +475,7 @@ Finished job 0.
 Complete log: .snakemake/log/2022-05-11T121044.745212.snakemake.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot9" content=e3dot9%}
 <br>
@@ -498,7 +498,7 @@ total 2.5M
 -rw-rw----+ 1 lkemp nesi99991 479K May 11 12:10 NA24631_2_fastqc.zip
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot10" content=e3dot10%}
 <br>
@@ -520,7 +520,7 @@ Building DAG of jobs...
 Nothing to be done (all requested files are present and up to date).
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot11" content=e3dot11%}
 <br>
@@ -539,7 +539,7 @@ Nothing to be done (all requested files are present and up to date).
 Complete log: .snakemake/log/2022-05-11T121300.251492.snakemake.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot12" content=e3dot12%}
 <br>
@@ -558,7 +558,7 @@ My DAG:
 
 ![DAG_2](./images/dag_2.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot13" content=e3dot13%}
 <br>
@@ -625,7 +625,7 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot14" content=e3dot14%}
 <br>
@@ -680,7 +680,7 @@ total         2              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot15" content=e3dot15%}
 <br>
@@ -783,7 +783,7 @@ Finished job 0.
 Complete log: .snakemake/log/2022-05-11T121422.744466.snakemake.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot16" content=e3dot16%}
 <br>
@@ -859,7 +859,7 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot17" content=e3dot17%}
 <br>
@@ -946,7 +946,7 @@ Finished job 0.
 Complete log: .snakemake/log/2022-05-11T121516.368334.snakemake.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot18" content=e3dot18%}
 <br>
@@ -974,7 +974,7 @@ Approx 40% complete for NA24631_1.fastq.gz
 Approx 45% complete for NA24631_1.fastq.gz
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot19" content=e3dot19%}
 <br>
@@ -1069,7 +1069,7 @@ rule fastqc:
         "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot20" content=e3dot20%}
 <br>
@@ -1088,7 +1088,7 @@ My DAG:
 
 ![DAG_3](./images/dag_3.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot21" content=e3dot21%}
 <br>
@@ -1168,7 +1168,7 @@ total         4              1              2
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot22" content=e3dot22%}
 <br>
@@ -1195,7 +1195,7 @@ total 1.5K
 -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:17 NA24695.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot23" content=e3dot23%}
 <br>
@@ -1294,7 +1294,7 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot24" content=e3dot24%}
 <br>
@@ -1324,7 +1324,7 @@ My DAG:
 
 ![DAG_4](./images/dag_4.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot25" content=e3dot25%}
 <br>
@@ -1417,7 +1417,7 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot26" content=e3dot26%}
 <br>
@@ -1448,7 +1448,7 @@ My DAG:
 
 ![DAG_5](./images/dag_5.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot27" content=e3dot27%}
 <br>
@@ -1544,7 +1544,7 @@ rule multiqc:
         "multiqc {input} -o ../results/ &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot28" content=e3dot28%}
 <br>
@@ -1569,7 +1569,7 @@ fastqc        3              2              2
 total         4              1              2
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot29" content=e3dot29%}
 <br>
@@ -1590,7 +1590,7 @@ My DAG:
 
 ![DAG_6](./images/dag_6.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot30" content=e3dot30%}
 <br>
@@ -1719,7 +1719,7 @@ rule trim_galore:
         "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot31" content=e3dot31%}
 <br>
@@ -1738,7 +1738,7 @@ My DAG:
 
 ![DAG_7](./images/dag_7.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot32" content=e3dot32%}
 <br>
@@ -1755,7 +1755,7 @@ My rulegraph:
 
 ![rulegraph_1](./images/rulegraph_1.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot33" content=e3dot33%}
 <br>
@@ -1772,7 +1772,7 @@ My filegraph:
 
 ![filegraph](./images/filegraph.png)
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot34" content=e3dot34%}
 <br>
@@ -2000,7 +2000,7 @@ Finished job 0.
 Complete log: .snakemake/log/2022-05-11T122639.019945.snakemake.log
 ```
 
-{% endcapture %}
+
 
 {% include exercise.html title="e3dot35" content=e3dot35%}
 <br>
@@ -2026,9 +2026,6 @@ JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME    
 26763423      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn090  
 ```
 
-{% endcapture %}
-
-{% include exercise.html title="e3dot36" content=e3dot36%}
 <br>
 
 An additional trick is to use the `watch` command to repeatedly call any command in the terminal, giving you a lightweight monitoring tool ;-).
