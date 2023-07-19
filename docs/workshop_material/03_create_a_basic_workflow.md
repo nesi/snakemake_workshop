@@ -1179,81 +1179,76 @@ rule fastqc:
 +       "multiqc {input} -o ../results/ &> {log}"
 ```
 
-Current snakefile:
-
-{% capture e3dot24 %}
-
-```txt
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-        "../results/multiqc_report.html"
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-```
+??? file-code "Current snakefile:"
 
 
+    ```txt
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+            "../results/multiqc_report.html"
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ &> {log}"
+    ```
 
-{% include exercise.html title="e3dot24" content=e3dot24%}
+
 <br>
 
-Run workflow again
+!!! terminal-2 "Run workflow again"
 
-```bash
-# remove output of last run
-rm -r ../results/*
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash
+    # run dryrun/run again
+    snakemake --dryrun --cores 2 --use-envmodules
+    snakemake --cores 2 --use-envmodules
+    ```
 
-# run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
-```
+    - Visualise workflow
+    ```bash
+    snakemake --dag | dot -Tpng > dag_4.png
+    ```
 
-Visualise workflow
+    - Now we have two rules in our workflow (fastqc and multiqc), we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
 
-```bash
-snakemake --dag | dot -Tpng > dag_4.png
-```
+    ??? image "DAG:"
 
-Now we have two rules in our workflow (fastqc and multiqc), we can also see that multiqc isn't run for each sample (since it merges the output of fastqc for all samples)
-
-My DAG:
-
-{% capture e3dot25 %}
-
-![DAG_4](./images/dag_4.png)
+        ![DAG_4](./images/dag_4.png)
 
 
 
