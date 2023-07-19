@@ -340,8 +340,6 @@ Now looking at the content of our workflow folder, it is getting cluttered with 
         -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:34 Snakefile
         ```
         
-
-{% include exercise.html title="e4dot5" content=e4dot5%}
 <br>
 
 Let's clean this and create a dedicated folder `logs/slurm` for future log files:
