@@ -191,23 +191,23 @@ First lets run the first step in our workflow ([fastqc](https://www.bioinformati
 
 ## 3.04 Create the first rule in your workflow
 
-Let's wrap this up in a Snakemake workflow! Start with the basic structure of a Snakefile:
+!!! file-code "Let's wrap this up in a Snakemake workflow! Start with the basic structure of a Snakefile:"
 
-```sh
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-
-# workflow
-rule my_rule:
-    input:
-        ""
-    output:
-        ""
-    threads:
-    shell:
-        ""
-```
+    ```python
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+    
+    # workflow
+    rule my_rule:
+        input:
+            ""
+        output:
+            ""
+        threads:
+        shell:
+            ""
+    ```
 
 !!! scale-balance "Now add our fastqc rule, let's:"
 
@@ -250,7 +250,7 @@ The use of the word `input` in `rule all` can be confusing, but in this context,
 
 ??? file-code "Current snakefile:"
 
-    ```txt
+    ```python
     # target OUTPUT files for the whole workflow
     rule all:
         input:
@@ -568,7 +568,7 @@ fastqc worked because we loaded it in our current shell session. Let's specify t
 
 ??? file-code "Current snakefile:"
 
-    ```txt
+    ```python
     # target OUTPUT files for the whole workflow
     rule all:
         input:
@@ -791,7 +791,7 @@ So far our logs (for fastqc) have been simply printed to our screen. As you can 
 
 ??? file-code "Current snakefile"
 
-    ```txt
+    ```python
     # target OUTPUT files for the whole workflow
     rule all:
         input:
@@ -987,7 +987,7 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 
 ??? file-code "Current snakefile:"
 
-    ```txt
+    ```python
     # define samples from data directory using wildcards
     SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
     
@@ -1186,7 +1186,7 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 ??? file-code "Current snakefile:"
 
 
-    ```txt
+    ```python
     # define samples from data directory using wildcards
     SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
     
@@ -1307,7 +1307,7 @@ What happens if we only have the final target file (`../results/multiqc_report.h
     ```
 
 ??? file-code "Current snakefile:"
-    ```txt
+    ```python
     # define samples from data directory using wildcards
     SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
     
@@ -1424,7 +1424,7 @@ For example if only our fastqc outputs are defined as the target in `rule: all`
 
 ??? file-code "Current snakefile:"
 
-    ```txt
+    ```python
     # define samples from data directory using wildcards
     SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
     

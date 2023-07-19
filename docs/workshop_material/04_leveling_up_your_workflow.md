@@ -200,7 +200,7 @@ Here we give more CPU resources to `trim_galore` to make it run faster.
 ??? file-code "Current snakefile:"
 
 
-    ```txt
+    ```python
     # define samples from data directory using wildcards
     SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
     
@@ -1029,7 +1029,7 @@ We can provide the user of our workflow more information on what is happening at
     
 ??? file-code "Current snakefile:"
 
-    ```txt
+    ```python
     # define our configuration file
     configfile: "../config/config.yaml"
     
