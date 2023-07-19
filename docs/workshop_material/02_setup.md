@@ -9,7 +9,7 @@ also possible to run this material locally on your own machine.
 
 One of the differences between running on NeSI or your own machine is that on NeSI we preinstall popular software and make it available to our users, whereas on your own machine you need to install the software yourself (e.g. using a package manager such as conda).
 
-We have provided a guide for setting up your own machine using conda [here](99_appendix_setup_on_your_machine.md) (note we will not be able to provide assistance if you decide to take this approach during the workshop).
+We have provided a guide for setting up your own machine using conda [here](./supplementary/99_appendix_setup_on_your_machine.md)) (note we will not be able to provide assistance if you decide to take this approach during the workshop).
 
 !!! jupyter "Connect to Jupyter on NeSI"
 
