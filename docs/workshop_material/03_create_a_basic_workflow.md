@@ -1648,15 +1648,13 @@ However, when analysing many samples, our DAG can become messy and complicated. 
 
 !!! terminal-2 "An aside: another option that will show all your input and output files at each step:"
 
-```bash
-snakemake --filegraph | dot -Tpng > filegraph.png
-```
+    ```bash
+    snakemake --filegraph | dot -Tpng > filegraph.png
+    ```
 
-My filegraph:
-
-{% capture e3dot34%}
-
-![filegraph](./images/filegraph.png)
+    ??? image "My filegraph:"
+    
+        ![filegraph](./images/filegraph.png)
 
 
 
