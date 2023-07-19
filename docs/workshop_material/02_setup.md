@@ -43,44 +43,50 @@ When you connect to NeSI JupyterLab you always start in a new hidden directory. 
 We use "environment modules" on NeSI to manage installed software. This allows you to pick and choose which software is available in your environment. 
 More details about environment modules can be found on the NeSI support [page](https://support.nesi.org.nz/hc/en-gb/articles/360000360576-Finding-Software).
 
-The JupyterLab terminal comes with some modules preloaded and it can often be nicer to start with a clean environment:
 
-```
-module purge
-```
+!!! terminal-2 "The JupyterLab terminal comes with some modules preloaded and it can often be nicer to start with a clean environment:"
 
-We can search for available Snakemake modules using the `module spider` command:
-
-```
-module spider snakemake
-```
-
-which shows we have many versions of snakemake installed. Now load a specific version of snakemake into your environment:
-
-```
-module load snakemake/7.6.2-gimkl-2020a-Python-3.9.9
-```
-
-Test that the snakemake command is now available by running the following command:
-
-```
-snakemake --version
-```
-
-It should print out the version of snakemake, i.e. "7.6.2".
-
-You can also run `module list` to see the list of modules that are currently loaded.
+    ```bash
+    module purge
+    ```
+    
+    We can search for available Snakemake modules using the `module spider` command:
+    
+    ```bash
+    module spider snakemake
+    ```
+    
+    which shows we have many versions of snakemake installed. Now load a specific version of snakemake into your environment:
+    
+    ```bash
+    module load snakemake/7.6.2-gimkl-2020a-Python-3.9.9
+    ```
+    
+    Test that the snakemake command is now available by running the following command:
+    
+    ```bash
+    snakemake --version
+    ```
+    
+    It should print out the version of snakemake, i.e. "7.6.2".
+    
+    You can also run `module list` to see the list of modules that are currently loaded.
 
 ## Clone this repo
 
 Clone this repo with the following:
 
-```bash
-git clone https://github.com/nesi/snakemake_workshop.git
-cd snakemake_workshop
-```
+!!! terminal "code"
 
-See the [Git Guides](https://github.com/git-guides/git-clone) for information on cloning a repo
+    ```bash
+    git clone https://github.com/nesi/snakemake_workshop.git
+    ```
+    ```bash
+    cd snakemake_workshop
+    ```
+    !!! info ""
+
+        See the [Git Guides](https://github.com/git-guides/git-clone) for information on cloning a repo
 
 - - - 
 
