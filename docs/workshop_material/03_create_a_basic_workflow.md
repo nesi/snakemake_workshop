@@ -2139,11 +2139,4 @@ See [basic_demo_workflow](https://github.com/nesi/snakemake_workshop/tree/main/b
 
 - - - 
 
-<p style="text-align:left;">
-  <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html" style="background: var(--bs-green);font-weight:bold">&laquo; 2 - Setup</a></b> 
-  <span style="float:right;">
-    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow.html" style="background: var(--bs-green);font-weight:bold">4 - Leveling up your WF &raquo;</a></b>
-  </span>
-</p>
-
 <p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
