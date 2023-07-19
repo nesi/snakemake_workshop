@@ -1705,224 +1705,225 @@ Use the `--cluster` option to specify the job submission command, using `sbatch`
 This command defines resources used for each job (maximum time, memory, number of cores...).
 In addition, you need to specify a maximum number of concurrent jobs using `--jobs`.
 
-```bash
-# remove output of last run
-rm -r ../results/*
+!!! terminal "code"
 
-# run again on the cluster
-snakemake --cluster "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-envmodules
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash
+    # run again on the cluster
+    snakemake --cluster "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991" --jobs 10 --use-envmodules
+    ```
 
-My output:
+    ??? success "output"
+    
+        ```bash
+        Building DAG of jobs...
+        Using shell: /usr/bin/bash
+        Provided cores: 4
+        Rules claiming more threads will be scaled down.
+        Job stats:
+        job            count    min threads    max threads
+        -----------  -------  -------------  -------------
+        all                1              1              1
+        fastqc             3              2              2
+        multiqc            1              1              1
+        trim_galore        3              2              2
+        total              8              1              2
+        
+        Select jobs to execute...
+        
+        [Wed May 11 12:26:39 2022]
+        rule fastqc:
+            input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+            output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+            log: logs/fastqc/NA24694.log
+            jobid: 4
+            wildcards: sample=NA24694
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: FastQC/0.11.9
+        
+        [Wed May 11 12:26:39 2022]
+        rule trim_galore:
+            input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
+            output: ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+            log: logs/trim_galore/NA24694.log
+            jobid: 7
+            wildcards: sample=NA24694
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:26:44 2022]
+        Finished job 4.
+        1 of 8 steps (12%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:26:44 2022]
+        rule fastqc:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            log: logs/fastqc/NA24631.log
+            jobid: 2
+            wildcards: sample=NA24631
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: FastQC/0.11.9
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:26:47 2022]
+        Finished job 7.
+        2 of 8 steps (25%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:26:47 2022]
+        rule trim_galore:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz
+            log: logs/trim_galore/NA24631.log
+            jobid: 5
+            wildcards: sample=NA24631
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:26:50 2022]
+        Finished job 2.
+        3 of 8 steps (38%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:26:50 2022]
+        rule fastqc:
+            input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+            output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
+            log: logs/fastqc/NA24695.log
+            jobid: 3
+            wildcards: sample=NA24695
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: FastQC/0.11.9
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:26:54 2022]
+        Finished job 3.
+        4 of 8 steps (50%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:26:54 2022]
+        rule trim_galore:
+            input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
+            output: ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz
+            log: logs/trim_galore/NA24695.log
+            jobid: 6
+            wildcards: sample=NA24695
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:26:56 2022]
+        Finished job 5.
+        5 of 8 steps (62%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:26:56 2022]
+        rule multiqc:
+            input: ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
+            output: ../results/multiqc_report.html
+            log: logs/multiqc/multiqc.log
+            jobid: 1
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: MultiQC/1.9-gimkl-2020a-Python-3.8.2
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:27:01 2022]
+        Finished job 6.
+        6 of 8 steps (75%) done
+        [Wed May 11 12:27:03 2022]
+        Finished job 1.
+        7 of 8 steps (88%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:27:03 2022]
+        localrule all:
+            input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+            jobid: 0
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        [Wed May 11 12:27:03 2022]
+        Finished job 0.
+        8 of 8 steps (100%) done
+        Complete log: .snakemake/log/2022-05-11T122639.019945.snakemake.log
+        ```
 
-{% capture e3dot35 %}
-
-```bash
-Building DAG of jobs...
-Using shell: /usr/bin/bash
-Provided cores: 4
-Rules claiming more threads will be scaled down.
-Job stats:
-job            count    min threads    max threads
------------  -------  -------------  -------------
-all                1              1              1
-fastqc             3              2              2
-multiqc            1              1              1
-trim_galore        3              2              2
-total              8              1              2
-
-Select jobs to execute...
-
-[Wed May 11 12:26:39 2022]
-rule fastqc:
-    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
-    output: ../results/fastqc/NA24694_1_fastqc.html, ../results/fastqc/NA24694_2_fastqc.html, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
-    log: logs/fastqc/NA24694.log
-    jobid: 4
-    wildcards: sample=NA24694
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: FastQC/0.11.9
-
-[Wed May 11 12:26:39 2022]
-rule trim_galore:
-    input: ../../data/NA24694_1.fastq.gz, ../../data/NA24694_2.fastq.gz
-    output: ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
-    log: logs/trim_galore/NA24694.log
-    jobid: 7
-    wildcards: sample=NA24694
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:26:44 2022]
-Finished job 4.
-1 of 8 steps (12%) done
-Select jobs to execute...
-
-[Wed May 11 12:26:44 2022]
-rule fastqc:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    log: logs/fastqc/NA24631.log
-    jobid: 2
-    wildcards: sample=NA24631
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: FastQC/0.11.9
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:26:47 2022]
-Finished job 7.
-2 of 8 steps (25%) done
-Select jobs to execute...
-
-[Wed May 11 12:26:47 2022]
-rule trim_galore:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz
-    log: logs/trim_galore/NA24631.log
-    jobid: 5
-    wildcards: sample=NA24631
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:26:50 2022]
-Finished job 2.
-3 of 8 steps (38%) done
-Select jobs to execute...
-
-[Wed May 11 12:26:50 2022]
-rule fastqc:
-    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
-    output: ../results/fastqc/NA24695_1_fastqc.html, ../results/fastqc/NA24695_2_fastqc.html, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip
-    log: logs/fastqc/NA24695.log
-    jobid: 3
-    wildcards: sample=NA24695
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: FastQC/0.11.9
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:26:54 2022]
-Finished job 3.
-4 of 8 steps (50%) done
-Select jobs to execute...
-
-[Wed May 11 12:26:54 2022]
-rule trim_galore:
-    input: ../../data/NA24695_1.fastq.gz, ../../data/NA24695_2.fastq.gz
-    output: ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz
-    log: logs/trim_galore/NA24695.log
-    jobid: 6
-    wildcards: sample=NA24695
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:26:56 2022]
-Finished job 5.
-5 of 8 steps (62%) done
-Select jobs to execute...
-
-[Wed May 11 12:26:56 2022]
-rule multiqc:
-    input: ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24695_1_fastqc.zip, ../results/fastqc/NA24694_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip, ../results/fastqc/NA24695_2_fastqc.zip, ../results/fastqc/NA24694_2_fastqc.zip
-    output: ../results/multiqc_report.html
-    log: logs/multiqc/multiqc.log
-    jobid: 1
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: MultiQC/1.9-gimkl-2020a-Python-3.8.2
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:27:01 2022]
-Finished job 6.
-6 of 8 steps (75%) done
-[Wed May 11 12:27:03 2022]
-Finished job 1.
-7 of 8 steps (88%) done
-Select jobs to execute...
-
-[Wed May 11 12:27:03 2022]
-localrule all:
-    input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
-    jobid: 0
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-[Wed May 11 12:27:03 2022]
-Finished job 0.
-8 of 8 steps (100%) done
-Complete log: .snakemake/log/2022-05-11T122639.019945.snakemake.log
-```
-
-
-
-{% include exercise.html title="e3dot35" content=e3dot35%}
 <br>
 
 If you open another terminal on the HPC, you can use the `squeue` command to list of your jobs and their state (pending, running, etc.):
 
-```bash
-squeue --me
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    squeue --me
+    ```
 
-{% capture e3dot36 %}
-
-```bash
-JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)    
-26763281      lkemp    nesi99991 spawner-jupy   4      4G interac 2022-05-11T1     7:30:33 RUNNING  wbn003              
-26763418      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn096              
-26763419      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn096              
-26763420      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn110              
-26763421      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn069              
-26763422      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn070              
-26763423      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn090  
-```
+    ??? success "output"
+    
+    
+        ```bash
+        JOBID         USER     ACCOUNT   NAME        CPUS MIN_MEM PARTITI START_TIME     TIME_LEFT STATE    NODELIST(REASON)    
+        26763281      lkemp    nesi99991 spawner-jupy   4      4G interac 2022-05-11T1     7:30:33 RUNNING  wbn003              
+        26763418      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn096              
+        26763419      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn096              
+        26763420      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn110              
+        26763421      lkemp    nesi99991 snakejob.fas   8    512M large   2022-05-11T1        9:59 RUNNING  wbn069              
+        26763422      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn070              
+        26763423      lkemp    nesi99991 snakejob.tri   8    512M large   2022-05-11T1        9:59 RUNNING  wbn090  
+        ```
 
 <br>
 
 An additional trick is to use the `watch` command to repeatedly call any command in the terminal, giving you a lightweight monitoring tool ;-).
 Here we will use it to see your jobs gets queued and executed in real time:
 
-```bash
-watch squeue --me
-```
+!!! terminal "code"
+
+    ```bash
+    watch squeue --me
+    ```
 
 You can exit the view create by `watch` by pressing CTRL+C.
 
@@ -1930,94 +1931,97 @@ You can exit the view create by `watch` by pressing CTRL+C.
 # Takeaways
 
 ---
+!!! quote ""
 
-- Once familiar with environment modules, the software are very straightforward to integrate in your snakemake workflow
-- Run your commands directly on the command line before wrapping it up in a Snakemake rule
-- First do a dryrun to check the Snakemake structure is set up correctly
-- Work iteratively (get each rule working before moving onto the next)
-- File paths are relative to the Snakefile
-- Run your workflow from where your Snakefile is
-- Visualise your workflow by creating a DAG (directed acyclic graph), a rulegraph or filegraph
-- Use environment modules to load software in your workflow - this improves reproducibility
-- Snakemake is lazy...
-  - It will only do something if it hasn't already done it
-  - It will pick up where it left off, rather than run the whole workflow again
-  - It *won't* do any steps that aren't necessary to get to the target files defined in `rule: all`
-- `input:` `output:` `log:` and `threads:` directives need to be called in the `shell` directive
-- Capture your log files
-- Organise your log files by naming them after the rule that was run and sample that was analysed
-- You don't need to specify all the target files in `rule all:`, the final file in a given chain of tasks will suffice
-- We can massively speed up our analyses by running our samples in parallel
+    - Once familiar with environment modules, the software are very straightforward to integrate in your snakemake workflow
+    - Run your commands directly on the command line before wrapping it up in a Snakemake rule
+    - First do a dryrun to check the Snakemake structure is set up correctly
+    - Work iteratively (get each rule working before moving onto the next)
+    - File paths are relative to the Snakefile
+    - Run your workflow from where your Snakefile is
+    - Visualise your workflow by creating a DAG (directed acyclic graph), a rulegraph or filegraph
+    - Use environment modules to load software in your workflow - this improves reproducibility
+    - Snakemake is lazy...
+      - It will only do something if it hasn't already done it
+      - It will pick up where it left off, rather than run the whole workflow again
+      - It *won't* do any steps that aren't necessary to get to the target files defined in `rule: all`
+    - `input:` `output:` `log:` and `threads:` directives need to be called in the `shell` directive
+    - Capture your log files
+    - Organise your log files by naming them after the rule that was run and sample that was analysed
+    - You don't need to specify all the target files in `rule all:`, the final file in a given chain of tasks will suffice
+    - We can massively speed up our analyses by running our samples in parallel
 
 ---
 
 # Summary commands
 
-Create a directed acyclic graph (DAG) with:
+!!! terminal "code"
 
-```bash
-snakemake --dag | dot -Tpng > dag.png
-```
-
-Create a rulegraph with:
-
-```bash
-snakemake --rulegraph | dot -Tpng > rulegraph.png
-```
-
-Create a filegraph with:
-
-```bash
-snakemake --filegraph | dot -Tpng > filegraph.png
-```
-
-Run a dryrun of your snakemake workflow with:
-
-```bash
-snakemake --dryrun
-```
-
-Run your snakemake workflow with:
-
-```bash
-snakemake --cores 2
-```
-
-Run a dryrun of your snakemake workflow (using environment modules to load your software) with:
-
-```bash
-snakemake --dryrun --cores 2 --use-envmodules
-```
-
-Run your snakemake workflow (using environment modules to load your software) with:
-
-```bash
-snakemake --cores 2 --use-envmodules
-```
-
-Run your snakemake workflow using multiple jobs on NeSI:
-
-```bash
-snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-envmodules
-```
-
-Create a global wildcard to get process all your samples in a directory with:
-
-```bash
-SAMPLES, = glob_wildcards("../relative/path/to/samples/{sample}_1.fastq.gz")
-```
-
-Combine this with the expand function to tell Snakemake to look at your global wildcard to figure out what you refer to as `{sample}` in your workflow
-
-```bash
-expand("../results/{sample}_1.fastq.gz", sample = SAMPLES)
-```
-
-Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores to be used at one time with the `--cores` command
-
-```bash
-snakemake --cores 4 --use-envmodules
-```
+    - Create a directed acyclic graph (DAG) with:
+    
+    ```bash
+    snakemake --dag | dot -Tpng > dag.png
+    ```
+    
+    - Create a rulegraph with:
+    
+    ```bash
+    snakemake --rulegraph | dot -Tpng > rulegraph.png
+    ```
+    
+    - Create a filegraph with:
+    
+    ```bash
+    snakemake --filegraph | dot -Tpng > filegraph.png
+    ```
+    
+    - Run a dryrun of your snakemake workflow with:
+    
+    ```bash
+    snakemake --dryrun
+    ```
+    
+    - Run your snakemake workflow with:
+    
+    ```bash
+    snakemake --cores 2
+    ```
+    
+    - Run a dryrun of your snakemake workflow (using environment modules to load your software) with:
+    
+    ```bash
+    snakemake --dryrun --cores 2 --use-envmodules
+    ```
+    
+    - Run your snakemake workflow (using environment modules to load your software) with:
+    
+    ```bash
+    snakemake --cores 2 --use-envmodules
+    ```
+    
+    - Run your snakemake workflow using multiple jobs on NeSI:
+    
+    ```bash
+    snakemake --cluster "sbatch --time 00:10:00 --mem=512MB --cpus-per-task 8" --jobs 10 --use-envmodules
+    ```
+    
+    - Create a global wildcard to get process all your samples in a directory with:
+    
+    ```bash
+    SAMPLES, = glob_wildcards("../relative/path/to/samples/{sample}_1.fastq.gz")
+    ```
+    
+    - Combine this with the expand function to tell Snakemake to look at your global wildcard to figure out what you refer to as `{sample}` in your workflow
+    
+    ```bash
+    expand("../results/{sample}_1.fastq.gz", sample = SAMPLES)
+    ```
+    
+    - Increase the number of samples that can be analysed at one time in your workflow by increasing the maximum number of cores to be used at one time with the `--cores` command
+    
+    ```bash
+    snakemake --cores 4 --use-envmodules
+    ```
 
 # Our final snakemake workflow!
 
