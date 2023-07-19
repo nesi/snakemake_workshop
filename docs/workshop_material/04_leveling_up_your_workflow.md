@@ -289,58 +289,57 @@ Here we give more CPU resources to `trim_galore` to make it run faster.
 
 Now looking at the content of our workflow folder, it is getting cluttered with Slurm log files:
 
-```bash
-ls -lh
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    ls -lh
+    ```
 
-{% capture e4dot5 %}
+    ??? success "output"
 
-```
-total 1.8M
--rw-rw----+ 1 lkemp nesi99991 4.2K May 11 12:10 dag_1.png
--rw-rw----+ 1 lkemp nesi99991 3.8K May 11 12:13 dag_2.png
--rw-rw----+ 1 lkemp nesi99991  12K May 11 12:16 dag_3.png
--rw-rw----+ 1 lkemp nesi99991  20K May 11 12:19 dag_4.png
--rw-rw----+ 1 lkemp nesi99991  15K May 11 12:21 dag_5.png
--rw-rw----+ 1 lkemp nesi99991  12K May 11 12:23 dag_6.png
--rw-rw----+ 1 lkemp nesi99991  26K May 11 12:24 dag_7.png
-drwxrws---+ 5 lkemp nesi99991 4.0K May 11 12:25 logs
--rw-rw----+ 1 lkemp nesi99991  11K May 11 12:24 rulegraph_1.png
-drwxrws---+ 3 lkemp nesi99991 4.0K May 11 12:34 slurm
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763403.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763404.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763405.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763406.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763407.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763408.out
--rw-rw----+ 1 lkemp nesi99991  865 May 11 12:29 slurm-26763409.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763418.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763419.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763420.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763421.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763422.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763423.out
--rw-rw----+ 1 lkemp nesi99991  865 May 11 12:32 slurm-26763431.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:33 slurm-26763435.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763436.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:33 slurm-26763437.out
--rw-rw----+ 1 lkemp nesi99991  837 May 11 12:34 slurm-26763438.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763439.out
--rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763440.out
--rw-rw----+ 1 lkemp nesi99991  865 May 11 12:35 slurm-26763444.out
--rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763447.out
--rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763448.out
--rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763449.out
--rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763450.out
--rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763451.out
--rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763452.out
--rw-rw----+ 1 lkemp nesi99991  885 May 11 12:37 slurm-26763454.out
--rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:34 Snakefile
-```
-
-
+        ```bash
+        total 1.8M
+        -rw-rw----+ 1 lkemp nesi99991 4.2K May 11 12:10 dag_1.png
+        -rw-rw----+ 1 lkemp nesi99991 3.8K May 11 12:13 dag_2.png
+        -rw-rw----+ 1 lkemp nesi99991  12K May 11 12:16 dag_3.png
+        -rw-rw----+ 1 lkemp nesi99991  20K May 11 12:19 dag_4.png
+        -rw-rw----+ 1 lkemp nesi99991  15K May 11 12:21 dag_5.png
+        -rw-rw----+ 1 lkemp nesi99991  12K May 11 12:23 dag_6.png
+        -rw-rw----+ 1 lkemp nesi99991  26K May 11 12:24 dag_7.png
+        drwxrws---+ 5 lkemp nesi99991 4.0K May 11 12:25 logs
+        -rw-rw----+ 1 lkemp nesi99991  11K May 11 12:24 rulegraph_1.png
+        drwxrws---+ 3 lkemp nesi99991 4.0K May 11 12:34 slurm
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763403.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763404.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763405.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:27 slurm-26763406.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763407.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:27 slurm-26763408.out
+        -rw-rw----+ 1 lkemp nesi99991  865 May 11 12:29 slurm-26763409.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763418.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763419.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763420.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:30 slurm-26763421.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763422.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:30 slurm-26763423.out
+        -rw-rw----+ 1 lkemp nesi99991  865 May 11 12:32 slurm-26763431.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:33 slurm-26763435.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763436.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:33 slurm-26763437.out
+        -rw-rw----+ 1 lkemp nesi99991  837 May 11 12:34 slurm-26763438.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763439.out
+        -rw-rw----+ 1 lkemp nesi99991  809 May 11 12:34 slurm-26763440.out
+        -rw-rw----+ 1 lkemp nesi99991  865 May 11 12:35 slurm-26763444.out
+        -rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763447.out
+        -rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763448.out
+        -rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763449.out
+        -rw-rw----+ 1 lkemp nesi99991  857 May 11 12:36 slurm-26763450.out
+        -rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763451.out
+        -rw-rw----+ 1 lkemp nesi99991  829 May 11 12:36 slurm-26763452.out
+        -rw-rw----+ 1 lkemp nesi99991  885 May 11 12:37 slurm-26763454.out
+        -rw-rw----+ 1 lkemp nesi99991 1.8K May 11 12:34 Snakefile
+        ```
+        
 
 {% include exercise.html title="e4dot5" content=e4dot5%}
 <br>
