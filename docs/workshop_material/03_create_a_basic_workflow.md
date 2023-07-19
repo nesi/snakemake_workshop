@@ -538,7 +538,7 @@ This can be quite informative if your workflow errors out at a rule. You can vis
 
 fastqc worked because we loaded it in our current shell session. Let's specify the environment module for fastqc so the user of the workflow doesn't need to load it manually.
 
-!!! terminal-2 "Update our rule to use it using the `envmodules:` directive"
+??? code-compare "Edit snakefile "Update our rule to use it using the `envmodules:` directive"
 
     ```diff
     # target OUTPUT files for the whole workflow
@@ -566,7 +566,7 @@ fastqc worked because we loaded it in our current shell session. Let's specify t
 
 
 
-!!! file-code "Current snakefile:"
+??? file-code "Current snakefile:"
 
     ```txt
     # target OUTPUT files for the whole workflow
@@ -759,35 +759,37 @@ So far our logs (for fastqc) have been simply printed to our screen. As you can 
       - Labelling the log files with the sample name the software was run on
     
     - Also make sure you tell the software (fastqc) to write the standard output and standard error to this log file we defined in the `log:` directive in the shell script (eg. `&> {log}`)
+
+??? code-compare "Edit snakefile"
+
+    ```diff
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/fastqc/NA24631_1_fastqc.html",
+            "../results/fastqc/NA24631_2_fastqc.html",
+            "../results/fastqc/NA24631_1_fastqc.zip",
+            "../results/fastqc/NA24631_2_fastqc.zip"
     
-```diff
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/NA24631_1.fastq.gz",
+            R2 = "../../data/NA24631_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+            zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+    +   log:
+    +       "logs/fastqc/NA24631.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+    -       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+    +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+    ```
 
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-+   log:
-+       "logs/fastqc/NA24631.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
--       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-+       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-```
-
-!!! file-code "Current snakefile"
+??? file-code "Current snakefile"
 
     ```txt
     # target OUTPUT files for the whole workflow
