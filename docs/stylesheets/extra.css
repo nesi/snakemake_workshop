@@ -949,3 +949,41 @@
   -webkit-mask-image: var(--md-admonition-icon--truck-medical);
           mask-image: var(--md-admonition-icon--truck-medical);
 }
+
+:root {
+  --md-admonition-icon--tags: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M345 39.1L472.8 168.4c52.4 53 52.4 138.2 0 191.2L360.8 472.9c-9.3 9.4-24.5 9.5-33.9 .2s-9.5-24.5-.2-33.9L438.6 325.9c33.9-34.3 33.9-89.4 0-123.7L310.9 72.9c-9.3-9.4-9.2-24.6 .2-33.9s24.6-9.2 33.9 .2zM0 229.5V80C0 53.5 21.5 32 48 32H197.5c17 0 33.3 6.7 45.3 18.7l168 168c25 25 25 65.5 0 90.5L277.3 442.7c-25 25-65.5 25-90.5 0l-168-168C6.7 262.7 0 246.5 0 229.5zM144 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg>')
+}
+.md-typeset .admonition.tags,
+.md-typeset details.tags {
+  border-color: rgb(105,105,105);
+}
+.md-typeset .tags > .admonition-title,
+.md-typeset .tags > summary {
+  color:rgb(35, 35, 37);
+  background-color: rgba(216, 202, 79, 0.815);
+}
+.md-typeset .tags > .admonition-title::before,
+.md-typeset .tags > summary::before {
+  background-color: rgb(240, 139, 8);
+  -webkit-mask-image: var(--md-admonition-icon--tags);
+          mask-image: var(--md-admonition-icon--tags);
+}
+
+:root {
+  --md-admonition-icon--user-group: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3zM609.3 512H471.4c5.4-9.4 8.6-20.3 8.6-32v-8c0-60.7-27.1-115.2-69.8-151.8c2.4-.1 4.7-.2 7.1-.2h61.4C567.8 320 640 392.2 640 481.3c0 17-13.8 30.7-30.7 30.7zM432 256c-31 0-59-12.6-79.3-32.9C372.4 196.5 384 163.6 384 128c0-26.8-6.6-52.1-18.3-74.3C384.3 40.1 407.2 32 432 32c61.9 0 112 50.1 112 112s-50.1 112-112 112z"/></svg>')
+}
+.md-typeset .admonition.user-group,
+.md-typeset details.user-group {
+  border-color: rgb(105,105,105);
+}
+.md-typeset .user-group > .admonition-title,
+.md-typeset .user-group > summary {
+  color:rgb(35, 35, 37);
+  background-color: rgba(221, 211, 166, 0.815);
+}
+.md-typeset .user-group > .admonition-title::before,
+.md-typeset .user-group > summary::before {
+  background-color: rgb(209, 22, 9);
+  -webkit-mask-image: var(--md-admonition-icon--user-group);
+          mask-image: var(--md-admonition-icon--user-group);
+}

@@ -26,21 +26,22 @@ In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you th
 - How to create a workflow to organize your computations, and
 - How an HPC scheduler (such as Slurm) fits into your workflow
 
-## Who should attend
+!!! user-group- "Who should attend"
 
-This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
+    This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.
 
-## Attribution notice
+    If you have any questions or would like more information about this session, please email training@nesi.org.nz
 
-* Material used in this workshop is based on the following repository
-    * Author     : Leah Kemp (ESR)
-    * Repository : [https://leahkemp.github.io/RezBaz2020_snakemake_workshop/](https://leahkemp.github.io/RezBaz2020_snakemake_workshop/)
 
-## Setup
+!!! tags "Attribution notice"
+    
+    * Material used in this workshop is based on the following repository
+        * Author     : Leah Kemp (ESR)
+        * Repository : [https://leahkemp.github.io/RezBaz2020_snakemake_workshop/](https://leahkemp.github.io/RezBaz2020_snakemake_workshop/)
+    
+!!! screwdriver-wrench "Setup"
 
-This is an online workshop that will use Jupyter on NeSI. Attendees will be required to set up an account on NeSI in order to participate. Full instructions will be sent to registrants closer to the time of the workshop.
-
-If you have any questions or would like more information about this session, please email training@nesi.org.nz
+    This is an online workshop that will use Jupyter on NeSI. Attendees will be required to set up an account on NeSI in order to participate. Full instructions will be sent to registrants closer to the time of the workshop.
 
 ## Workshop
 
