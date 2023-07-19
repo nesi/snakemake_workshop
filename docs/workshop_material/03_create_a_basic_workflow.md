@@ -1573,7 +1573,7 @@ We currently have fastqc and multiqc, so we still need to add trim_galore
 
 ??? file-code "Current snakefile:"
 
-    ```txt
+    ```python
     # define samples from data directory using wildcards
     SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
     
