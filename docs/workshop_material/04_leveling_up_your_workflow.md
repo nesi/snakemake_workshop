@@ -94,184 +94,182 @@ In this case, we use it to set the `--cluster` and the `--jobs` options.
 If you interrupt the execution of a snakemake workflow using CTRL-C, already submitted Slurm jobs won't be cancelled.
 We tell snakemake how to cancel Slurm jobs using `scancel` via the `--cluster-cancel` option and adding `--parsable` to the `sbatch` command, to make it return the job ID.
 
-```diff
-jobs: 20
-- cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8"
-+ cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
-+ cluster-cancel: scancel
-```
+!!! code-compare "Edit config.yaml"
+    ```diff
+    jobs: 20
+    - cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8"
+    + cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
+    + cluster-cancel: scancel
+    ```
 
 You can specify different resources (memory, cpus, gpus, etc.) for each target in the workflow and refer to them in the `cluster` option using placeholders.
 Default resources for all rules can also be set using the `default-resources` option.
 
 Update the profile `slurm/config.yaml` file as follows (using a multiline option to improve readability)
 
-```diff
-jobs: 20
-- cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
-+ cluster:
-+     sbatch
-+         --parsable
-+         --time {resources.time_min}
-+         --mem {resources.mem_mb}
-+         --cpus-per-task {resources.cpus}
-+         --account nesi99991
-+ default-resources: [cpus=2, mem_mb=512, time_min=10]
-cluster-cancel: scancel
-```
+!!! code-compare "Edit config.yml"
+
+    ```diff
+    jobs: 20
+    - cluster: "sbatch --parsable --time 00:10:00 --mem 512MB --cpus-per-task 8"
+    + cluster:
+    +     sbatch
+    +         --parsable
+    +         --time {resources.time_min}
+    +         --mem {resources.mem_mb}
+    +         --cpus-per-task {resources.cpus}
+    +         --account nesi99991
+    + default-resources: [cpus=2, mem_mb=512, time_min=10]
+    cluster-cancel: scancel
+    ```
 
 and add resources definitions in the workflow.
 Here we give more CPU resources to `trim_galore` to make it run faster.
 
-```diff
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+??? code-compare "Edit snakefile"
 
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    ```diff
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+    +   resources:
+    +       cpus=8
+        shell:
+            "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+    ```
+    
+??? file-code "Current slurm profile:"
 
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-+   resources:
-+       cpus=8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-```
-
-Current slurm profile:
-
-{% capture e4dot2 %}
-
-```
-jobs: 20
-cluster:
-    sbatch
-        --parsable
-        --time {resources.time_min}
-        --mem {resources.mem_mb}
-        --cpus-per-task {resources.cpus}
-        --account nesi99991
-default-resources: [cpus=2, mem_mb=512, time_min=10]
-cluster-cancel: scancel
-```
-
-
-
-{% include exercise.html title="e4dot2" content=e4dot2%}
+    ```
+    jobs: 20
+    cluster:
+        sbatch
+            --parsable
+            --time {resources.time_min}
+            --mem {resources.mem_mb}
+            --cpus-per-task {resources.cpus}
+            --account nesi99991
+    default-resources: [cpus=2, mem_mb=512, time_min=10]
+    cluster-cancel: scancel
+    ```
 <br>
 
-Current snakefile:
-
-{% capture e4dot3 %}
-
-```txt
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-    resources:
-        cpus=8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-```
+??? file-code "Current snakefile:"
 
 
-
-{% include exercise.html title="e4dot3" content=e4dot3%}
+    ```txt
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+        resources:
+            cpus=8
+        shell:
+            "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+    ```
+    
 <br>
 
-Run the workflow again
+!!! terminal-2 "Run the workflow again"
 
-```bash
-# remove output of last run
-rm -r ../results/*
-
-# run dryrun/run again
-snakemake --dryrun --profile slurm --use-envmodules
-snakemake --profile slurm --use-envmodules
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```
+    # run dryrun/run again
+    snakemake --dryrun --profile slurm --use-envmodules
+    ```
+    ```bash
+    snakemake --profile slurm --use-envmodules
+    ```
 
 If you monitor the progress of your jobs using `squeue`, you will notice that some jobs now request 2 or 8 CPUs.
 
