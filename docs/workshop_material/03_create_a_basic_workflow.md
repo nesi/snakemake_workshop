@@ -6,36 +6,35 @@
 ## 3.01 Aim
 
 ---
+!!! info ""
 
-*Let's create a basic workflow that will do some of the analysis steps for genetic data. We will have three samples with two files each - six files in total. These files will be processed through the below workflow, passing through three software.*
+    Let's create a basic workflow that will do some of the analysis steps for genetic data. We will have three samples with two files each - six files in total. These files will be processed through the below workflow, passing through three software.
 
 ---
-
+<center>
 ![rulegraph_1](./images/rulegraph_1.png)
+</center>
 
 We have paired end sequencing data for three samples `NA24631` to process in the `./data` directory. Let's have a look:
 
-```bash
-ls -lh ./data/
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    ls -lh ./data/
+    ```
 
-{% capture e3dot1 %}
+!!! success "My output:"
 
-```bash
-total 13M
--rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24631_1.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24631_2.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24694_1.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24694_2.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 1.8M May 11 12:06 NA24695_1.fastq.gz
--rw-rw----+ 1 lkemp nesi99991 1.9M May 11 12:06 NA24695_2.fastq.gz
-```
+    ```bash
+    total 13M
+    -rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24631_1.fastq.gz
+    -rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24631_2.fastq.gz
+    -rw-rw----+ 1 lkemp nesi99991 2.1M May 11 12:06 NA24694_1.fastq.gz
+    -rw-rw----+ 1 lkemp nesi99991 2.3M May 11 12:06 NA24694_2.fastq.gz
+    -rw-rw----+ 1 lkemp nesi99991 1.8M May 11 12:06 NA24695_1.fastq.gz
+    -rw-rw----+ 1 lkemp nesi99991 1.9M May 11 12:06 NA24695_2.fastq.gz
+    ```
 
-
-
-{% include exercise.html title="e3dot1" content=e3dot1%}
 <br>
 
 ## 3.02 Snakemake workflow file structure
