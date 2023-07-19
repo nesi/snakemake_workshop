@@ -1444,8 +1444,6 @@ In our report:
 
 My report:
 
-{% capture e4dot16 %}
-
 ![snakemake_report](./images/snakemake_report.gif)
 
 
