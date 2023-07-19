@@ -1385,36 +1385,37 @@ Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping
     
 <br>
 
-```diff
-# remove output of last run
-rm -r ../results/*
+!!! terminal "code"
 
-# run dryrun/run again
-snakemake --dryrun --profile slurm --use-envmodules
-snakemake --profile slurm --use-envmodules
-```
+    ```diff
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash    
+    # run dryrun/run again
+    snakemake --dryrun --profile slurm --use-envmodules
+    snakemake --profile slurm --use-envmodules
+    ```
 
-Now when we have a look at the `../results/fastqc/` directory with:
+!!! terminal-2 "Now when we have a look at the `../results/fastqc/` directory with:"
 
-```bash
-ls -lh ../results/fastqc/
-```
+    ```bash
+    ls -lh ../results/fastqc/
+    ```
 
-These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 4.5 megabytes to 3 megabytes in this directory).
+    - These html files have been removed once Snakemake no longer needs the files for another rule/operation, and we've saved some space on our computer (from 4.5 megabytes to 3 megabytes in this directory).
 
-My output:
+    ??? success "output"
 
-{% capture e4dot15 %}
-
-```bash
-total 3.0M
--rw-rw----+ 1 lkemp nesi99991 327K May 11 13:26 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 327K May 11 13:26 NA24631_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 334K May 11 13:26 NA24694_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 328K May 11 13:26 NA24694_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 328K May 11 13:26 NA24695_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 330K May 11 13:26 NA24695_2_fastqc.zip
-```
+        ```bash
+        total 3.0M
+        -rw-rw----+ 1 lkemp nesi99991 327K May 11 13:26 NA24631_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 327K May 11 13:26 NA24631_2_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 334K May 11 13:26 NA24694_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 328K May 11 13:26 NA24694_2_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 328K May 11 13:26 NA24695_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 330K May 11 13:26 NA24695_2_fastqc.zip
+        ```
 
 
 
