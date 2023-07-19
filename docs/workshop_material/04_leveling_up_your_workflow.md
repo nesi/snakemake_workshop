@@ -800,153 +800,153 @@ Snakemake can't find our 'Key' - we haven't told Snakemake where our config file
 
 Alternatively, we can define our config file in our Snakefile in a situation where the configuration file is likely to always be named the same and be in the exact same location `../config/config.yaml` and you don't need the flexibility for the user to specify their own configuration files:
 
-```diff
-# define our configuration file
-+ configfile: "../config/config.yaml"
+??? code-compare "Edit snakefile"
 
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    ```diff
+    # define our configuration file
+    + configfile: "../config/config.yaml"
+    
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        params:
+            fastqc_params = config['PARAMS']['FASTQC']
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        params:
+            multiqc_params = config['PARAMS']['MULTIQC']
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+        params:
+            "--paired"
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+        resources:
+            cpus=8
+        shell:
+            "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+    ```
+    
+??? file-code "Current snakefile:"
 
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    ```python
+    # define our configuration file
+    configfile: "../config/config.yaml"
+    
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        params:
+            fastqc_params = config['PARAMS']['FASTQC']
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        params:
+            multiqc_params = config['PARAMS']['MULTIQC']
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+        params:
+            "--paired"
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+        resources:
+            cpus=8
+        shell:
+            "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+    ```
 
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    params:
-        fastqc_params = config['PARAMS']['FASTQC']
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    params:
-        multiqc_params = config['PARAMS']['MULTIQC']
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    params:
-        "--paired"
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-    resources:
-        cpus=8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
-```
-
-Current snakefile:
-
-{% capture e4dot10 %}
-
-```txt
-# define our configuration file
-configfile: "../config/config.yaml"
-
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    params:
-        fastqc_params = config['PARAMS']['FASTQC']
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    params:
-        multiqc_params = config['PARAMS']['MULTIQC']
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    params:
-        "--paired"
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-    resources:
-        cpus=8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
-```
-
-
-
-{% include exercise.html title="e4dot10" content=e4dot10%}
 <br>
 
 Then we don't need to specify where the configuration file is on the command line
 
-```diff
-# remove output of last run
-rm -r ../results/*
+!!! terminal "code"
 
-# run dryrun/run again
-- snakemake --dryrun --profile slurm --use-envmodules --configfile ../config/config.yaml
-- snakemake --profile slurm --use-envmodules --configfile ../config/config.yaml
-+ snakemake --dryrun --profile slurm --use-envmodules
-+ snakemake --profile slurm --use-envmodules
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```diff 
+    # run dryrun/run again
+    - snakemake --dryrun --profile slurm --use-envmodules --configfile ../config/config.yaml
+    - snakemake --profile slurm --use-envmodules --configfile ../config/config.yaml
+    + snakemake --dryrun --profile slurm --use-envmodules
+    + snakemake --profile slurm --use-envmodules
+    ```
 
 ## 4.4 Leave messages for the user
 
