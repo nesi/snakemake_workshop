@@ -193,7 +193,7 @@ First lets run the first step in our workflow ([fastqc](https://www.bioinformati
 
 Let's wrap this up in a Snakemake workflow! Start with the basic structure of a Snakefile:
 
-```diff
+```sh
 # target OUTPUT files for the whole workflow
 rule all:
     input:
@@ -209,14 +209,14 @@ rule my_rule:
         ""
 ```
 
-Now add our fastqc rule, let's:
+!!! scale-balance "Now add our fastqc rule, let's:"
 
-- Name the rule
-- Fill in the the input fastq files from the `data` directory (*path relative to the Snakefile*)
-- Fill in the output files (now you can see it's useful to know what files fastqc outputs!)
-- Set the number of threads
-- Write the fastqc shell command in the `shell:` section and pass the input/output variables to the shell command
-- Set the final output files for the whole workflow in `rule all:`
+    - Name the rule
+    - Fill in the the input fastq files from the `data` directory (*path relative to the Snakefile*)
+    - Fill in the output files (now you can see it's useful to know what files fastqc outputs!)
+    - Set the number of threads
+    - Write the fastqc shell command in the `shell:` section and pass the input/output variables to the shell command
+    - Set the final output files for the whole workflow in `rule all:`
 
 ---
 
@@ -1791,7 +1791,8 @@ With a high performance cluster such as [NeSi](https://www.nesi.org.nz/), you ca
 
 <p align="center"><b>Boom! Scalability here we come!</b><br></p>
 
-<p align="center"><img src="nesi_images/mahuika_maui_real.png" alt="drawing" width="800"/></p>
+<center>![image](./nesi_images/mahuika_maui_real.png){width="800"}
+
 
 To run the workflow on the cluster, we need to ensure that each step is run as a dedicated job in the queuing system of the HPC. On NeSI, the queuing system is managed by [Slurm](https://slurm.schedmd.com/documentation.html).
 
