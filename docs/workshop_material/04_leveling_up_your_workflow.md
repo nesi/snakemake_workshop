@@ -196,7 +196,6 @@ Here we give more CPU resources to `trim_galore` to make it run faster.
     default-resources: [cpus=2, mem_mb=512, time_min=10]
     cluster-cancel: scancel
     ```
-<br>
 
 ??? file-code "Current snakefile:"
 
