@@ -247,9 +247,8 @@ The use of the word `input` in `rule all` can be confusing, but in this context,
     +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
     ```
 
-Current snakefile:
 
-!!! terminal ""
+!!! file-code "Current snakefile:"
 
     ```txt
     # target OUTPUT files for the whole workflow
