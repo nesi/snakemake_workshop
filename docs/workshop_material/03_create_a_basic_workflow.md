@@ -591,65 +591,61 @@ fastqc worked because we loaded it in our current shell session. Let's specify t
         shell:
             "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
     ```
-
-
-
-{% include exercise.html title="e3dot14" content=e3dot14%}
 <br>
 
 Run again, now telling Snakemake to use [environment modules](https://nesi.github.io/hpc-intro/14-modules/index.html) to automatically load our software by using the `--use-envmodules` flag
 
-```diff
-# first remove output of last run
-rm -r ../results/*
+!!! terminal "code"
 
-# Run dryrun again
-- snakemake --dryrun --cores 2
-+ snakemake --dryrun --cores 2 --use-envmodules
-```
+    ```diff
+    # first remove output of last run
+    rm -r ../results/*
+    
+    # Run dryrun again
+    - snakemake --dryrun --cores 2
+    + snakemake --dryrun --cores 2 --use-envmodules
+    ```
 
-My output:
+    ??? success "output"
 
-{% capture e3dot15 %}
-
-```bash
-Building DAG of jobs...
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        1              2              2
-total         2              1              2
-
-
-[Wed May 11 12:13:52 2022]
-rule fastqc:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 1
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-
-[Wed May 11 12:13:52 2022]
-localrule all:
-    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 0
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        1              2              2
-total         2              1              2
-
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
-```
+        ```bash
+        Building DAG of jobs...
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        1              2              2
+        total         2              1              2
+        
+        
+        [Wed May 11 12:13:52 2022]
+        rule fastqc:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 1
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        
+        [Wed May 11 12:13:52 2022]
+        localrule all:
+            input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 0
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        1              2              2
+        total         2              1              2
+        
+        This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+        ```
 
 
 
-{% include exercise.html title="e3dot15" content=e3dot15%}
+
 <br>
 
 Let's do a full run
