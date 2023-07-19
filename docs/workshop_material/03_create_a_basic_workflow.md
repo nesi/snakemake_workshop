@@ -223,59 +223,57 @@ rule my_rule:
 The use of the word `input` in `rule all` can be confusing, but in this context, it is referring to the final *output* files of the whole workflow
 
 ---
-
-```diff
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-+       "../results/fastqc/NA24631_1_fastqc.html",
-+       "../results/fastqc/NA24631_2_fastqc.html",
-+       "../results/fastqc/NA24631_1_fastqc.zip",
-+       "../results/fastqc/NA24631_2_fastqc.zip"
-
-# workflow
-- rule my_rule:
-+ rule fastqc:
-    input:
-+       R1 = "../../data/NA24631_1.fastq.gz",
-+       R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-+       html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-+       zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-+   threads: 2
-    shell:
-+       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-```
+!!! terminal ""
+    ```diff
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+    +       "../results/fastqc/NA24631_1_fastqc.html",
+    +       "../results/fastqc/NA24631_2_fastqc.html",
+    +       "../results/fastqc/NA24631_1_fastqc.zip",
+    +       "../results/fastqc/NA24631_2_fastqc.zip"
+    
+    # workflow
+    - rule my_rule:
+    + rule fastqc:
+        input:
+    +       R1 = "../../data/NA24631_1.fastq.gz",
+    +       R2 = "../../data/NA24631_2.fastq.gz"
+        output:
+    +       html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+    +       zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+    +   threads: 2
+        shell:
+    +       "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+    ```
 
 Current snakefile:
 
-{% capture e3dot6 %}
+!!! terminal ""
 
-```txt
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/fastqc/NA24631_1_fastqc.html",
-        "../results/fastqc/NA24631_2_fastqc.html",
-        "../results/fastqc/NA24631_1_fastqc.zip",
-        "../results/fastqc/NA24631_2_fastqc.zip"
+    ```txt
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/fastqc/NA24631_1_fastqc.html",
+            "../results/fastqc/NA24631_2_fastqc.html",
+            "../results/fastqc/NA24631_1_fastqc.zip",
+            "../results/fastqc/NA24631_2_fastqc.zip"
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/NA24631_1.fastq.gz",
+            R2 = "../../data/NA24631_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+            zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+        threads: 2
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
+    ```
 
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/NA24631_1.fastq.gz",
-        R2 = "../../data/NA24631_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
-        zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-    threads: 2
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}"
-```
 
-
-
-{% include exercise.html title="e3dot6" content=e3dot6%}
 <br>
 
 When you have multiple input and output files:
