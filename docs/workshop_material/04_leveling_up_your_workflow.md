@@ -376,211 +376,206 @@ Note that `logs/slurm/slurm-%j-{rule}.out` contains a placeholder `{rule}`, whic
 Finally, to improve the communication between Snakemake and Slurm, we meed an additional script translating Slurm job status for Snakemake.
 The `--cluster-status` option is used to tell Snakemake which script to use.
 
-Create an executable `status.py` file
+!!! terminal-2 "Create an executable `status.py` file"
 
-```bash
-# create an empty file
-touch status.py
+    ```bash
+    # create an empty file
+    touch status.py
+    ```
+    ```bash
+    # make it executable
+    chmod +x status.py
+    ```
+    
+    - and copy the following content in it
+    
+    ```python
+    #!/usr/bin/env python
+    import subprocess
+    import sys
+    
+    jobid = sys.argv[1]
+    
+    output = str(subprocess.check_output("sacct -j %s --format State --noheader | head -1 | awk '{print $1}'" % jobid, shell=True).strip())
+    
+    running_status=["PENDING", "CONFIGURING", "COMPLETING", "RUNNING", "SUSPENDED"]
+    if "COMPLETED" in output:
+        print("success")
+    elif any(r in output for r in running_status):
+        print("running")
+    else:
+        print("failed")
+    ```
 
-# make it executable
-chmod +x status.py
-```
+??? code-compare "Then modify the profile `slurm/config.yaml` file"
 
-and copy the following content in it
+    ```diff
+    jobs: 20
+    cluster:
+        sbatch
+            --parsable
+            --time {resources.time_min}
+            --mem {resources.mem_mb}
+            --cpus-per-task {resources.cpus}
+            --output logs/slurm/slurm-%j-{rule}.out
+            --account nesi99991
+    default-resources: [cpus=2, mem_mb=512, time_min=10]
+    cluster-cancel: scancel
+    + cluster-status: ./status.py
+    ```
 
-```
-#!/usr/bin/env python
-import subprocess
-import sys
+??? file-code "Current slurm profile:"
 
-jobid = sys.argv[1]
+    ```
+    jobs: 20
+    cluster:
+        sbatch
+            --parsable
+            --time {resources.time_min}
+            --mem {resources.mem_mb}
+            --cpus-per-task {resources.cpus}
+            --output logs/slurm/slurm-%j-{rule}.out
+            --account nesi99991
+    default-resources: [cpus=2, mem_mb=512, time_min=10]
+    cluster-cancel: scancel
+    cluster-status: ./status.py
+    ```
 
-output = str(subprocess.check_output("sacct -j %s --format State --noheader | head -1 | awk '{print $1}'" % jobid, shell=True).strip())
-
-running_status=["PENDING", "CONFIGURING", "COMPLETING", "RUNNING", "SUSPENDED"]
-if "COMPLETED" in output:
-    print("success")
-elif any(r in output for r in running_status):
-    print("running")
-else:
-    print("failed")
-```
-
-Then modify the profile `slurm/config.yaml` file
-
-```diff
-jobs: 20
-cluster:
-    sbatch
-        --parsable
-        --time {resources.time_min}
-        --mem {resources.mem_mb}
-        --cpus-per-task {resources.cpus}
-        --output logs/slurm/slurm-%j-{rule}.out
-        --account nesi99991
-default-resources: [cpus=2, mem_mb=512, time_min=10]
-cluster-cancel: scancel
-+ cluster-status: ./status.py
-```
-
-Current slurm profile:
-
-{% capture e4dot6 %}
-
-```
-jobs: 20
-cluster:
-    sbatch
-        --parsable
-        --time {resources.time_min}
-        --mem {resources.mem_mb}
-        --cpus-per-task {resources.cpus}
-        --output logs/slurm/slurm-%j-{rule}.out
-        --account nesi99991
-default-resources: [cpus=2, mem_mb=512, time_min=10]
-cluster-cancel: scancel
-cluster-status: ./status.py
-```
-
-
-
-{% include exercise.html title="e4dot6" content=e4dot6%}
 <br>
 
 Once all of this is in place, we can:
 
-- submit Slurm jobs with the right resources per Snakemake rule,
-- cancel the workflow and Slurms jobs using CTRL-C,
-- keep all slurm jobs log files in a dedicated folder,
-- and make sure Snakemake reports Slurm jobs failures.
+!!! quote ""
 
-> **Exercise:**
->
-> Run the snakemake workflow with Slurm jobs then use `scancel JOBID` to cancel some Slurm. See how Snakemake reacts with and without the `status.py` script.
+    - submit Slurm jobs with the right resources per Snakemake rule,
+    - cancel the workflow and Slurms jobs using CTRL-C,
+    - keep all slurm jobs log files in a dedicated folder,
+    - and make sure Snakemake reports Slurm jobs failures.
+
+!!! question "Exercise"
+
+    Run the snakemake workflow with Slurm jobs then use `scancel JOBID` to cancel some Slurm. See how Snakemake reacts with and without the `status.py` script.
 
 
 ## 4.2 Pull out parameters
 
-```diff
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+??? code-compare "Edit snakefile"
+    
+    ```diff
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    +   params:
+    +       "--paired"
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+        resources:
+            cpus=8
+        shell:
+    -       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+    +       "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+    ```
+    
+??? file-code "Current snakefile:"
 
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    ```python
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+        params:
+            "--paired"
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+        resources:
+            cpus=8
+        shell:
+            "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+    ```
 
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-+   params:
-+       "--paired"
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-    resources:
-        cpus=8
-    shell:
--       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-+       "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
-```
-
-Current snakefile:
-
-{% capture e4dot7 %}
-
-```txt
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    params:
-        "--paired"
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-    resources:
-        cpus=8
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
-```
-
-
-
-{% include exercise.html title="e4dot7" content=e4dot7%}
 <br>
 
 Run a dryrun to check it works
