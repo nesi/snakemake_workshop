@@ -607,15 +607,16 @@
   }
   .md-typeset .admonition.circle-info,
   .md-typeset details.circle-info {
-    border-color: rgb(238, 156, 131);
+    border-color: rgb(55, 52, 238);
   }
   .md-typeset .circle-info > .admonition-title,
   .md-typeset .circle-info > summary {
-    background-color: rgba(240, 199, 19, 0.459);
+    color:rgb(230, 230, 236);
+    background-color: rgba(9, 23, 143, 0.959);
   }
   .md-typeset .circle-info > .admonition-title::before,
   .md-typeset .circle-info > summary::before {
-    background-color: rgb(235, 98, 80);
+    background-color: rgb(217, 235, 117);
     -webkit-mask-image: var(--md-admonition-icon--circle-info);
             mask-image: var(--md-admonition-icon--circle-info);
   }
