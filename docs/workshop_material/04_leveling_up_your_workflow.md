@@ -1311,11 +1311,9 @@ Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping
             "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
     ```
 
-Current snakefile:
+??? file-code "Current snakefile:"
 
-{% capture e4dot14 %}
-
-```txt
+```python
 # define our configuration file
 configfile: "../config/config.yaml"
 
