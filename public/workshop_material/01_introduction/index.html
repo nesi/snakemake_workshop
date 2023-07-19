@@ -6,19 +6,20 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="NeSI" name="author"/>
-<link href="https://nesi.github.io/snakemake_workshop/" rel="canonical"/>
-<link href="workshop_material/01_introduction/" rel="next"/>
-<link href="theme_images_nesi_logo.png" rel="icon"/>
+<link href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction/" rel="canonical"/>
+<link href="../.." rel="prev"/>
+<link href="../02_setup/" rel="next"/>
+<link href="../../theme_images_nesi_logo.png" rel="icon"/>
 <meta content="mkdocs-1.4.3, mkdocs-material-9.1.15" name="generator"/>
-<title>Automate Your Workflow With Snakemake</title>
-<link href="assets/stylesheets/main.26e3688c.min.css" rel="stylesheet"/>
-<link href="assets/stylesheets/palette.ecc896b0.min.css" rel="stylesheet"/>
+<title>01 - Introduction - Automate Your Workflow With Snakemake</title>
+<link href="../../assets/stylesheets/main.26e3688c.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ecc896b0.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Mukta:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Mukta";--md-code-font:"Fira Code"}</style>
-<link href="stylesheets/extra.css" rel="stylesheet"/>
-<script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-<link href="assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -29,14 +30,14 @@
                 body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
                 body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
                 body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-                </style><script src="assets/javascripts/glightbox.min.js"></script></head>
+                </style><script src="../../assets/javascripts/glightbox.min.js"></script></head>
 <body data-md-color-accent="indigo" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr">
 <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#online-workflow-code-along-introduction-to-snakemake">
+<a class="md-skip" href="#01-introduction">
           Skip to content
         </a>
 </div>
@@ -44,8 +45,8 @@
 </div>
 <header class="md-header md-header--shadow" data-md-component="header">
 <nav aria-label="Header" class="md-header__inner md-grid">
-<a aria-label="Automate Your Workflow With Snakemake" class="md-header__button md-logo" data-md-component="logo" href="." title="Automate Your Workflow With Snakemake">
-<img alt="logo" src="theme_images/nesi_logo.png"/>
+<a aria-label="Automate Your Workflow With Snakemake" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Automate Your Workflow With Snakemake">
+<img alt="logo" src="../../theme_images/nesi_logo.png"/>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
@@ -60,7 +61,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Online workflow code-along: Introduction to Snakemake
+              01 - Introduction
             
           </span>
 </div>
@@ -130,8 +131,8 @@
 <div class="md-sidebar__inner">
 <nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="Automate Your Workflow With Snakemake" class="md-nav__button md-logo" data-md-component="logo" href="." title="Automate Your Workflow With Snakemake">
-<img alt="logo" src="theme_images/nesi_logo.png"/>
+<a aria-label="Automate Your Workflow With Snakemake" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Automate Your Workflow With Snakemake">
+<img alt="logo" src="../../theme_images/nesi_logo.png"/>
 </a>
     Automate Your Workflow With Snakemake
   </label>
@@ -146,14 +147,31 @@
 </a>
 </div>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+        Online workflow code-along: Introduction to Snakemake
+      </a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Workshop material
+          <span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+          Workshop material
+        </label>
+<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
-          Online workflow code-along: Introduction to Snakemake
+          01 - Introduction
           <span class="md-nav__icon md-icon"></span>
 </label>
-<a class="md-nav__link md-nav__link--active" href=".">
-        Online workflow code-along: Introduction to Snakemake
+<a class="md-nav__link md-nav__link--active" href="./">
+        01 - Introduction
       </a>
 <nav aria-label="Table of contents" class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">
@@ -162,77 +180,55 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#automate-your-workflow-with-snakemake">
-    Automate Your Workflow With Snakemake
+<a class="md-nav__link" href="#benefits-of-workflow-languages">
+    Benefits of workflow languages
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#who-should-attend">
-    Who should attend
+<a class="md-nav__link" href="#benefits-of-snakemake">
+    Benefits of Snakemake
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#attribution-notice">
-    Attribution notice
+<a class="md-nav__link" href="#other-workflow-languages">
+    Other workflow languages
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#workshop">
-    Workshop
+<a class="md-nav__link" href="#this-workshop">
+    This workshop
   </a>
 </li>
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--section md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
-<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-          Workshop material
-          <span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_2">
-<span class="md-nav__icon md-icon"></span>
-          Workshop material
-        </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/01_introduction/">
-        01 - Introduction
-      </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/02_setup/">
+<a class="md-nav__link" href="../02_setup/">
         02 - Setup
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/03_create_a_basic_workflow/">
+<a class="md-nav__link" href="../03_create_a_basic_workflow/">
         03 - Create a basic workflow
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/04_leveling_up_your_workflow/">
+<a class="md-nav__link" href="../04_leveling_up_your_workflow/">
         04 - Leveling up your workflow!
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/05_we_want_more/">
+<a class="md-nav__link" href="../05_we_want_more/">
         05 - We want more!
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/99_appendix_setup_on_your_machine/">
+<a class="md-nav__link" href="../99_appendix_setup_on_your_machine/">
         Appendix - Setup on your machine using conda
       </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="workshop_material/99_appendix_use_conda_environments/">
+<a class="md-nav__link" href="../99_appendix_use_conda_environments/">
         Appendix - Use conda environments
       </a>
 </li>
@@ -254,28 +250,23 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#automate-your-workflow-with-snakemake">
-    Automate Your Workflow With Snakemake
+<a class="md-nav__link" href="#benefits-of-workflow-languages">
+    Benefits of workflow languages
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#who-should-attend">
-    Who should attend
+<a class="md-nav__link" href="#benefits-of-snakemake">
+    Benefits of Snakemake
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#attribution-notice">
-    Attribution notice
+<a class="md-nav__link" href="#other-workflow-languages">
+    Other workflow languages
   </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#setup">
-    Setup
-  </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#workshop">
-    Workshop
+<a class="md-nav__link" href="#this-workshop">
+    This workshop
   </a>
 </li>
 </ul>
@@ -285,53 +276,64 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="online-workflow-code-along-introduction-to-snakemake">Online workflow code-along: Introduction to Snakemake<a class="headerlink" href="#online-workflow-code-along-introduction-to-snakemake" title="Permanent link">¶</a></h1>
-<h2 id="automate-your-workflow-with-snakemake">Automate Your Workflow With Snakemake<a class="headerlink" href="#automate-your-workflow-with-snakemake" title="Permanent link">¶</a></h2>
-<p>Are you working with big data?</p>
-<p>Do you need to pass your data through various software?</p>
-<p>Oh wait! Have I updated this output file?</p>
-<p>If you’ve ever been in this situation, you would know that it can become quite difficult to maintain consistency and accuracy.</p>
-<p>The more manual steps we execute, the more human errors that are inevitably introduced into our analysis - hampering accuracy and reproducibility.</p>
-<p>Sit back and let the machines do their magic.</p>
-<p>Workflow languages automate your data analysis workflow. They also ensure that all your analysis logs are captured in an organized fashion, explicitly outline the software used, capture the input and output files at each step and even allow you to restart the pipeline from where it errored out. The process ensures higher productivity and decreases loss of resources re-running your workflow from the start. Additionally, when your data inevitably becomes big data, workflow languages allow you to easily scale up - meaning, you can move your analysis to a high performance cluster (HPC) without stress!</p>
-<p>In this hands-on workshop, ESR’s Leah Kemp and the NeSI team will guide you through an introduction to Snakemake, a workflow language with its basis in the popular programming language, Python. Attendees can expect to learn:</p>
+<h1 id="01-introduction">01 - Introduction<a class="headerlink" href="#01-introduction" title="Permanent link">¶</a></h1>
+<p style="text-align:left;">
+<b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-green);font-weight:bold">«Home </a></b>
+<span style="float:right;">
+<b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html" style="background: var(--bs-green);font-weight:bold">2 - Setup »</a></b>
+</span>
+</p>
 <ul>
-<li>The benefits of using Snakemake or other workflow languages,</li>
-<li>How to create a workflow to organize your computations, and</li>
-<li>How an HPC scheduler (such as Slurm) fits into your workflow</li>
+<li toc="toc">Do not remove this line (it will not be displayed)</li>
 </ul>
-<h2 id="who-should-attend">Who should attend<a class="headerlink" href="#who-should-attend" title="Permanent link">¶</a></h2>
-<p>This Workshop is intended for anyone who has several steps in their data analysis workflow. It is a hands-on workshop, meaning you will be coding along with Leah and the NeSI team.</p>
-<h2 id="attribution-notice">Attribution notice<a class="headerlink" href="#attribution-notice" title="Permanent link">¶</a></h2>
+<h2 id="benefits-of-workflow-languages">Benefits of workflow languages<a class="headerlink" href="#benefits-of-workflow-languages" title="Permanent link">¶</a></h2>
 <ul>
-<li>Material used in this workshop is based on the following repository<ul>
-<li>Author     : Leah Kemp (ESR)</li>
-<li>Repository : <a href="https://leahkemp.github.io/RezBaz2020_snakemake_workshop/">https://leahkemp.github.io/RezBaz2020_snakemake_workshop/</a></li>
+<li>Reproducibility</li>
+<li>Automation</li>
+<li>Portability</li>
+<li>Scalability</li>
+<li>Interpretability</li>
 </ul>
-</li>
-</ul>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
-<p>This is an online workshop that will use Jupyter on NeSI. Attendees will be required to set up an account on NeSI in order to participate. Full instructions will be sent to registrants closer to the time of the workshop.</p>
-<p>If you have any questions or would like more information about this session, please email <a href="mailto:training@nesi.org.nz">training@nesi.org.nz</a></p>
-<h2 id="workshop">Workshop<a class="headerlink" href="#workshop" title="Permanent link">¶</a></h2>
-<p><strong>Workshop sections:</strong></p>
+<p>A good paper on <a href="https://link.springer.com/protocol/10.1007/978-1-4939-9074-0_24">Scalable Workflows and Reproducible Data Analysis for Genomics</a> - although genomics focussed, it covers a lot of the concepts we will touch on in this workshop</p>
+<h2 id="benefits-of-snakemake">Benefits of Snakemake<a class="headerlink" href="#benefits-of-snakemake" title="Permanent link">¶</a></h2>
+<p><a class="glightbox" data-desc-position="bottom" data-height="auto" data-width="100%" href="https://avatars2.githubusercontent.com/u/33450111?s=400&amp;v=4"><img alt="Snakemake" src="https://avatars2.githubusercontent.com/u/33450111?s=400&amp;v=4" title="Snakemake"/></a></p>
 <ul>
-<li><a href="workshop_material/01_introduction/">01 - Introduction</a></li>
-<li><a href="workshop_material/02_setup/">02 - Setup</a></li>
-<li><a href="workshop_material/03_create_a_basic_workflow/">03 - Create a basic workflow</a></li>
-<li><a href="workshop_material/04_leveling_up_your_workflow/">04 - Leveling up your workflow</a></li>
-<li><a href="workshop_material/05_we_want_more/">05 - We want more!</a></li>
+<li>Based in the popular (and widely used) programming language, Python</li>
+<li>Great documentation, actively maintained (but so are the other workflow languages mentioned below)</li>
+<li>Easier to learn (particularly if you're familiar with python)</li>
+<li>Flexible</li>
 </ul>
-<p><strong>The workflows we will create:</strong></p>
+<p>See what other people think:</p>
 <ul>
-<li><a href="https://github.com/nesi/snakemake_workshop/tree/main/basic_demo_workflow">Basic demo workflow</a></li>
-<li><a href="https://github.com/nesi/snakemake_workshop/tree/main/leveled_up_demo_workflow">Leveled up demo workflow</a></li>
+<li><a href="https://www.biostars.org/p/345998/">https://www.biostars.org/p/345998/</a></li>
+<li><a href="https://www.reddit.com/r/bioinformatics/comments/f3rxel/snakemake_vs_nextflow/">https://www.reddit.com/r/bioinformatics/comments/f3rxel/snakemake_vs_nextflow/</a></li>
+<li><a href="https://www.biostars.org/p/258436/">https://www.biostars.org/p/258436/</a></li>
 </ul>
-<p><strong>Appendices:</strong></p>
+<h2 id="other-workflow-languages">Other workflow languages<a class="headerlink" href="#other-workflow-languages" title="Permanent link">¶</a></h2>
+<p>Choose your favourite flavour of workflow language!</p>
 <ul>
-<li><a href="workshop_material/99_appendix_setup_on_your_machine/">Setup for running on your machine using conda</a></li>
-<li><a href="workshop_material/99_appendix_use_conda_environments/">Use conda environments</a></li>
+<li><a href="https://www.commonwl.org/">Common Workflow Language (CWL)</a></li>
+<li><a href="https://www.nextflow.io/">Nextflow</a></li>
+<li><a href="https://openwdl.org/">Workflow Description Language (WDL)</a></li>
+<li><a href="https://workflows.guix.info/">Guix Workflow Language (GWL)</a></li>
 </ul>
+<p>The real point is to use a workflow language (where applicable) and just use the flavour you like!</p>
+<h2 id="this-workshop">This workshop<a class="headerlink" href="#this-workshop" title="Permanent link">¶</a></h2>
+<p>This workshop is designed with someone who had some familiarity with the command line. However, I've tried to make it as accessible as possible to anyone who wants to learn Snakemake.</p>
+<p>Throughout this workshop, I'll be indicating the code to remove and the code to insert (relative to the previous step) with the following:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="gd">- Remove this line of code</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="gi">+ Add this line of code</span>
+</code></pre></div>
+<p><em>However, the actual <code>+</code> and <code>-</code> symbols should not be included in your own code</em></p>
+<p>At each section of the workshop you can find a drop down box under "Current snakefile:" that will contain the main Snakefile that comprises the pipeline as a plain text file to copy and paste from if you need to catch up.</p>
+<hr/>
+<p style="text-align:left;">
+<b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-green);font-weight:bold">«Home </a></b>
+<span style="float:right;">
+<b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html" style="background: var(--bs-green);font-weight:bold">2 - Setup »</a></b>
+</span>
+</p>
+<p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>
 </article>
 </div>
 </div>
@@ -342,13 +344,26 @@
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Next: 01 - Introduction" class="md-footer__link md-footer__link--next" href="workshop_material/01_introduction/" rel="next">
+<a aria-label="Previous: Online workflow code-along: Introduction to Snakemake" class="md-footer__link md-footer__link--prev" href="../.." rel="prev">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                Online workflow code-along: Introduction to Snakemake
+              </div>
+</div>
+</a>
+<a aria-label="Next: 02 - Setup" class="md-footer__link md-footer__link--next" href="../02_setup/" rel="next">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                01 - Introduction
+                02 - Setup
               </div>
 </div>
 <div class="md-footer__button md-icon">
@@ -376,9 +391,9 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": ".", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
-<script src="assets/javascripts/bundle.b4d07000.min.js"></script>
-<script src="javascripts/mathjax.js"></script>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+<script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+<script src="../../javascripts/mathjax.js"></script>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
