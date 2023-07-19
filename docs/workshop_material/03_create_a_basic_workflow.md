@@ -838,107 +838,99 @@ Different ways to write log files:
 
 ---
 
-Run again
+!!! terminal-2 "Run again"
 
-```bash
-# remove output of last run
-rm -r ../results/*
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash
+    # run dryrun/run again
+    snakemake --dryrun --cores 2 --use-envmodules
+    snakemake --cores 2 --use-envmodules
+    ```
 
-# run dryrun/run again
-snakemake --dryrun --cores 2 --use-envmodules
-snakemake --cores 2 --use-envmodules
-```
+    ??? success "output"
 
-My output:
+        ```bash
+        Building DAG of jobs...
+        Using shell: /usr/bin/bash
+        Provided cores: 2
+        Rules claiming more threads will be scaled down.
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        1              2              2
+        total         2              1              2
+        
+        Select jobs to execute...
+        
+        [Wed May 11 12:15:16 2022]
+        rule fastqc:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            log: logs/fastqc/NA24631.log
+            jobid: 1
+            threads: 2
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Activating environment modules: FastQC/0.11.9
+        
+        The following modules were not unloaded:
+           (Use "module --force purge" to unload all):
+        
+          1) XALT/minimal   2) slurm   3) NeSI
+        [Wed May 11 12:15:20 2022]
+        Finished job 1.
+        1 of 2 steps (50%) done
+        Select jobs to execute...
+        
+        [Wed May 11 12:15:20 2022]
+        localrule all:
+            input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 0
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        [Wed May 11 12:15:20 2022]
+        Finished job 0.
+        2 of 2 steps (100%) done
+        Complete log: .snakemake/log/2022-05-11T121516.368334.snakemake.log
+        ```
 
-{% capture e3dot18 %}
-
-```bash
-Building DAG of jobs...
-Using shell: /usr/bin/bash
-Provided cores: 2
-Rules claiming more threads will be scaled down.
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        1              2              2
-total         2              1              2
-
-Select jobs to execute...
-
-[Wed May 11 12:15:16 2022]
-rule fastqc:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    log: logs/fastqc/NA24631.log
-    jobid: 1
-    threads: 2
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Activating environment modules: FastQC/0.11.9
-
-The following modules were not unloaded:
-   (Use "module --force purge" to unload all):
-
-  1) XALT/minimal   2) slurm   3) NeSI
-[Wed May 11 12:15:20 2022]
-Finished job 1.
-1 of 2 steps (50%) done
-Select jobs to execute...
-
-[Wed May 11 12:15:20 2022]
-localrule all:
-    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 0
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-[Wed May 11 12:15:20 2022]
-Finished job 0.
-2 of 2 steps (100%) done
-Complete log: .snakemake/log/2022-05-11T121516.368334.snakemake.log
-```
-
-
-
-{% include exercise.html title="e3dot18" content=e3dot18%}
 <br>
 
-We now have a log file, lets have a look at the first 10 lines of our log with:
+!!! terminal-2 "We now have a log file, lets have a look at the first 10 lines of our log with:"
 
-```bash
-head ./logs/fastqc/NA24631.log
-```
+    ```bash
+    head ./logs/fastqc/NA24631.log
+    ```
 
-My output:
+    ??? success "output"
 
-{% capture e3dot19 %}
-
-```bash
-Started analysis of NA24631_1.fastq.gz
-Approx 5% complete for NA24631_1.fastq.gz
-Approx 10% complete for NA24631_1.fastq.gz
-Approx 15% complete for NA24631_1.fastq.gz
-Approx 20% complete for NA24631_1.fastq.gz
-Approx 25% complete for NA24631_1.fastq.gz
-Approx 30% complete for NA24631_1.fastq.gz
-Approx 35% complete for NA24631_1.fastq.gz
-Approx 40% complete for NA24631_1.fastq.gz
-Approx 45% complete for NA24631_1.fastq.gz
-```
+        ```bash
+        Started analysis of NA24631_1.fastq.gz
+        Approx 5% complete for NA24631_1.fastq.gz
+        Approx 10% complete for NA24631_1.fastq.gz
+        Approx 15% complete for NA24631_1.fastq.gz
+        Approx 20% complete for NA24631_1.fastq.gz
+        Approx 25% complete for NA24631_1.fastq.gz
+        Approx 30% complete for NA24631_1.fastq.gz
+        Approx 35% complete for NA24631_1.fastq.gz
+        Approx 40% complete for NA24631_1.fastq.gz
+        Approx 45% complete for NA24631_1.fastq.gz
+        ```
 
 
-
-{% include exercise.html title="e3dot19" content=e3dot19%}
 <br>
 
 <p align="center"><b>We have logs. Tidy logs.</b><br></p>
 
-![logs](https://miro.medium.com/max/2560/1*ohWUB5snJRaMe-vJ8HaoiA.png)
+<center>![logs](https://miro.medium.com/max/2560/1*ohWUB5snJRaMe-vJ8HaoiA.png){width="400"}</center>
 
-> **Exercise:**
->
-> Try creating an error in the shell command (for example remove the `-o` flag) and use the three different syntaxes for writing to your log file. What is and isn't printed to your screen and to your log file?
+!!! question "Exercise:"
+
+    Try creating an error in the shell command (for example remove the `-o` flag) and use the three different syntaxes for writing to your log file. What is and isn't printed to your screen and to your log file?
 
 ## 3.11 Scale up to analyse all of our samples
 
@@ -951,76 +943,76 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 - Use the [expand function](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#the-expand-function) (`expand()`) function to tell snakemake that `{sample}` is what we defined in our global wildcard `SAMPLES,`
 - Snakemake can figure out what `{sample}` is in our rule since it's defined in the targets in `rule all:`
 
-```diff
-# define samples from data directory using wildcards
-+ SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+!!! terminal ""
 
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
--       "../results/fastqc/NA24631_1_fastqc.html",
--       "../results/fastqc/NA24631_2_fastqc.html",
--       "../results/fastqc/NA24631_1_fastqc.zip",
--       "../results/fastqc/NA24631_2_fastqc.zip"
-+       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-+       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-+       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-+       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+    ```diff
+    # define samples from data directory using wildcards
+    + SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+    -       "../results/fastqc/NA24631_1_fastqc.html",
+    -       "../results/fastqc/NA24631_2_fastqc.html",
+    -       "../results/fastqc/NA24631_1_fastqc.zip",
+    -       "../results/fastqc/NA24631_2_fastqc.zip"
+    +       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+    +       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+    +       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+    +       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+    -       R1 = "../../data/NA24631_1.fastq.gz",
+    -       R2 = "../../data/NA24631_2.fastq.gz"
+    +       R1 = "../../data/{sample}_1.fastq.gz",
+    +       R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+    -       html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
+    -       zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
+    +       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+    +       zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+    -       "logs/fastqc/NA24631.log"
+    +       "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+    ```
 
-# workflow
-rule fastqc:
-    input:
--       R1 = "../../data/NA24631_1.fastq.gz",
--       R2 = "../../data/NA24631_2.fastq.gz"
-+       R1 = "../../data/{sample}_1.fastq.gz",
-+       R2 = "../../data/{sample}_2.fastq.gz"
-    output:
--       html = ["../results/fastqc/NA24631_1_fastqc.html", "../results/fastqc/NA24631_2_fastqc.html"],
--       zip = ["../results/fastqc/NA24631_1_fastqc.zip", "../results/fastqc/NA24631_2_fastqc.zip"]
-+       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-+       zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
--       "logs/fastqc/NA24631.log"
-+       "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-```
+!!! file-code "Current snakefile:"
 
-Current snakefile:
-
-{% capture e3dot20 %}
-
-```txt
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-```
+    ```txt
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+    ```
 
 
 
