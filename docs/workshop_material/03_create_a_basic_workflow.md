@@ -1513,61 +1513,63 @@ Let's add the rest of the rules. We want to get to:
 
 We currently have fastqc and multiqc, so we still need to add trim_galore
 
-```diff
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
--       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
-+       "../results/multiqc_report.html",
-+       expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    shell:
-        "multiqc {input} -o ../results/ &> {log}"
-
-+ rule trim_galore:
-+   input:
-+       ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-+   output:
-+       ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-+   log:
-+       "logs/trim_galore/{sample}.log"
-+   envmodules:
-+       "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-+   threads: 2
-+   shell:
-+       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
-```
+??? code-compare "Edit snakefile"
+    
+    ```diff
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+    -       expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+    -       expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+    -       expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+    -       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+    +       "../results/multiqc_report.html",
+    +       expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        shell:
+            "multiqc {input} -o ../results/ &> {log}"
+    
+    + rule trim_galore:
+    +   input:
+    +       ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+    +   output:
+    +       ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+    +   log:
+    +       "logs/trim_galore/{sample}.log"
+    +   envmodules:
+    +       "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+    +   threads: 2
+    +   shell:
+    +       "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
+    ```
 
 ??? file-code "Current snakefile:"
 
