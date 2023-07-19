@@ -784,16 +784,19 @@ PARAMS:
 
 Snakemake can't find our 'Key' - we haven't told Snakemake where our config file is so it can't find our config variables. We can do this by passing the location of our config file to the `--configfile` flag
 
-```diff
-# remove output of last run
-rm -r ../results/
+!!! terminal "code"
 
-# run dryrun/run again
-- snakemake --dryrun --profile slurm --use-envmodules
-- snakemake --profile slurm --use-envmodules
-+ snakemake --dryrun --profile slurm --use-envmodules --configfile ../config/config.yaml
-+ snakemake --profile slurm --use-envmodules --configfile ../config/config.yaml
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/
+    ```
+    ```diff
+    # run dryrun/run again
+    - snakemake --dryrun --profile slurm --use-envmodules
+    - snakemake --profile slurm --use-envmodules
+    + snakemake --dryrun --profile slurm --use-envmodules --configfile ../config/config.yaml
+    + snakemake --profile slurm --use-envmodules --configfile ../config/config.yaml
+    ```
 
 Alternatively, we can define our config file in our Snakefile in a situation where the configuration file is likely to always be named the same and be in the exact same location `../config/config.yaml` and you don't need the flexibility for the user to specify their own configuration files:
 
