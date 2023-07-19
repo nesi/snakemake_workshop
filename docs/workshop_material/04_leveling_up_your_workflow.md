@@ -1098,114 +1098,111 @@ We can provide the user of our workflow more information on what is happening at
             "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
     ```
     
-
-
-{% include exercise.html title="e4dot11" content=e4dot11%}
 <br>
 
-```diff
-# remove output of last run
-rm -r ../results/*
+!!! terminal "code"
 
-# run dryrun/run again
-snakemake --dryrun --profile slurm --use-envmodules
-snakemake --profile slurm --use-envmodules
-```
+    ```diff
+    # remove output of last run
+    rm -r ../results/*
+    ```
 
-Now our messages are printed to the screen as our workflow runs
+    ```bash
+    # run dryrun/run again
+    snakemake --dryrun --profile slurm --use-envmodules
+    snakemake --profile slurm --use-envmodules
+    ```
+    
+    - Now our messages are printed to the screen as our workflow runs
 
-My output:
+    ??? success "output"
 
-{% capture e4dot12 %}
-
-```bash
-Building DAG of jobs...
-Using shell: /usr/bin/bash
-Provided cluster nodes: 20
-Job stats:
-job            count    min threads    max threads
------------  -------  -------------  -------------
-all                1              1              1
-fastqc             3              2              2
-multiqc            1              1              1
-trim_galore        3              2              2
-total              8              1              2
-
-Select jobs to execute...
-
-[Wed May 11 13:20:52 2022]
-Job 4: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
-
-Submitted job 4 with external jobid '26763840'.
-
-[Wed May 11 13:20:52 2022]
-Job 6: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24695.log. Using 2 threads.
-
-Submitted job 6 with external jobid '26763841'.
-
-[Wed May 11 13:20:52 2022]
-Job 2: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
-
-Submitted job 2 with external jobid '26763842'.
-
-[Wed May 11 13:20:52 2022]
-Job 3: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
-
-Submitted job 3 with external jobid '26763843'.
-
-[Wed May 11 13:20:52 2022]
-Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
-
-Submitted job 5 with external jobid '26763844'.
-
-[Wed May 11 13:20:52 2022]
-Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
-
-Submitted job 7 with external jobid '26763845'.
-[Wed May 11 13:22:08 2022]
-Finished job 4.
-1 of 8 steps (12%) done
-[Wed May 11 13:22:08 2022]
-Finished job 6.
-2 of 8 steps (25%) done
-[Wed May 11 13:22:08 2022]
-Finished job 2.
-3 of 8 steps (38%) done
-[Wed May 11 13:22:08 2022]
-Finished job 3.
-4 of 8 steps (50%) done
-Select jobs to execute...
-
-[Wed May 11 13:22:09 2022]
-Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
-
-Submitted job 1 with external jobid '26763848'.
-[Wed May 11 13:22:09 2022]
-Finished job 5.
-5 of 8 steps (62%) done
-[Wed May 11 13:22:09 2022]
-Finished job 7.
-6 of 8 steps (75%) done
-[Wed May 11 13:24:21 2022]
-Finished job 1.
-7 of 8 steps (88%) done
-Select jobs to execute...
-
-[Wed May 11 13:24:21 2022]
-localrule all:
-    input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
-    jobid: 0
-    resources: mem_mb=512, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281, cpus=2, time_min=10
-
-[Wed May 11 13:24:21 2022]
-Finished job 0.
-8 of 8 steps (100%) done
-Complete log: .snakemake/log/2022-05-11T132052.454902.snakemake.log
-```
+        ```bash
+        Building DAG of jobs...
+        Using shell: /usr/bin/bash
+        Provided cluster nodes: 20
+        Job stats:
+        job            count    min threads    max threads
+        -----------  -------  -------------  -------------
+        all                1              1              1
+        fastqc             3              2              2
+        multiqc            1              1              1
+        trim_galore        3              2              2
+        total              8              1              2
+        
+        Select jobs to execute...
+        
+        [Wed May 11 13:20:52 2022]
+        Job 4: Undertaking quality control checks ../../data/NA24694_1.fastq.gz ../../data/NA24694_2.fastq.gz
+        
+        Submitted job 4 with external jobid '26763840'.
+        
+        [Wed May 11 13:20:52 2022]
+        Job 6: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24695.log. Using 2 threads.
+        
+        Submitted job 6 with external jobid '26763841'.
+        
+        [Wed May 11 13:20:52 2022]
+        Job 2: Undertaking quality control checks ../../data/NA24631_1.fastq.gz ../../data/NA24631_2.fastq.gz
+        
+        Submitted job 2 with external jobid '26763842'.
+        
+        [Wed May 11 13:20:52 2022]
+        Job 3: Undertaking quality control checks ../../data/NA24695_1.fastq.gz ../../data/NA24695_2.fastq.gz
+        
+        Submitted job 3 with external jobid '26763843'.
+        
+        [Wed May 11 13:20:52 2022]
+        Job 5: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24631.log. Using 2 threads.
+        
+        Submitted job 5 with external jobid '26763844'.
+        
+        [Wed May 11 13:20:52 2022]
+        Job 7: Trimming using these parameter: --paired. Writing logs to logs/trim_galore/NA24694.log. Using 2 threads.
+        
+        Submitted job 7 with external jobid '26763845'.
+        [Wed May 11 13:22:08 2022]
+        Finished job 4.
+        1 of 8 steps (12%) done
+        [Wed May 11 13:22:08 2022]
+        Finished job 6.
+        2 of 8 steps (25%) done
+        [Wed May 11 13:22:08 2022]
+        Finished job 2.
+        3 of 8 steps (38%) done
+        [Wed May 11 13:22:08 2022]
+        Finished job 3.
+        4 of 8 steps (50%) done
+        Select jobs to execute...
+        
+        [Wed May 11 13:22:09 2022]
+        Job 1: Compiling a HTML report for quality control checks. Writing to ../results/multiqc_report.html.
+        
+        Submitted job 1 with external jobid '26763848'.
+        [Wed May 11 13:22:09 2022]
+        Finished job 5.
+        5 of 8 steps (62%) done
+        [Wed May 11 13:22:09 2022]
+        Finished job 7.
+        6 of 8 steps (75%) done
+        [Wed May 11 13:24:21 2022]
+        Finished job 1.
+        7 of 8 steps (88%) done
+        Select jobs to execute...
+        
+        [Wed May 11 13:24:21 2022]
+        localrule all:
+            input: ../results/multiqc_report.html, ../results/trimmed/NA24631_1_val_1.fq.gz, ../results/trimmed/NA24695_1_val_1.fq.gz, ../results/trimmed/NA24694_1_val_1.fq.gz, ../results/trimmed/NA24631_2_val_2.fq.gz, ../results/trimmed/NA24695_2_val_2.fq.gz, ../results/trimmed/NA24694_2_val_2.fq.gz
+            jobid: 0
+            resources: mem_mb=512, disk_mb=1000, tmpdir=/dev/shm/jobs/26763281, cpus=2, time_min=10
+        
+        [Wed May 11 13:24:21 2022]
+        Finished job 0.
+        8 of 8 steps (100%) done
+        Complete log: .snakemake/log/2022-05-11T132052.454902.snakemake.log
+        ```
 
 
-
-{% include exercise.html title="e4dot12" content=e4dot12%}
 <br>
 
 ## 4.5 Create temporary files
@@ -1214,29 +1211,29 @@ In our workflow, we are likely to be creating files that we don't want, but are 
 
 For example, we might not want to keep our fastqc output files since our multiqc report merges all of our fastqc reports for each sample into one report. Let's have a look at the files currently produced by our workflow with:
 
-```bash
-ls -lh ../results/fastqc/
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    ls -lh ../results/fastqc/
+    ```
 
-{% capture e4dot13 %}
+    ??? success "output"
 
-```bash
-total 4.5M
--rw-rw----+ 1 lkemp nesi99991 250K May 11 13:22 NA24631_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 327K May 11 13:22 NA24631_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 249K May 11 13:22 NA24631_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 327K May 11 13:22 NA24631_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 254K May 11 13:22 NA24694_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 334K May 11 13:22 NA24694_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 250K May 11 13:22 NA24694_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 328K May 11 13:22 NA24694_2_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 252K May 11 13:22 NA24695_1_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 328K May 11 13:22 NA24695_1_fastqc.zip
--rw-rw----+ 1 lkemp nesi99991 253K May 11 13:22 NA24695_2_fastqc.html
--rw-rw----+ 1 lkemp nesi99991 330K May 11 13:22 NA24695_2_fastqc.zip
-```
+        ```bash
+        total 4.5M
+        -rw-rw----+ 1 lkemp nesi99991 250K May 11 13:22 NA24631_1_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 327K May 11 13:22 NA24631_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 249K May 11 13:22 NA24631_2_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 327K May 11 13:22 NA24631_2_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 254K May 11 13:22 NA24694_1_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 334K May 11 13:22 NA24694_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 250K May 11 13:22 NA24694_2_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 328K May 11 13:22 NA24694_2_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 252K May 11 13:22 NA24695_1_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 328K May 11 13:22 NA24695_1_fastqc.zip
+        -rw-rw----+ 1 lkemp nesi99991 253K May 11 13:22 NA24695_2_fastqc.html
+        -rw-rw----+ 1 lkemp nesi99991 330K May 11 13:22 NA24695_2_fastqc.zip
+        ```
 
 
 
