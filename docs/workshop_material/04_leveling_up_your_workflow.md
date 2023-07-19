@@ -56,9 +56,6 @@
             "trim_galore {input} -o ../results/trimmed/ --paired --cores {threads} &> {log}"
     ```
 
-
-
-{% include exercise.html title="e4dot1" content=e4dot1%}
 <br>
 
 ## 4.1 Use a profile for HPC
@@ -67,28 +64,32 @@ In section 3.16, we have seen that a snakemake workflow can be run on an HPC clu
 To reduce the boilerplate, we can use a [configuration profile](https://snakemake.readthedocs.io/en/stable/executing/cli.html#profiles) to configure default options.
 In this case, we use it to set the `--cluster` and the `--jobs` options.
 
-Make a `slurm` profile folder
+!!! terminal-2 "Make a `slurm` profile folder"
 
-```bash
-# create the profile folder
-mkdir slurm
-touch slurm/config.yaml
+    ```bash
+    # create the profile folder
+    mkdir slurm
+    touch slurm/config.yaml
+    ```
+!!! file-code "write the following to config.yaml"
+    ```bash
+    jobs: 20
+    cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991"
+    ```
 
-# write the following to config.yaml
-jobs: 20
-cluster: "sbatch --time 00:10:00 --mem 512MB --cpus-per-task 8 --account nesi99991"
-```
+!!! terminal-2 "Then run the snakemake workflow using the `slurm` profile"
 
-Then run the snakemake workflow using the `slurm` profile
-
-```bash
-# remove output of last run
-rm -r ../results/*
-
-# run dryrun/run again
-snakemake --dryrun --profile slurm --use-envmodules
-snakemake --profile slurm --use-envmodules
-```
+    ```bash
+    # remove output of last run
+    rm -r ../results/*
+    ```
+    ```bash
+    # run dryrun/run again
+    snakemake --dryrun --profile slurm --use-envmodules
+    ```
+    ```bash
+    snakemake --profile slurm --use-envmodules
+    ```
 
 If you interrupt the execution of a snakemake workflow using CTRL-C, already submitted Slurm jobs won't be cancelled.
 We tell snakemake how to cancel Slurm jobs using `scancel` via the `--cluster-cancel` option and adding `--parsable` to the `sbatch` command, to make it return the job ID.
