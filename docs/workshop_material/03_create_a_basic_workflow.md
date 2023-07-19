@@ -337,7 +337,6 @@ Then let's carry out a dryrun of the workflow, where no actual analysis is under
 
 
 
-{% include exercise.html title="e3dot7" content=e3dot7%}
 <br>
 
 The last table in the output confirms that the workflow will run one sample (`count 1`) through fastqc (`job fastqc`)
