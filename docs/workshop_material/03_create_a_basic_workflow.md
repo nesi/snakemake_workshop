@@ -945,7 +945,7 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 - Use the [expand function](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#the-expand-function) (`expand()`) function to tell snakemake that `{sample}` is what we defined in our global wildcard `SAMPLES,`
 - Snakemake can figure out what `{sample}` is in our rule since it's defined in the targets in `rule all:`
 
-!!! terminal ""
+??? code-compare "Edit snakefile"
 
     ```diff
     # define samples from data directory using wildcards
@@ -985,7 +985,7 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
             "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
     ```
 
-!!! file-code "Current snakefile:"
+??? file-code "Current snakefile:"
 
     ```txt
     # define samples from data directory using wildcards
@@ -1138,48 +1138,50 @@ Let's scale up to run all of our samples by using [wildcards](https://snakemake.
 - Connect the outputs of fastqc to the inputs of multiqc
 - Add a new final target for `rule all:`
 
-```diff
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+??? code-compare "Edit snakefile"
 
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
-        expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
--       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
-+       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
-+       "../results/multiqc_report.html"
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
-        html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
-  
-+ rule multiqc:
-+   input:
-+       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-+   output:
-+       "../results/multiqc_report.html"
-+   log:
-+       "logs/multiqc/multiqc.log"
-+   envmodules:
-+       "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-+   shell:
-+       "multiqc {input} -o ../results/ &> {log}"
-```
+    ```diff
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            expand("../results/fastqc/{sample}_1_fastqc.html", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_2_fastqc.html", sample = SAMPLES),
+            expand("../results/fastqc/{sample}_1_fastqc.zip", sample = SAMPLES),
+    -       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES)
+    +       expand("../results/fastqc/{sample}_2_fastqc.zip", sample = SAMPLES),
+    +       "../results/multiqc_report.html"
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+            html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} &> {log}"
+      
+    + rule multiqc:
+    +   input:
+    +       expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+    +   output:
+    +       "../results/multiqc_report.html"
+    +   log:
+    +       "logs/multiqc/multiqc.log"
+    +   envmodules:
+    +       "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+    +   shell:
+    +       "multiqc {input} -o ../results/ &> {log}"
+    ```
 
 ??? file-code "Current snakefile:"
 
