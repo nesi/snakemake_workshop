@@ -1,7 +1,6 @@
 # Appendix - Use conda environments
 
-* Do not remove this line (it will not be displayed)
-{:toc}
+
 
 ## Introduction
 

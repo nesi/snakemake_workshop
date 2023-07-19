@@ -1,14 +1,8 @@
 # 01 - Introduction
 
-<p style="text-align:left;">
-  <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-green);font-weight:bold">&laquo;Home </a></b> 
-  <span style="float:right;">
-    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html" style="background: var(--bs-green);font-weight:bold">2 - Setup &raquo;</a></b>
-  </span>
-</p>
 
-* Do not remove this line (it will not be displayed)
-{:toc}
+
+
 
 
 ## Benefits of workflow languages
@@ -64,11 +58,6 @@ At each section of the workshop you can find a drop down box under "Current snak
 
 - - - 
 
-<p style="text-align:left;">
-  <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-green);font-weight:bold">&laquo;Home </a></b> 
-  <span style="float:right;">
-    <b><a class="btn" href="https://nesi.github.io/snakemake_workshop/workshop_material/02_setup.html" style="background: var(--bs-green);font-weight:bold">2 - Setup &raquo;</a></b>
-  </span>
-</p>
+
 
 <p align="center"><b><a class="btn" href="https://nesi.github.io/snakemake_workshop/" style="background: var(--bs-dark);font-weight:bold">Back to homepage</a></b></p>

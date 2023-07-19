@@ -7,8 +7,7 @@
   </span>
 </p>
 
-* Do not remove this line (it will not be displayed)
-{:toc}
+
 
 
 ## Running on NeSI vs on your computer

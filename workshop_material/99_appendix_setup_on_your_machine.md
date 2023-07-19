@@ -1,7 +1,6 @@
 # Appendix - Setup on your machine using conda
 
-* Do not remove this line (it will not be displayed)
-{:toc}
+
 
 ## Install Miniconda
 
