@@ -1235,82 +1235,81 @@ For example, we might not want to keep our fastqc output files since our multiqc
         -rw-rw----+ 1 lkemp nesi99991 330K May 11 13:22 NA24695_2_fastqc.zip
         ```
 
-
-
-{% include exercise.html title="e4dot13" content=e4dot13%}
 <br>
 
 Let's mark all the trimmed fastq files as temporary in our Snakefile by wrapping it up in the `temp()` function
 
-```diff
-# define our configuration file
-configfile: "../config/config.yaml"
-
-# define samples from data directory using wildcards
-SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
-
-# target OUTPUT files for the whole workflow
-rule all:
-    input:
-        "../results/multiqc_report.html",
-        expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
-
-# workflow
-rule fastqc:
-    input:
-        R1 = "../../data/{sample}_1.fastq.gz",
-        R2 = "../../data/{sample}_2.fastq.gz"
-    output:
--       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
-+       html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
-        zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
-    params:
-        fastqc_params = config['PARAMS']['FASTQC']
-    log:
-        "logs/fastqc/{sample}.log"
-    threads: 2
-    envmodules:
-        "FastQC/0.11.9"
-    message:
-        "Undertaking quality control checks {input}"
-    shell:
-        "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
-  
-rule multiqc:
-    input:
-        expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
-    output:
-        "../results/multiqc_report.html"
-    params:
-        multiqc_params = config['PARAMS']['MULTIQC']
-    log:
-        "logs/multiqc/multiqc.log"
-    envmodules:
-        "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
-    message:
-        "Compiling a HTML report for quality control checks. Writing to {output}."
-    shell:
-        "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
-
-rule trim_galore:
-    input:
-        ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
-    output:
-        ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
-    params:
-        "--paired"
-    log:
-        "logs/trim_galore/{sample}.log"
-    envmodules:
-        "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
-    threads: 2
-    resources:
-        cpus=8
-    message:
-        "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
-    shell:
-        "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
-```
+??? code-compare "Edit snakefile"
+    
+    ```diff
+    # define our configuration file
+    configfile: "../config/config.yaml"
+    
+    # define samples from data directory using wildcards
+    SAMPLES, = glob_wildcards("../../data/{sample}_1.fastq.gz")
+    
+    # target OUTPUT files for the whole workflow
+    rule all:
+        input:
+            "../results/multiqc_report.html",
+            expand(["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"], sample = SAMPLES)
+    
+    # workflow
+    rule fastqc:
+        input:
+            R1 = "../../data/{sample}_1.fastq.gz",
+            R2 = "../../data/{sample}_2.fastq.gz"
+        output:
+    -       html = ["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"],
+    +       html = temp(["../results/fastqc/{sample}_1_fastqc.html", "../results/fastqc/{sample}_2_fastqc.html"]),
+            zip = ["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"]
+        params:
+            fastqc_params = config['PARAMS']['FASTQC']
+        log:
+            "logs/fastqc/{sample}.log"
+        threads: 2
+        envmodules:
+            "FastQC/0.11.9"
+        message:
+            "Undertaking quality control checks {input}"
+        shell:
+            "fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads} {params.fastqc_params} &> {log}"
+      
+    rule multiqc:
+        input:
+            expand(["../results/fastqc/{sample}_1_fastqc.zip", "../results/fastqc/{sample}_2_fastqc.zip"], sample = SAMPLES)
+        output:
+            "../results/multiqc_report.html"
+        params:
+            multiqc_params = config['PARAMS']['MULTIQC']
+        log:
+            "logs/multiqc/multiqc.log"
+        envmodules:
+            "MultiQC/1.9-gimkl-2020a-Python-3.8.2"
+        message:
+            "Compiling a HTML report for quality control checks. Writing to {output}."
+        shell:
+            "multiqc {input} -o ../results/ {params.multiqc_params} &> {log}"
+    
+    rule trim_galore:
+        input:
+            ["../../data/{sample}_1.fastq.gz", "../../data/{sample}_2.fastq.gz"]
+        output:
+            ["../results/trimmed/{sample}_1_val_1.fq.gz", "../results/trimmed/{sample}_2_val_2.fq.gz"]
+        params:
+            "--paired"
+        log:
+            "logs/trim_galore/{sample}.log"
+        envmodules:
+            "TrimGalore/0.6.7-gimkl-2020a-Python-3.8.2-Perl-5.30.1"
+        threads: 2
+        resources:
+            cpus=8
+        message:
+            "Trimming using these parameter: {params}. Writing logs to {log}. Using {threads} threads."
+        shell:
+            "trim_galore {input} -o ../results/trimmed/ {params} --cores {threads} &> {log}"
+    ```
 
 Current snakefile:
 
