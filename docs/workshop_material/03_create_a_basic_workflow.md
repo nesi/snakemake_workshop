@@ -293,47 +293,47 @@ Let's test the workflow! First we need to be in the `workflow` directory, where 
 
 Then let's carry out a dryrun of the workflow, where no actual analysis is undertaken (fastqc is *not* run) but the overall Snakemake structure is run/validated. This is a good way to check for errors in your Snakemake workflow before actually running your workflow.
 
-```bash
-snakemake --dryrun
-```
+!!! terminal "code"
 
-My output:
+    ```bash
+    snakemake --dryrun
+    ```
 
-{% capture e3dot7 %}
+    ??? success "output"
 
-```bash
-Building DAG of jobs...
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        1              1              1
-total         2              1              1
-
-
-[Wed May 11 12:09:56 2022]
-rule fastqc:
-    input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
-    output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 1
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-
-[Wed May 11 12:09:56 2022]
-localrule all:
-    input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
-    jobid: 0
-    resources: tmpdir=/dev/shm/jobs/26763281
-
-Job stats:
-job       count    min threads    max threads
-------  -------  -------------  -------------
-all           1              1              1
-fastqc        1              1              1
-total         2              1              1
-
-This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
-```
+        ```bash
+        Building DAG of jobs...
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        1              1              1
+        total         2              1              1
+        
+        
+        [Wed May 11 12:09:56 2022]
+        rule fastqc:
+            input: ../../data/NA24631_1.fastq.gz, ../../data/NA24631_2.fastq.gz
+            output: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 1
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        
+        [Wed May 11 12:09:56 2022]
+        localrule all:
+            input: ../results/fastqc/NA24631_1_fastqc.html, ../results/fastqc/NA24631_2_fastqc.html, ../results/fastqc/NA24631_1_fastqc.zip, ../results/fastqc/NA24631_2_fastqc.zip
+            jobid: 0
+            resources: tmpdir=/dev/shm/jobs/26763281
+        
+        Job stats:
+        job       count    min threads    max threads
+        ------  -------  -------------  -------------
+        all           1              1              1
+        fastqc        1              1              1
+        total         2              1              1
+        
+        This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
+        ```
 
 
 
