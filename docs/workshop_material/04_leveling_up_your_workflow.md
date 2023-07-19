@@ -91,7 +91,7 @@ In this case, we use it to set the `--cluster` and the `--jobs` options.
     snakemake --profile slurm --use-envmodules
     ```
 
-If you interrupt the execution of a snakemake workflow using <KBD>CTRL-C</KBD>, already submitted Slurm jobs won't be cancelled.
+If you interrupt the execution of a snakemake workflow using <KBD>CTRL+C</KBD>, already submitted Slurm jobs won't be cancelled.
 We tell snakemake how to cancel Slurm jobs using `scancel` via the `--cluster-cancel` option and adding `--parsable` to the `sbatch` command, to make it return the job ID.
 
 !!! code-compare "Edit config.yaml"
