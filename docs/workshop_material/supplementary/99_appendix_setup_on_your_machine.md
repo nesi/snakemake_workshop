@@ -1,4 +1,4 @@
-# Appendix - Setup on your machine using conda
+# Supp. 1 - Setup on your machine using conda
 
 
 

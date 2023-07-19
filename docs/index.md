@@ -61,5 +61,5 @@
     
     **Appendices:**
     
-    - [Setup for running on your machine using conda](workshop_material/99_appendix_setup_on_your_machine.md)
-    - [Use conda environments](workshop_material/99_appendix_use_conda_environments.md)
+    - [Setup for running on your machine using conda](./workshop_material/supplementary/99_appendix_setup_on_your_machine.md)
+    - [Use conda environments](./workshop_material/supplementary/99_appendix_use_conda_environments.md)

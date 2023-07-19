@@ -1,4 +1,4 @@
-# Appendix - Use conda environments
+# Supp. 2 - Use conda environments
 
 
 
