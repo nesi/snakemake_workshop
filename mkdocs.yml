@@ -12,7 +12,7 @@ repo_url: https://github.com/nesi/snakemake_workshop
 theme:
   name: material
   logo: theme_images/nesi_logo.png
-  favicon: theme_images_nesi_logo.png
+  favicon: theme_images/nesi_logo.png
    # 404 page
   static_templates:
     - 404.html
