@@ -11,7 +11,7 @@ One of the differences between running on NeSI or your own machine is that on Ne
 
 We have provided a guide for setting up your own machine using conda [here](./supplementary/99_appendix_setup_on_your_machine.md)) (note we will not be able to provide assistance if you decide to take this approach during the workshop).
 
-!!! jupyter "Connect to Jupyter on NeSI"
+??? jupyter "Connect to Jupyter on NeSI"
 
     1. Connect to [https://jupyter.nesi.org.nz](https://jupyter.nesi.org.nz)
     2. <p>Enter NeSI username, HPC password and 6 digit second factor token (as set on <a href="https://my.nesi.org.nz/account/hpc-account">MyNeSI</a>)<br>![image](./nesi_images/jupyter_login_labels_updated.png)</p>
