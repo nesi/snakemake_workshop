@@ -18,4 +18,4 @@ Workshop material : https://nesi.github.io/snakemake_workshop/
 - [Setup for running on your machine using conda](https://nesi.github.io/snakemake_workshop/workshop_material/supplementary/99_appendix_setup_on_your_machine/)
 - [Use conda environments](https://nesi.github.io/snakemake_workshop/workshop_material/supplementary/99_appendix_use_conda_environments/)
 
-<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/workshop_material/01_introduction.html">Start the workshop!</a>
+<p align="center"><b><a href="https://nesi.github.io/snakemake_workshop/">Start the workshop!</a>
