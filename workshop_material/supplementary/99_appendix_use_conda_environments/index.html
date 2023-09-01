@@ -1,0 +1,942 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="NeSI">
+      
+      
+        <link rel="canonical" href="https://nesi.github.io/snakemake_workshop/workshop_material/supplementary/99_appendix_use_conda_environments/">
+      
+      
+        <link rel="prev" href="../99_appendix_setup_on_your_machine/">
+      
+      
+      
+      <link rel="icon" href="../../../theme_images/nesi_logo.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.6">
+    
+    
+      
+        <title>Supp. 2 - Use conda environments - Automate Your Workflow With Snakemake</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0e669242.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Mukta";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#supp-2-use-conda-environments" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+<!-- Custom Banner -->
+<div class="banner">
+    <p style="color:white; display:inline;font-size: 160%;">This repository is in the early stages of development (Beta Version)</p>
+</div>
+
+<!-- Original Header -->
+
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Automate Your Workflow With Snakemake" class="md-header__button md-logo" aria-label="Automate Your Workflow With Snakemake" data-md-component="logo">
+      
+  <img src="../../../theme_images/nesi_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Automate Your Workflow With Snakemake
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Supp. 2 - Use conda environments
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_3" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_3">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nesi/snakemake_workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/snakemake_workshop
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Automate Your Workflow With Snakemake" class="md-nav__button md-logo" aria-label="Automate Your Workflow With Snakemake" data-md-component="logo">
+      
+  <img src="../../../theme_images/nesi_logo.png" alt="logo">
+
+    </a>
+    Automate Your Workflow With Snakemake
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nesi/snakemake_workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nesi/snakemake_workshop
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Workshop material
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Workshop material
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    01 - Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    02 - Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_create_a_basic_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    03 - Create a basic workflow
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_leveling_up_your_workflow/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    04 - Leveling up your workflow!
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_we_want_more/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    05 - We want more!
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" checked>
+        
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Supplementary
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            Supplementary
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../99_appendix_setup_on_your_machine/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supp. 1 - Setup on your machine using conda
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Supp. 2 - Use conda environments
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Supp. 2 - Use conda environments
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activate-conda-on-nesi" class="md-nav__link">
+    Activate conda on NeSI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-using-the-conda-package-management-system" class="md-nav__link">
+    Run using the conda package management system
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-information" class="md-nav__link">
+    Additional information
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activate-conda-on-nesi" class="md-nav__link">
+    Activate conda on NeSI
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-using-the-conda-package-management-system" class="md-nav__link">
+    Run using the conda package management system
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-information" class="md-nav__link">
+    Additional information
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="supp-2-use-conda-environments">Supp. 2 - Use conda environments<a class="headerlink" href="#supp-2-use-conda-environments" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>Conda environments can be used as a substitute to environment modules to run a rule in a self-contained and reproducible environment.
+This page presents an alternative version of <a href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html#309-run-using-environment-modules">Section 3.09: Run using environment modules</a>.</p>
+<h2 id="activate-conda-on-nesi">Activate conda on NeSI<a class="headerlink" href="#activate-conda-on-nesi" title="Permanent link">&para;</a></h2>
+<p>First, you need to have <a href="https://docs.conda.io/en/latest/miniconda.html">Conda</a> or <a href="https://github.com/mamba-org/mamba">Mamba</a> installed on your machine.</p>
+<p>On NeSI, use the Miniconda environment module:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>module<span class="w"> </span>load<span class="w"> </span>Miniconda3
+</code></pre></div>
+<p>and check that the <code>conda</code> tool is now available:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>conda<span class="w"> </span>--version
+</code></pre></div>
+<h2 id="run-using-the-conda-package-management-system">Run using the conda package management system<a class="headerlink" href="#run-using-the-conda-package-management-system" title="Permanent link">&para;</a></h2>
+<p>Now let's run the example from <a href="https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow.html#309-run-using-environment-modules">Section 3.09</a> using a conda environment.
+First, we need to specify a conda environment for fastqc.</p>
+<p>Make a conda environment file for fastqc</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># create a folder for conda environments</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>mkdir<span class="w"> </span>envs
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># create the file</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>touch<span class="w"> </span>./envs/fastqc.yaml
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># see what versions of fastqc are available in the bioconda channel</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>conda<span class="w"> </span>search<span class="w"> </span>fastqc<span class="w"> </span>-c<span class="w"> </span>bioconda
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># write the following to fastqc.yaml</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>channels:
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">  </span>-<span class="w"> </span>bioconda
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">  </span>-<span class="w"> </span>conda-forge
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">  </span>-<span class="w"> </span>defaults
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>dependencies:
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">  </span>-<span class="w"> </span>bioconda::fastqc<span class="o">=</span><span class="m">0</span>.11.9
+</code></pre></div>
+<p>This will install <a href="https://anaconda.org/bioconda/fastqc">fastqc (version 0.11.9)</a> from bioconda into a 'clean' conda environment separate from the rest of your computer</p>
+<p>See <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-file-manually">here</a> for information on creating conda environment files.</p>
+<p>Update our rule to use it using the <code>conda:</code> directive, pointing the rule to the <code>envs</code> directory which has our conda environment file for fastqc (directory relative to the Snakefile)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># target OUTPUT files for the whole workflow
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>rule all:
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w"> </span>   input:
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w"> </span>       &quot;../results/fastqc/NA24631_1_fastqc.html&quot;,
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w"> </span>       &quot;../results/fastqc/NA24631_2_fastqc.html&quot;,
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w"> </span>       &quot;../results/fastqc/NA24631_1_fastqc.zip&quot;,
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w"> </span>       &quot;../results/fastqc/NA24631_2_fastqc.zip&quot;
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a># workflow
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>rule fastqc:
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w"> </span>   input:
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w"> </span>       R1 = &quot;../../data/NA24631_1.fastq.gz&quot;,
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w"> </span>       R2 = &quot;../../data/NA24631_2.fastq.gz&quot;
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w"> </span>   output:
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w"> </span>       html = [&quot;../results/fastqc/NA24631_1_fastqc.html&quot;, &quot;../results/fastqc/NA24631_2_fastqc.html&quot;],
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w"> </span>       zip = [&quot;../results/fastqc/NA24631_1_fastqc.zip&quot;, &quot;../results/fastqc/NA24631_2_fastqc.zip&quot;]
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w"> </span>   threads: 2
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="gi">+   conda:</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="gi">+       &quot;envs/fastqc.yaml&quot;</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w"> </span>   shell:
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w"> </span>       &quot;fastqc {input.R1} {input.R2} -o ../results/fastqc/ -t {threads}&quot;
+</code></pre></div>
+<p>Run again, now telling Snakemake to use to use <a href="https://docs.conda.io/en/latest/">Conda</a> to automatically install our software by using the <code>--use-conda</code> and <code>--conda-frontend conda</code> flags</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># first remove output of last run
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>rm -r ../results/*
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a># Run dryrun again
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="gd">- snakemake --dryrun --cores 2</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="gi">+ snakemake --dryrun --cores 2 --use-conda --conda-frontend conda</span>
+</code></pre></div>
+<p>My output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Building<span class="w"> </span>DAG<span class="w"> </span>of<span class="w"> </span>jobs...
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Conda<span class="w"> </span>environment<span class="w"> </span>envs/fastqc.yaml<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>created.
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Job<span class="w"> </span>stats:
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>job<span class="w">       </span>count<span class="w">    </span>min<span class="w"> </span>threads<span class="w">    </span>max<span class="w"> </span>threads
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>------<span class="w">  </span>-------<span class="w">  </span>-------------<span class="w">  </span>-------------
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>all<span class="w">           </span><span class="m">1</span><span class="w">              </span><span class="m">1</span><span class="w">              </span><span class="m">1</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>fastqc<span class="w">        </span><span class="m">1</span><span class="w">              </span><span class="m">2</span><span class="w">              </span><span class="m">2</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>total<span class="w">         </span><span class="m">2</span><span class="w">              </span><span class="m">1</span><span class="w">              </span><span class="m">2</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="o">[</span>Mon<span class="w"> </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">03</span>:06:45<span class="w"> </span><span class="m">2021</span><span class="o">]</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>rule<span class="w"> </span>fastqc:
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span>input:<span class="w"> </span>../../data/NA24631_1.fastq.gz,<span class="w"> </span>../../data/NA24631_2.fastq.gz
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span>output:<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.zip,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.zip
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">    </span>jobid:<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span>threads:<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span>resources:<span class="w"> </span><span class="nv">tmpdir</span><span class="o">=</span>/dev/shm/jobs/22281190
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="o">[</span>Mon<span class="w"> </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">03</span>:06:45<span class="w"> </span><span class="m">2021</span><span class="o">]</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>localrule<span class="w"> </span>all:
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">    </span>input:<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.zip,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.zip
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span>jobid:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">    </span>resources:<span class="w"> </span><span class="nv">tmpdir</span><span class="o">=</span>/dev/shm/jobs/22281190
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>Job<span class="w"> </span>stats:
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>job<span class="w">       </span>count<span class="w">    </span>min<span class="w"> </span>threads<span class="w">    </span>max<span class="w"> </span>threads
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>------<span class="w">  </span>-------<span class="w">  </span>-------------<span class="w">  </span>-------------
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>all<span class="w">           </span><span class="m">1</span><span class="w">              </span><span class="m">1</span><span class="w">              </span><span class="m">1</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>fastqc<span class="w">        </span><span class="m">1</span><span class="w">              </span><span class="m">2</span><span class="w">              </span><span class="m">2</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>total<span class="w">         </span><span class="m">2</span><span class="w">              </span><span class="m">1</span><span class="w">              </span><span class="m">2</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>This<span class="w"> </span>was<span class="w"> </span>a<span class="w"> </span>dry-run<span class="w"> </span><span class="o">(</span>flag<span class="w"> </span>-n<span class="o">)</span>.<span class="w"> </span>The<span class="w"> </span>order<span class="w"> </span>of<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>reflect<span class="w"> </span>the<span class="w"> </span>order<span class="w"> </span>of<span class="w"> </span>execution.
+</code></pre></div>
+<p>Notice it now says that "Conda environment envs/fastqc.yaml will be created.". Now the software our workflow uses will be automatically installed!</p>
+<p>Let's do a full run</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="gd">- snakemake --cores 2</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="gi">+ snakemake --cores 2 --use-conda --conda-frontend conda</span>
+</code></pre></div>
+<p>My output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Building<span class="w"> </span>DAG<span class="w"> </span>of<span class="w"> </span>jobs...
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Creating<span class="w"> </span>conda<span class="w"> </span>environment<span class="w"> </span>envs/fastqc.yaml...
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Downloading<span class="w"> </span>and<span class="w"> </span>installing<span class="w"> </span>remote<span class="w"> </span>packages.
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Environment<span class="w"> </span><span class="k">for</span><span class="w"> </span>envs/fastqc.yaml<span class="w"> </span>created<span class="w"> </span><span class="o">(</span>location:<span class="w"> </span>.snakemake/conda/67c1376bae89b8de73037e703ea4b6f5<span class="o">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Using<span class="w"> </span>shell:<span class="w"> </span>/usr/bin/bash
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>Provided<span class="w"> </span>cores:<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Rules<span class="w"> </span>claiming<span class="w"> </span>more<span class="w"> </span>threads<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>scaled<span class="w"> </span>down.
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>Job<span class="w"> </span>stats:
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>job<span class="w">       </span>count<span class="w">    </span>min<span class="w"> </span>threads<span class="w">    </span>max<span class="w"> </span>threads
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>------<span class="w">  </span>-------<span class="w">  </span>-------------<span class="w">  </span>-------------
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>all<span class="w">           </span><span class="m">1</span><span class="w">              </span><span class="m">1</span><span class="w">              </span><span class="m">1</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>fastqc<span class="w">        </span><span class="m">1</span><span class="w">              </span><span class="m">2</span><span class="w">              </span><span class="m">2</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>total<span class="w">         </span><span class="m">2</span><span class="w">              </span><span class="m">1</span><span class="w">              </span><span class="m">2</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>Select<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>to<span class="w"> </span>execute...
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="o">[</span>Mon<span class="w"> </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">03</span>:10:27<span class="w"> </span><span class="m">2021</span><span class="o">]</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>rule<span class="w"> </span>fastqc:
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span>input:<span class="w"> </span>../../data/NA24631_1.fastq.gz,<span class="w"> </span>../../data/NA24631_2.fastq.gz
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span>output:<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.zip,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.zip
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span>jobid:<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">    </span>threads:<span class="w"> </span><span class="m">2</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">    </span>resources:<span class="w"> </span><span class="nv">tmpdir</span><span class="o">=</span>/dev/shm/jobs/22281190
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>Activating<span class="w"> </span>conda<span class="w"> </span>environment:<span class="w"> </span>/scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/conda/67c1376bae89b8de73037e703ea4b6f5
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>Started<span class="w"> </span>analysis<span class="w"> </span>of<span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>Approx<span class="w"> </span><span class="m">5</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>Approx<span class="w"> </span><span class="m">10</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>Approx<span class="w"> </span><span class="m">15</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>Approx<span class="w"> </span><span class="m">20</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>Approx<span class="w"> </span><span class="m">25</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>Approx<span class="w"> </span><span class="m">30</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>Approx<span class="w"> </span><span class="m">35</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>Approx<span class="w"> </span><span class="m">40</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>Approx<span class="w"> </span><span class="m">45</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>Approx<span class="w"> </span><span class="m">50</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>Approx<span class="w"> </span><span class="m">55</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>Approx<span class="w"> </span><span class="m">60</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>Started<span class="w"> </span>analysis<span class="w"> </span>of<span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>Approx<span class="w"> </span><span class="m">65</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>Approx<span class="w"> </span><span class="m">5</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>Approx<span class="w"> </span><span class="m">70</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>Approx<span class="w"> </span><span class="m">10</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>Approx<span class="w"> </span><span class="m">75</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>Approx<span class="w"> </span><span class="m">15</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>Approx<span class="w"> </span><span class="m">80</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a>Approx<span class="w"> </span><span class="m">20</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a>Approx<span class="w"> </span><span class="m">85</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a>Approx<span class="w"> </span><span class="m">25</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>Approx<span class="w"> </span><span class="m">90</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a>Approx<span class="w"> </span><span class="m">30</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>Approx<span class="w"> </span><span class="m">95</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a>Approx<span class="w"> </span><span class="m">35</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-54" name="__codelineno-7-54" href="#__codelineno-7-54"></a>Analysis<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_1.fastq.gz
+<a id="__codelineno-7-55" name="__codelineno-7-55" href="#__codelineno-7-55"></a>Approx<span class="w"> </span><span class="m">40</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-56" name="__codelineno-7-56" href="#__codelineno-7-56"></a>Approx<span class="w"> </span><span class="m">45</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-57" name="__codelineno-7-57" href="#__codelineno-7-57"></a>Approx<span class="w"> </span><span class="m">50</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-58" name="__codelineno-7-58" href="#__codelineno-7-58"></a>Approx<span class="w"> </span><span class="m">55</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-59" name="__codelineno-7-59" href="#__codelineno-7-59"></a>Approx<span class="w"> </span><span class="m">60</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-60" name="__codelineno-7-60" href="#__codelineno-7-60"></a>Approx<span class="w"> </span><span class="m">65</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-61" name="__codelineno-7-61" href="#__codelineno-7-61"></a>Approx<span class="w"> </span><span class="m">70</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-62" name="__codelineno-7-62" href="#__codelineno-7-62"></a>Approx<span class="w"> </span><span class="m">75</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-63" name="__codelineno-7-63" href="#__codelineno-7-63"></a>Approx<span class="w"> </span><span class="m">80</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-64" name="__codelineno-7-64" href="#__codelineno-7-64"></a>Approx<span class="w"> </span><span class="m">85</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-65" name="__codelineno-7-65" href="#__codelineno-7-65"></a>Approx<span class="w"> </span><span class="m">90</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-66" name="__codelineno-7-66" href="#__codelineno-7-66"></a>Approx<span class="w"> </span><span class="m">95</span>%<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-67" name="__codelineno-7-67" href="#__codelineno-7-67"></a>Analysis<span class="w"> </span><span class="nb">complete</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>NA24631_2.fastq.gz
+<a id="__codelineno-7-68" name="__codelineno-7-68" href="#__codelineno-7-68"></a><span class="o">[</span>Mon<span class="w"> </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">03</span>:10:33<span class="w"> </span><span class="m">2021</span><span class="o">]</span>
+<a id="__codelineno-7-69" name="__codelineno-7-69" href="#__codelineno-7-69"></a>Finished<span class="w"> </span>job<span class="w"> </span><span class="m">1</span>.
+<a id="__codelineno-7-70" name="__codelineno-7-70" href="#__codelineno-7-70"></a><span class="m">1</span><span class="w"> </span>of<span class="w"> </span><span class="m">2</span><span class="w"> </span>steps<span class="w"> </span><span class="o">(</span><span class="m">50</span>%<span class="o">)</span><span class="w"> </span><span class="k">done</span>
+<a id="__codelineno-7-71" name="__codelineno-7-71" href="#__codelineno-7-71"></a>Select<span class="w"> </span><span class="nb">jobs</span><span class="w"> </span>to<span class="w"> </span>execute...
+<a id="__codelineno-7-72" name="__codelineno-7-72" href="#__codelineno-7-72"></a>
+<a id="__codelineno-7-73" name="__codelineno-7-73" href="#__codelineno-7-73"></a><span class="o">[</span>Mon<span class="w"> </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">03</span>:10:33<span class="w"> </span><span class="m">2021</span><span class="o">]</span>
+<a id="__codelineno-7-74" name="__codelineno-7-74" href="#__codelineno-7-74"></a>localrule<span class="w"> </span>all:
+<a id="__codelineno-7-75" name="__codelineno-7-75" href="#__codelineno-7-75"></a><span class="w">    </span>input:<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.html,<span class="w"> </span>../results/fastqc/NA24631_1_fastqc.zip,<span class="w"> </span>../results/fastqc/NA24631_2_fastqc.zip
+<a id="__codelineno-7-76" name="__codelineno-7-76" href="#__codelineno-7-76"></a><span class="w">    </span>jobid:<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-7-77" name="__codelineno-7-77" href="#__codelineno-7-77"></a><span class="w">    </span>resources:<span class="w"> </span><span class="nv">tmpdir</span><span class="o">=</span>/dev/shm/jobs/22281190
+<a id="__codelineno-7-78" name="__codelineno-7-78" href="#__codelineno-7-78"></a>
+<a id="__codelineno-7-79" name="__codelineno-7-79" href="#__codelineno-7-79"></a><span class="o">[</span>Mon<span class="w"> </span>Sep<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">03</span>:10:33<span class="w"> </span><span class="m">2021</span><span class="o">]</span>
+<a id="__codelineno-7-80" name="__codelineno-7-80" href="#__codelineno-7-80"></a>Finished<span class="w"> </span>job<span class="w"> </span><span class="m">0</span>.
+<a id="__codelineno-7-81" name="__codelineno-7-81" href="#__codelineno-7-81"></a><span class="m">2</span><span class="w"> </span>of<span class="w"> </span><span class="m">2</span><span class="w"> </span>steps<span class="w"> </span><span class="o">(</span><span class="m">100</span>%<span class="o">)</span><span class="w"> </span><span class="k">done</span>
+<a id="__codelineno-7-82" name="__codelineno-7-82" href="#__codelineno-7-82"></a>Complete<span class="w"> </span>log:<span class="w"> </span>/scale_wlg_persistent/filesets/project/nesi99991/snakemake20210914/lkemp/snakemake_workshop/demo_workflow/workflow/.snakemake/log/2021-09-13T030734.543325.snakemake.log
+</code></pre></div>
+<h2 id="additional-information">Additional information<a class="headerlink" href="#additional-information" title="Permanent link">&para;</a></h2>
+<p>Have a look at <a href="https://bioconda.github.io/conda-package_index.html">bioconda's list of packages</a> to see the VERY extensive list of quality open source (free) bioinformatics software that is available for download and use. Note that is only one of the conda package repositories that exist, also have a look at the <a href="https://conda-forge.org/feedstocks/">conda-forge</a> and <a href="https://anaconda.org/anaconda/repo">main</a> conda package repositories.</p>
+<p>Another option to run your code in self-contained and reproducible environments are containers.
+Snakemake can use Singularity containers to execute the workflow, as detailed in the <a href="https://snakemake.readthedocs.io/en/latest/snakefiles/deployment.html#running-jobs-in-containers">official documentation</a>.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../99_appendix_setup_on_your_machine/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Supp. 1 - Setup on your machine using conda" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Supp. 1 - Setup on your machine using conda
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Snakemake workshop material is licensed under a <a rel="noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution license</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tracking", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.78eede0e.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
