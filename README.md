@@ -10,7 +10,7 @@ Workshop material : https://nesi.github.io/snakemake_workshop/
 - [02 - Setup](https://nesi.github.io/snakemake_workshop/workshop_material/02_setup/)
 - [03 - Create a basic workflow](https://nesi.github.io/snakemake_workshop/workshop_material/03_create_a_basic_workflow/)
 - [04 - Leveling up your workflow](https://nesi.github.io/snakemake_workshop/workshop_material/04_leveling_up_your_workflow/)
-- [05 - We want more!](https://nesi.github.io/snakemake_workshop/workshop_material/05_we_want_more/./workshop_material/05_we_want_more.md)
+- [05 - We want more!](https://nesi.github.io/snakemake_workshop/workshop_material/05_we_want_more/)
 
 
 **Appendices:**
